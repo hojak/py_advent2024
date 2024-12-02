@@ -22,3 +22,14 @@ Install the required python packages:
 pip install -r requirements.txt
 ```
 
+### Execute all tests Once
+
+```shell
+python -m pytest
+```
+
+### Launch the Test Runner in Watch Mode
+
+```shell
+ptw . --now --last-failed --new-first
+```
