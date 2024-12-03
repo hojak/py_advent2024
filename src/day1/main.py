@@ -9,7 +9,7 @@ def readFromFile(filename):
     return content
 
 def splitIntoPairs(textFileInput):
-    return list(map(lambda line: [int(string) for string in re.split('\s+', line)], textFileInput.split('\n')))
+    return list(map(lambda line: [int(string) for string in re.split('\\s+', line)], textFileInput.split('\n')))
 
 def main(filename):
     textFileInput = readFromFile(filename)
