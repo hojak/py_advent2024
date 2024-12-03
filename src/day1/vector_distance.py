@@ -15,9 +15,7 @@ def distance(listOfPairs):
     listOfSecondMembers.sort()
 
     sortedPairs = zip(listOfFirstMembers, listOfSecondMembers)
-    print ( sortedPairs )
     listOfDistances = list(map(lambda pair: single_distance(pair[0], pair[1]), sortedPairs))
-    print (listOfDistances)
 
     return reduce(do_sum, listOfDistances )
 
