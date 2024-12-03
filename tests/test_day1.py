@@ -1,4 +1,4 @@
-from day1.vector_distance import single_distance
+from day1.vector_distance import single_distance, distance
 
 import pytest
 
@@ -10,3 +10,10 @@ import pytest
 ])
 def test_single_distance(a, b, expected):
     assert single_distance(a,b) == expected
+
+
+@pytest.mark.parametrize('listOfPairs, expectedDistance', [
+    ([[1,1],[2,2]],0),
+])
+def test_distance(listOfPairs, expectedDistance):
+    assert distance(listOfPairs) == expectedDistance
