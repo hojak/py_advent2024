@@ -1,20 +1,22 @@
+from functools import reduce
+
 def single_distance(a, b):
     return abs(a-b)
 
 
+def do_sum ( a, b):
+    return a+b
+
 def distance(listOfPairs):
-    listOfFirstMembers = []
-    listOfSecondMembers = []
-    
-    for pair in listOfPairs:
-        listOfFirstMembers.append(pair[0])
-        listOfSecondMembers.append(pair[1])
+    listOfFirstMembers = list(map(lambda pair: pair[0], listOfPairs))
+    listOfSecondMembers = list(map(lambda pair: pair[1], listOfPairs))
 
     listOfFirstMembers.sort
     listOfSecondMembers.sort
 
-    result = 0
-    for i in range(len(listOfFirstMembers)):
-        result += single_distance(listOfFirstMembers[i], listOfSecondMembers[i])
+    sortedPairs = zip(listOfFirstMembers, listOfSecondMembers)
+    listOfDistances = list(map(lambda pair: single_distance(pair[0], pair[1]), sortedPairs))
 
-    return result
+    return reduce(do_sum, listOfDistances )
+
+

@@ -15,6 +15,7 @@ def test_single_distance(a, b, expected):
 @pytest.mark.parametrize('listOfPairs, expectedDistance', [
     ([[1,1],[2,2]],0),
     ([[1,2],[1,2]],2),
+    ([[2,1],[1,2]],2),
 ])
 def test_distance(listOfPairs, expectedDistance):
     assert distance(listOfPairs) == expectedDistance
