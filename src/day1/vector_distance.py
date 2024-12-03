@@ -3,4 +3,18 @@ def single_distance(a, b):
 
 
 def distance(listOfPairs):
-    return 0
+    listOfFirstMembers = []
+    listOfSecondMembers = []
+    
+    for pair in listOfPairs:
+        listOfFirstMembers.append(pair[0])
+        listOfSecondMembers.append(pair[1])
+
+    listOfFirstMembers.sort
+    listOfSecondMembers.sort
+
+    result = 0
+    for i in range(len(listOfFirstMembers)):
+        result += single_distance(listOfFirstMembers[i], listOfSecondMembers[i])
+
+    return result
