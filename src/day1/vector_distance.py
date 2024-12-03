@@ -19,4 +19,10 @@ def distance(listOfPairs):
 
     return reduce(do_sum, listOfDistances )
 
+def countNumberOccurences(listOfNumnbers):
+    result = defaultdict(int)
+    for number in listOfNumnbers:
+        result[number] +=1
+    return result
+
 

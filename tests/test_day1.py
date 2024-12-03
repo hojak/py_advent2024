@@ -20,3 +20,10 @@ def test_single_distance(a, b, expected):
 ])
 def test_distance(listOfPairs, expectedDistance):
     assert distance(listOfPairs) == expectedDistance
+
+def test_countNumberOccurences():
+    countHash = countNumberOccurences([1,2,2,1,5])
+    assert countHash[7] == 0
+    assert countHash[1] == 2
+    assert countHash[5] == 1
+    assert countHash[1] == 2
