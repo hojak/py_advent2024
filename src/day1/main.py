@@ -1,19 +1,11 @@
-import sys, re
+import sys
 
 from day1.analyze_coordinates import distance, similarity_score
-
-def read_from_file(filename):
-    file = open(filename, "r")
-    content = file.read()
-    file.close()
-    return content
-
-def splitIntoPairs(text_file_input: str) -> list:
-    return list(map(lambda line: [int(string) for string in re.split('\\s+', line)], text_file_input.split('\n')))
+from adv24_tools.tools import read_from_file, split_lines_into_numbers
 
 def main(filename: str) -> None:
     text_file_input = read_from_file(filename)
-    list_of_pairs = splitIntoPairs(text_file_input)
+    list_of_pairs = split_lines_into_numbers(text_file_input)
 
     print ("Distance: ")
     print ( distance ( list_of_pairs ) )
