@@ -1,4 +1,4 @@
-from day3.tools import find_mul_statements, get_mul_result, get_multiplication_results
+from day3.tools import find_all_statements, get_mul_result, get_multiplication_results, get_program_result
 
 import pytest
 
@@ -11,7 +11,7 @@ import pytest
     ('xmul(2,4)&mul[3,7]!^don\'t()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5)))', ['mul(2,4)','don\'t()','mul(5,5)','mul(11,8)','do()','mul(8,5)'])
 ])
 def test_find_all_statements(input: str, expectedFindings:list) -> None:
-    assert find_mul_statements(input) == expectedFindings
+    assert find_all_statements(input) == expectedFindings
 
 @pytest.mark.parametrize('input, expectedValue', [
     ('mul(1,1)', 1),

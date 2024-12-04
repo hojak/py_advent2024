@@ -1,7 +1,7 @@
 import re
 from functools import reduce
 
-def find_mul_statements ( input: str ) -> list :
+def find_all_statements ( input: str ) -> list :
     return re.findall( r'(mul\(\d{1,3},\d{1,3}\)|do\(\)|don\'t\(\))', input)
 
 def get_mul_result ( input:str )-> int :
@@ -13,7 +13,7 @@ def get_mul_result ( input:str )-> int :
     return 0
 
 def get_multiplication_results ( input: str) -> int:
-    mul_statements = find_mul_statements(input)
+    mul_statements = find_all_statements(input)
     
     results = list(map(get_mul_result, mul_statements))
 
