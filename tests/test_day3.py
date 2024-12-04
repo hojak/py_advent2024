@@ -1,4 +1,4 @@
-from day3.tools import find_mul_statements, get_mul_result
+from day3.tools import find_mul_statements, get_mul_result, get_program_result
 
 import pytest
 
@@ -21,5 +21,6 @@ def test_find_mul_statements(input: str, expectedFindings:list) -> None:
 def test_get_mul_result(input: str, expectedValue:int) -> None:
     assert get_mul_result(input) == expectedValue
 
-
+def test_get_program_result() -> None:
+    assert get_program_result ('xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))') == 161
 
