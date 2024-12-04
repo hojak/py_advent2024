@@ -12,7 +12,7 @@ def test_single_distance(a, b, expected):
     assert single_distance(a,b) == expected
 
 
-@pytest.mark.parametrize('listOfPairs, expectedDistance', [
+@pytest.mark.parametrize('list_of_pairs, expected_distance', [
     ([[1,1],[2,2]],0),
     ([[1,2],[1,2]],2),
     ([[2,1],[1,2]],0),
@@ -23,7 +23,7 @@ def test_distance(list_of_pairs, expected_distance):
 
 
 
-@pytest.mark.parametrize('listOfPairs, expectedSimilarityScore', [
+@pytest.mark.parametrize('list_of_pairs, expected_similarity_score', [
     ([[1,1],[2,2]],3),
     ([[1,3],[2,3]],0),
     ([[3,4],[4,3],[2,5],[1,3],[3,9],[3,3]],31)
