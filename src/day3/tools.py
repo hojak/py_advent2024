@@ -12,7 +12,7 @@ def get_mul_result ( input:str )-> int :
     
     return 0
 
-def get_program_result ( input: str) -> int:
+def get_multiplication_results ( input: str) -> int:
     mul_statements = find_mul_statements(input)
     
     results = list(map(get_mul_result, mul_statements))
