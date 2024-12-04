@@ -1,6 +1,6 @@
 import sys
 
-from day3.tools import get_multiplication_results
+from day3.tools import get_multiplication_results, get_program_result
 from adv24_tools.tools import read_from_file
 
 def main(filename: str) -> None:
@@ -8,6 +8,9 @@ def main(filename: str) -> None:
 
     print ("Result: ")
     print ( get_multiplication_results(text_file_input) )
+
+    print ("\nResult reflecting dos and don'ts: ")
+    print ( get_program_result(text_file_input) )
 
 
 if __name__ == "__main__":
