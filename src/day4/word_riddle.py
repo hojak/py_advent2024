@@ -1,9 +1,20 @@
 import math 
 
-def get_every_x_char ( content: str, start: int, offset: int, length: int) -> str :
-    result = ''
+def get_every_x_char ( content: str, anchor: int, offset: int, length: int) -> str :
+    offsets = []
     for char_number in range(length):
-        result += content[ start + char_number*offset ]
+        char_offset = char_number*offset
+        offsets.append(char_offset)
+
+    return get_string_chars(content, anchor, offsets)
+
+def get_string_chars ( content: str, anchor: int, offsets: list) -> str :
+    result = ''
+    for char_offset in offsets:
+        char_index = anchor + char_offset
+        
+        result += content[ char_index ]
+    
     return result
 
 class WordRiddle:
