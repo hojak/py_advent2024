@@ -1,6 +1,6 @@
 import pytest
 
-from day3.word_riddle import WordRiddle, get_every_x_char
+from day4.word_riddle import WordRiddle, get_every_x_char
 
 @pytest.mark.parametrize('init_str, expected_width', [
     ('X', 1),
