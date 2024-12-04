@@ -1,4 +1,5 @@
 from functools import reduce
+from collections import defaultdict
 
 def single_distance(a, b):
     return abs(a-b)
@@ -19,10 +20,23 @@ def distance(listOfPairs):
 
     return reduce(do_sum, listOfDistances )
 
+
+def similarityScore(listOfPairs):
+    listOfFirstMembers = list(map(lambda pair: pair[0], listOfPairs))
+    listOfSecondMembers = list(map(lambda pair: pair[1], listOfPairs))
+    
+    numberOfOccurences = countNumberOccurences (listOfSecondMembers)
+
+    listOfScores = list(map(lambda number: number * numberOfOccurences[number], listOfFirstMembers))
+
+    return reduce(do_sum, listOfScores )
+
+
 def countNumberOccurences(listOfNumnbers):
     result = defaultdict(int)
     for number in listOfNumnbers:
         result[number] +=1
     return result
+
 
 

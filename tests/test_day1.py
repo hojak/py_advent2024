@@ -1,4 +1,4 @@
-from day1.vector_distance import single_distance, distance
+from day1.vector_distance import single_distance, distance, similarityScore, countNumberOccurences
 
 import pytest
 
@@ -20,6 +20,17 @@ def test_single_distance(a, b, expected):
 ])
 def test_distance(listOfPairs, expectedDistance):
     assert distance(listOfPairs) == expectedDistance
+
+
+
+@pytest.mark.parametrize('listOfPairs, expectedSimilarityScore', [
+    ([[1,1],[2,2]],3),
+    ([[1,3],[2,3]],0),
+    ([[3,4],[4,3],[2,5],[1,3],[3,9],[3,3]],31)
+])
+def test_similarityScore(listOfPairs, expectedSimilarityScore):
+    assert similarityScore(listOfPairs) == expectedSimilarityScore
+
 
 def test_countNumberOccurences():
     countHash = countNumberOccurences([1,2,2,1,5])

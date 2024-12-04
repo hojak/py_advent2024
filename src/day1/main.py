@@ -1,6 +1,6 @@
 import sys, re
 
-from vector_distance import distance
+from vector_distance import distance, similarityScore
 
 def readFromFile(filename):
     file = open(filename, "r")
@@ -15,7 +15,12 @@ def main(filename):
     textFileInput = readFromFile(filename)
     listOfPairs = splitIntoPairs(textFileInput)
 
+    print ("Distance: ")
     print ( distance ( listOfPairs ) )
+
+    print ('\n\n');
+    print ('similarity score')
+    print (similarityScore ( listOfPairs ))
 
 
 if __name__ == "__main__":
