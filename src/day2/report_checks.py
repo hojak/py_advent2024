@@ -1,20 +1,31 @@
-def is_save ( list_of_leves: list) -> bool:
-    if len(list_of_leves)<2:
+def is_save ( list_of_levels: list) -> bool:
+    if len(list_of_levels)<2:
         return True
     
-    first_diff = list_of_leves[1] - list_of_leves[0]
+    first_diff = list_of_levels[1] - list_of_levels[0]
 
-    for index in range (len(list_of_leves)-1):
-        diff = list_of_leves[index+1]-list_of_leves[index]
-
-        if ( diff * first_diff < 0 ):
-            return False
-        if ( abs(diff)<1 or abs(diff)>3):
+    for index in range (len(list_of_levels)-1):
+        if ( not is_current_diff_save ( first_diff, list_of_levels[index+1]-list_of_levels[index])):
             return False
 
     return True
 
+def is_current_diff_save ( first_diff: int, current_diff: int) -> bool:
+    return (first_diff * current_diff > 0 ) and abs(current_diff)>=1 and abs(current_diff)<=3
+        
 
 def count_save_reports ( list_of_reports: list) -> int:
     save_reports = list(filter(is_save, list_of_reports))
     return len ( save_reports)
+
+def is_save_with_dampener (list_of_levels: list) -> bool:
+    if len(list_of_levels)<2:
+        return True
+    
+    first_diff = list_of_levels[1] - list_of_levels[0]
+
+    for index in range (len(list_of_levels)-1):
+        if ( not is_current_diff_save ( first_diff, list_of_levels[index+1]-list_of_levels[index])):
+            return is_save ( list_of_levels[:index] + list_of_levels[index+1:])
+
+    return True
