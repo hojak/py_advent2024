@@ -4,37 +4,36 @@ from collections import defaultdict
 def single_distance(a, b):
     return abs(a-b)
 
-
 def do_sum ( a, b):
     return a+b
 
-def distance(listOfPairs):
-    listOfFirstMembers = list(map(lambda pair: pair[0], listOfPairs))
-    listOfSecondMembers = list(map(lambda pair: pair[1], listOfPairs))
+def distance(list_of_pairs):
+    list_of_first_members = list(map(lambda pair: pair[0], list_of_pairs))
+    list_of_second_members = list(map(lambda pair: pair[1], list_of_pairs))
 
-    listOfFirstMembers.sort()
-    listOfSecondMembers.sort()
+    list_of_first_members.sort()
+    list_of_second_members.sort()
 
-    sortedPairs = zip(listOfFirstMembers, listOfSecondMembers)
-    listOfDistances = list(map(lambda pair: single_distance(pair[0], pair[1]), sortedPairs))
+    sorted_pairs = zip(list_of_first_members, list_of_second_members)
+    list_of_distances = list(map(lambda pair: single_distance(pair[0], pair[1]), sorted_pairs))
 
-    return reduce(do_sum, listOfDistances )
+    return reduce(do_sum, list_of_distances )
 
 
-def similarityScore(listOfPairs):
-    listOfFirstMembers = list(map(lambda pair: pair[0], listOfPairs))
-    listOfSecondMembers = list(map(lambda pair: pair[1], listOfPairs))
+def similarity_score(list_of_pairs: list) -> int:
+    list_of_first_members = list(map(lambda pair: pair[0], list_of_pairs))
+    list_of_second_members = list(map(lambda pair: pair[1], list_of_pairs))
     
-    numberOfOccurences = countNumberOccurences (listOfSecondMembers)
+    number_of_occurences = count_number_of_occurences (list_of_second_members)
 
-    listOfScores = list(map(lambda number: number * numberOfOccurences[number], listOfFirstMembers))
+    list_of_scores = list(map(lambda number: number * number_of_occurences[number], list_of_first_members))
 
-    return reduce(do_sum, listOfScores )
+    return reduce(do_sum, list_of_scores )
 
 
-def countNumberOccurences(listOfNumnbers):
+def count_number_of_occurences(list_of_numnbers):
     result = defaultdict(int)
-    for number in listOfNumnbers:
+    for number in list_of_numnbers:
         result[number] +=1
     return result
 

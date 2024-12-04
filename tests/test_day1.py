@@ -1,4 +1,4 @@
-from day1.vector_distance import single_distance, distance, similarityScore, countNumberOccurences
+from day1.vector_distance import single_distance, distance, similarity_score, count_number_of_occurences
 
 import pytest
 
@@ -18,8 +18,8 @@ def test_single_distance(a, b, expected):
     ([[2,1],[1,2]],0),
     ([[3,4],[4,3],[2,5],[1,3],[3,9],[3,3]],11)
 ])
-def test_distance(listOfPairs, expectedDistance):
-    assert distance(listOfPairs) == expectedDistance
+def test_distance(list_of_pairs, expected_distance):
+    assert distance(list_of_pairs) == expected_distance
 
 
 
@@ -28,13 +28,13 @@ def test_distance(listOfPairs, expectedDistance):
     ([[1,3],[2,3]],0),
     ([[3,4],[4,3],[2,5],[1,3],[3,9],[3,3]],31)
 ])
-def test_similarityScore(listOfPairs, expectedSimilarityScore):
-    assert similarityScore(listOfPairs) == expectedSimilarityScore
+def test_similarity_score(list_of_pairs, expected_similarity_score):
+    assert similarity_score(list_of_pairs) == expected_similarity_score
 
 
-def test_countNumberOccurences():
-    countHash = countNumberOccurences([1,2,2,1,5])
-    assert countHash[7] == 0
-    assert countHash[1] == 2
-    assert countHash[5] == 1
-    assert countHash[1] == 2
+def test_count_number_of_occurences():
+    count_hash = count_number_of_occurences([1,2,2,1,5])
+    assert count_hash[7] == 0
+    assert count_hash[1] == 2
+    assert count_hash[5] == 1
+    assert count_hash[1] == 2
