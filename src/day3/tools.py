@@ -18,3 +18,19 @@ def get_multiplication_results ( input: str) -> int:
     results = list(map(get_mul_result, mul_statements))
 
     return reduce ( lambda a,b : a+b, results)
+
+def get_program_result ( input: str ) -> int:
+    result = 0
+    enabled = True
+
+    for line in find_all_statements(input):
+        if ( line == 'don\'t()' ):
+            enabled = False
+        elif (line == 'do()'):
+            enabled = True
+        elif enabled:
+            result += get_mul_result(line)
+        
+    return result
+
+    
