@@ -1,15 +1,22 @@
 import math 
 
+class Coordinate:
+    x: int
+    y: int
 
-def get_string_chars ( content: str, anchor: int, offsets: list) -> str :
-    result = ''
-    for char_offset in offsets:
-        char_index = anchor + char_offset
-        if ( char_index < 0 or char_index >= len(content)):
-            return ''        
-        result += content[ char_index ]
+    def __init__(self,x: int, y:int):
+        self.x = x
+        self.y = y
+
+    def get_index( self, width ) -> int:
+        return width*self.y + self.x
     
-    return result
+    def add (self, a):
+        return Coordinate(self.x + a.x, self.y + a.y)
+    
+    def mul (self, m: int):
+        return Coordinate(self.x*m, self.y*m)
+
 
 class WordRiddle:
     content: str
@@ -34,27 +41,27 @@ class WordRiddle:
     def get_chars_in_direction (self,x: int,y: int,direction:str,length: int) -> str:
         offsets = self.get_offsets_for_direction(direction, length)
 
-        return get_string_chars(self.content,x + y*self.get_width(), offsets )
+        return self.get_string_chars(Coordinate(x,y), offsets )
     
     
-    def get_direction_delta ( self, direction: str) -> int:
+    def get_direction_delta ( self, direction: str):
         match direction:
-            case 'r': return 1
-            case 'l': return -1
-            case 'u': return -self.get_width()
-            case 'd': return self.get_width()
-            case 'ru': return -self.get_width()+1
-            case 'rd': return self.get_width()+1
-            case 'lu': return -self.get_width()-1
-            case 'ld': return self.get_width()-1
-            case _: return 0
+            case 'r': return Coordinate(1,0)
+            case 'l': return Coordinate(-1,0)
+            case 'u': return Coordinate(0,-1)
+            case 'd': return Coordinate(0,1)
+            case 'ru': return Coordinate(1,-1)
+            case 'rd': return Coordinate(1,1)
+            case 'lu': return Coordinate(-1,-1)
+            case 'ld': return Coordinate(-1,1)
+            case _: return Coordinate(0,0)
 
     def get_offsets_for_direction(self, direction: str, length: int) -> list:
-        dirction_step_size = self.get_direction_delta(direction)
+        direction_step = self.get_direction_delta(direction)
 
         offsets = []
         for char_number in range(length):
-            char_offset = char_number*dirction_step_size
+            char_offset = direction_step.mul(char_number)
             offsets.append(char_offset)
         return offsets
 
@@ -68,3 +75,17 @@ class WordRiddle:
                     if ( self.get_chars_in_direction(x, y, direction, len(look_for)) == look_for ):
                         result += 1
         return result
+
+    def get_string_chars ( self, anchor: Coordinate, offsets: list) -> str :
+        result = ''
+        for char_offset in offsets:
+            char_coordinates = anchor.add(char_offset)
+            if ( not self.is_within_bounds ( char_coordinates)):
+                return ''
+            char_index = char_coordinates.get_index(self.width)
+            result += self.content[ char_index ]
+        
+        return result
+
+    def is_within_bounds ( self, c ) -> bool: 
+        return c.x>=0 and c.y >= 0 and c.x < self.width and c.y < self.height

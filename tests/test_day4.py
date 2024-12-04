@@ -52,3 +52,19 @@ SAXAMASAAA
 MAMMMXMMMM
 MXMXAXMASX''')
     assert testee.number_of_occurences('XMAS') == 18
+
+
+def test_find_XMAS2() -> None:
+    testee = WordRiddle(
+'''....XXMAS.
+.SAMXMS...
+...S..A...
+..A.A.MS.X
+XMASAMX.MM
+X.....XA.A
+S.S.S.S.SS
+.A.A.A.A.A
+..M.M.M.MM
+.X.X.XMASX''')
+    assert testee.number_of_occurences('XMAS') == 18
+    
