@@ -1,12 +1,5 @@
 import math 
 
-def get_every_x_char ( content: str, anchor: int, offset: int, length: int) -> str :
-    offsets = []
-    for char_number in range(length):
-        char_offset = char_number*offset
-        offsets.append(char_offset)
-
-    return get_string_chars(content, anchor, offsets)
 
 def get_string_chars ( content: str, anchor: int, offsets: list) -> str :
     result = ''
@@ -39,12 +32,12 @@ class WordRiddle:
         return self.height
     
     def get_chars_in_direction (self,x: int,y: int,direction:str,length: int) -> str:
-        offset = self.get_direction_offset(direction)
+        offsets = self.get_offsets_for_direction(direction, length)
 
-        return get_every_x_char(self.content, x + y*self.get_width(), offset, length )
+        return get_string_chars(self.content,x + y*self.get_width(), offsets )
     
     
-    def get_direction_offset ( self, direction: str) -> int:
+    def get_direction_delta ( self, direction: str) -> int:
         match direction:
             case 'r': return 1
             case 'l': return -1
@@ -56,6 +49,14 @@ class WordRiddle:
             case 'ld': return self.get_width()-1
             case _: return 0
 
+    def get_offsets_for_direction(self, direction: str, length: int) -> list:
+        dirction_step_size = self.get_direction_delta(direction)
+
+        offsets = []
+        for char_number in range(length):
+            char_offset = char_number*dirction_step_size
+            offsets.append(char_offset)
+        return offsets
 
 
     def number_of_occurences (self, look_for: str ) -> int :

@@ -1,6 +1,6 @@
 import pytest
 
-from day4.word_riddle import WordRiddle, get_every_x_char
+from day4.word_riddle import WordRiddle
 
 @pytest.mark.parametrize('init_str, expected_width', [
     ('X', 1),
@@ -38,15 +38,6 @@ def test_get_chars_in_direction(init_str: str,x:int,y:int,direction:str,length:i
     testee = WordRiddle(init_str)
     assert testee.get_chars_in_direction(x,y,direction,length) == expected_chars
 
-
-@pytest.mark.parametrize('content, start, offset, length, expected', [
-    ('.X.', 1, 1, 1, 'X'),
-    ('.XA.', 1, 1, 2, 'XA'),
-    ('.XA.', 2, -1, 2, 'AX'),
-    ('.X.A.', 1, 2, 2, 'XA'),
-])
-def test_get_every_x_char(content,start,offset,length,expected) -> None : 
-    assert get_every_x_char(content, start, offset, length) == expected
 
 def test_find_XMAS() -> None:
     testee = WordRiddle(
