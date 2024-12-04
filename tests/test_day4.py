@@ -39,8 +39,8 @@ def test_get_chars_in_direction(init_str: str,x:int,y:int,direction:str,length:i
     assert testee.get_chars_in_direction(x,y,direction,length) == expected_chars
 
 
-def test_find_XMAS() -> None:
-    testee = WordRiddle(
+
+@pytest.mark.parametrize('init_string', [
 '''MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
@@ -50,12 +50,7 @@ XXAMMXXAMA
 SMSMSASXSS
 SAXAMASAAA
 MAMMMXMMMM
-MXMXAXMASX''')
-    assert testee.number_of_occurences('XMAS') == 18
-
-
-def test_find_XMAS2() -> None:
-    testee = WordRiddle(
+MXMXAXMASX''',
 '''....XXMAS.
 .SAMXMS...
 ...S..A...
@@ -65,6 +60,10 @@ X.....XA.A
 S.S.S.S.SS
 .A.A.A.A.A
 ..M.M.M.MM
-.X.X.XMASX''')
+.X.X.XMASX'''
+])
+def test_find_XMAS(init_string:str) -> None:
+    testee = WordRiddle(init_string)
     assert testee.number_of_occurences('XMAS') == 18
+
     
