@@ -47,3 +47,17 @@ def test_get_chars_in_direction(init_str: str,x:int,y:int,direction:str,length:i
 ])
 def test_get_every_x_char(content,start,offset,length,expected) -> None : 
     assert get_every_x_char(content, start, offset, length) == expected
+
+def test_find_XMAS() -> None:
+    testee = WordRiddle(
+'''MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX''')
+    assert testee.number_of_occurences('XMAS') == 18
