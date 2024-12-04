@@ -7,9 +7,10 @@ import pytest
     ('mul(123,1)', ['mul(123,1)']),
     ('mul(1,123)', ['mul(1,123)']),
     ('mul(1234,1)', []),
-    ('xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))', ['mul(2,4)', 'mul(5,5)', 'mul(11,8)','mul(8,5)'])
+    ('xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))', ['mul(2,4)', 'mul(5,5)', 'mul(11,8)','mul(8,5)']),
+    ('xmul(2,4)&mul[3,7]!^don\'t()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5)))', ['mul(2,4)','don\'t()','mul(5,5)','mul(11,8)','do()','mul(8,5)'])
 ])
-def test_find_mul_statements(input: str, expectedFindings:list) -> None:
+def test_find_all_statements(input: str, expectedFindings:list) -> None:
     assert find_mul_statements(input) == expectedFindings
 
 @pytest.mark.parametrize('input, expectedValue', [
