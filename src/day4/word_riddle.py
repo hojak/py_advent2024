@@ -12,7 +12,8 @@ def get_string_chars ( content: str, anchor: int, offsets: list) -> str :
     result = ''
     for char_offset in offsets:
         char_index = anchor + char_offset
-        
+        if ( char_index < 0 or char_index >= len(content)):
+            return ''        
         result += content[ char_index ]
     
     return result
@@ -38,30 +39,10 @@ class WordRiddle:
         return self.height
     
     def get_chars_in_direction (self,x: int,y: int,direction:str,length: int) -> str:
-        if ( not self.stays_within_dimensions (x,y,direction, length)):
-            return ''
-        
         offset = self.get_direction_offset(direction)
 
         return get_every_x_char(self.content, x + y*self.get_width(), offset, length )
     
-    def stays_within_dimensions ( self, x, y, direction, length) -> bool:
-        if ( not self.is_in_grid(x,y)):
-            return False
-        if ( 'r' in direction and x+length-1 >= self.width ):
-            return False
-        if ( 'l' in direction and length > x+1):
-            return False
-        if ( 'd' in direction and y+length-1 >= self.height):
-            return False
-        if ( 'u' in direction and length > y+1):
-            return False
-        
-        return True
-
-
-    def is_in_grid (self, x: int, y: int) -> bool:
-        return x >= 0 and y >= 0 and x < self.width and y < self.height
     
     def get_direction_offset ( self, direction: str) -> int:
         match direction:
