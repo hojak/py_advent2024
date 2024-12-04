@@ -1,4 +1,4 @@
-from day3.tools import find_mul_statements
+from day3.tools import find_mul_statements, get_mul_result
 
 import pytest
 
@@ -11,3 +11,15 @@ import pytest
 ])
 def test_find_mul_statements(input: str, expectedFindings:list) -> None:
     assert find_mul_statements(input) == expectedFindings
+
+@pytest.mark.parametrize('input, expectedValue', [
+    ('mul(1,1)', 1),
+    ('mul(123,1)', 123),
+    ('mul(2,123)', 246),
+    ('q93824e98124', 0)
+])
+def test_get_mul_result(input: str, expectedValue:int) -> None:
+    assert get_mul_result(input) == expectedValue
+
+
+
