@@ -39,3 +39,11 @@ python -m pytest
 ```shell
 ptw . --now --last-failed --new-first
 ```
+
+### Run the Day 1 Solution
+```shell
+python src/day1/main.py data/day1/input.txt
+```
+
+## Links
+- https://adventofcode.com/
