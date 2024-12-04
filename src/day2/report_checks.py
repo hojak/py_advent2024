@@ -13,3 +13,8 @@ def is_save ( list_of_leves: list) -> bool:
             return False
 
     return True
+
+
+def count_save_reports ( list_of_reports: list) -> int:
+    save_reports = list(filter(is_save, list_of_reports))
+    return len ( save_reports)
