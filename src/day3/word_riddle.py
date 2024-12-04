@@ -1,4 +1,9 @@
 
+def get_every_x_char ( content: str, start: int, offset: int, length: int) -> str :
+    result = ''
+    for char_number in range(length):
+        result += content[ start + char_number*offset ]
+    return result
 class WordRiddle:
     content: str
     width: int
