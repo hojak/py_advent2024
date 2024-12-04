@@ -16,6 +16,9 @@ class Coordinate:
     
     def mul (self, m: int):
         return Coordinate(self.x*m, self.y*m)
+    
+    def __str__(self) -> str:
+        return "("+str(self.x) + "/" + str(self.y) + ")"
 
 
 class WordRiddle:
@@ -80,7 +83,7 @@ class WordRiddle:
         result = ''
         for char_offset in offsets:
             char_coordinates = anchor.add(char_offset)
-            if ( not self.is_within_bounds ( char_coordinates)):
+            if ( not self.is_within_bounds(char_coordinates)):
                 return ''
             char_index = char_coordinates.get_index(self.width)
             result += self.content[ char_index ]
@@ -88,4 +91,18 @@ class WordRiddle:
         return result
 
     def is_within_bounds ( self, c ) -> bool: 
-        return c.x>=0 and c.y >= 0 and c.x < self.width and c.y < self.height
+        return c.x >= 0 and c.y >= 0 and c.x < self.width and c.y < self.height
+    
+    def count_x_of_mas(self) -> int: 
+        offsets = [Coordinate(0,0),Coordinate(-1,-1),Coordinate(1,-1),Coordinate(1,1),Coordinate(-1,1)]
+        possible_versions = ['AMMSS', 'AMSSM', 'ASSMM', 'ASMMS']
+
+        found = 0
+
+        for x in range(1,self.get_width()-1): 
+            for y in range (1,self.get_height()-1):
+                check = self.get_string_chars(Coordinate(x,y), offsets)
+                if check in possible_versions:
+                    found += 1
+
+        return found

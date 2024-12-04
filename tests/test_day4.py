@@ -67,3 +67,27 @@ def test_find_XMAS(init_string:str) -> None:
     assert testee.number_of_occurences('XMAS') == 18
 
     
+
+@pytest.mark.parametrize('init_string, expected', [
+('''.M.S.
+..A..
+.M.S.
+''', 1),
+('''.S.M.
+..A..
+.S.M.
+''', 1),
+('''MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX''',9),
+])
+def test_find_x_of_mas(init_string, expected) -> None:
+    testee = WordRiddle (init_string)
+    assert testee.count_x_of_mas() == expected
