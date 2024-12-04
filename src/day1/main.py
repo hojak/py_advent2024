@@ -1,6 +1,6 @@
 import sys, re
 
-from vector_distance import distance, similarity_score
+from day1.analyze_coordinates import distance, similarity_score
 
 def read_from_file(filename):
     file = open(filename, "r")
