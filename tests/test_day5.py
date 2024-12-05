@@ -1,6 +1,6 @@
 import pytest
 
-from day5.ReleaseRequirements import ReleaseRequirements
+from day5.ReleaseRequirements import ReleaseRequirements, get_middle_number
 
 
 
@@ -24,3 +24,7 @@ def test_requirements_init_updates ():
 def test_requirements_init_rules(init_str, expected_requirements) -> None:
     testee = ReleaseRequirements(init_str)
     assert testee.requirements == expected_requirements
+
+
+def test_get_middle_number():
+    assert get_middle_number([1,2,3,4,5]) == 3

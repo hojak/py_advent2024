@@ -1,4 +1,8 @@
-import re
+import re, math
+
+def get_middle_number ( list: list ) -> int:
+    index = math.floor(len(list) / 2)
+    return list[index]
 
 class ReleaseRequirements:
     input: str
