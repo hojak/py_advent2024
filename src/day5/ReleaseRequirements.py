@@ -76,3 +76,12 @@ class ReleaseRequirements:
             seen = [page] + seen
 
         raise Exception("could not find fix")
+
+
+    def get_sum_for_fixed_updates(self) -> int:
+        result = 0
+        for update in self.updates:
+            if ( not self.is_valid(update)):
+                fixed_update = self.get_fix(update)
+                result += get_middle_number(fixed_update)
+        return result
