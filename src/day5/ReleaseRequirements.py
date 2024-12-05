@@ -60,23 +60,15 @@ class ReleaseRequirements:
     
     def fix_step (self, work: list) -> list:
         seen = []
-        print ( "\ncurrent update: " + work.__str__() )
 
         for index in reversed(range(len(work))):
             page = work[index]
-            print ("looking into: " + str(page) + " at " + str(index))
 
             if page in self.requirements:
                 for required_page in self.requirements[page]:
                     try:
                         problem_index = seen.index (required_page)
-                        print ( "problematic is " + str(required_page) + " at " + str(problem_index) + " in " + seen.__str__())
                         result = work[:index] + seen[:problem_index+1] + [page] + seen[problem_index+1:]
-                        print (work[:index] )
-                        print ( seen[:problem_index+1] )
-                        print ( [page] )
-                        print ( seen[problem_index+1:])
-                        print ("  -> " + result.__str__ ());
                         return result
                     except:
                         pass
