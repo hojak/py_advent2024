@@ -46,3 +46,41 @@ class ReleaseRequirements:
             if ( self.is_valid(update)):
                 result += get_middle_number(update)
         return result
+    
+    def get_fix(self, update: list) -> list:
+        work = update
+
+        # assumption: every update sequence is fixable
+        # otherwise we'd run into an endless loop here
+        # indicator: a rule is used twice to derive a fix
+        while not self.is_valid(work):
+            work = self.fix_step( work )
+
+        return work
+    
+    def fix_step (self, work: list) -> list:
+        seen = []
+        print ( "\ncurrent update: " + work.__str__() )
+
+        for index in reversed(range(len(work))):
+            page = work[index]
+            print ("looking into: " + str(page) + " at " + str(index))
+
+            if page in self.requirements:
+                for required_page in self.requirements[page]:
+                    try:
+                        problem_index = seen.index (required_page)
+                        print ( "problematic is " + str(required_page) + " at " + str(problem_index) + " in " + seen.__str__())
+                        result = work[:index] + seen[:problem_index+1] + [page] + seen[problem_index+1:]
+                        print (work[:index] )
+                        print ( seen[:problem_index+1] )
+                        print ( [page] )
+                        print ( seen[problem_index+1:])
+                        print ("  -> " + result.__str__ ());
+                        return result
+                    except:
+                        pass
+
+            seen = [page] + seen
+
+        raise Exception("could not find fix")
