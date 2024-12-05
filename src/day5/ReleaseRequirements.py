@@ -30,3 +30,13 @@ class ReleaseRequirements:
                 self.requirements[int(entry_page)] = []
             self.requirements[int(entry_page)].append ( int(required_page) )
 
+    def is_valid (self, update: list) -> bool: 
+        seen = []
+        for page in reversed(update):
+            if page in self.requirements:
+                for required_page in self.requirements[page]:
+                    if required_page in seen:
+                        return False
+            seen.append(page)
+        return True
+
