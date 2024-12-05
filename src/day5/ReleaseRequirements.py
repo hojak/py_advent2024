@@ -40,3 +40,9 @@ class ReleaseRequirements:
             seen.append(page)
         return True
 
+    def get_sum_for_valid_updates(self) -> int:
+        result = 0
+        for update in self.updates:
+            if ( self.is_valid(update)):
+                result += get_middle_number(update)
+        return result
