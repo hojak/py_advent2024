@@ -7,7 +7,10 @@ def main(filename) -> None:
     text_file_input = read_from_file(filename)
     xmas_finder = WordRiddle ( text_file_input )
 
-    print ("Found XMASes: " + str(xmas_finder.number_of_occurences('XMAS')))
+    print("Found XMASes: " + str(xmas_finder.number_of_occurences('XMAS')))
+    print()
+    print("Found Xes if MAS: " + str(xmas_finder.count_x_of_mas()))
+
 
 
 if __name__ == "__main__":
