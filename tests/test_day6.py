@@ -75,3 +75,23 @@ def test_run_patrol(map, expected_trail):
     testee.run_patrol()
     assert testee.get_trail() == expected_trail
 
+
+@pytest.mark.parametrize('map, expected_length', [
+    ('>...\n....', 4),
+    ('>.#.\n....', 3),
+    ('''....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...''', 41)
+])
+def test_run_patrol(map, expected_length):
+    testee = LabMap (map)
+    testee.run_patrol()
+    assert testee.get_trail_length() == expected_length
+

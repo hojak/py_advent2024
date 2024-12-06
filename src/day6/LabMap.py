@@ -99,6 +99,9 @@ class LabMap:
     def get_trail (self):
         return self.break_lines ( self.trail )
     
+    def get_trail_length(self):
+        return len (re.sub('[^X]','',self.get_trail())) 
+    
     def get_guard_status(self):
         return self.guard_status
     
