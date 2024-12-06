@@ -43,6 +43,7 @@ class GuardStatus:
 class LabMap:
 
     content: str
+    trail: str
     width: int
     height: int
     guard_status: GuardStatus
@@ -57,6 +58,14 @@ class LabMap:
         self.height = math.ceil(len(self.content) / self.width)
         
         self.init_guard_status()
+        self.init_trail()
+
+    def init_trail ( self ) :
+        guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
+        self.trail = ' ' * (guard_index) \
+                + 'X' \
+                + ' ' * (len (self.content)-guard_index-1)
+        
 
     def init_guard_status(self):
         re_result = re.search(r'[v^<>]', self.content)
@@ -80,7 +89,13 @@ class LabMap:
         content_with_guard = self.content[:guard_index] + self.guard_status.orientation + self.content[guard_index+1:]
 
         # insert line breaks
-        return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content_with_guard)
+        return self.break_lines(content_with_guard)
+    
+    def break_lines ( self, content ): 
+        return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
+
+    def get_trail (self):
+        return self.break_lines ( self.trail )
     
     def get_guard_status(self):
         return self.guard_status
