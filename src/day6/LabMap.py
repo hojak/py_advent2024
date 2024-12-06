@@ -61,11 +61,12 @@ class LabMap:
         self.init_trail()
 
     def init_trail ( self ) :
+        self.trail = ' ' * len ( self.content )
+        self.mark_guard_position()
+
+    def mark_guard_position(self):
         guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
-        self.trail = ' ' * (guard_index) \
-                + 'X' \
-                + ' ' * (len (self.content)-guard_index-1)
-        
+        self.trail = self.trail[0:guard_index] + 'X' + self.trail[guard_index+1:]        
 
     def init_guard_status(self):
         re_result = re.search(r'[v^<>]', self.content)
@@ -75,7 +76,7 @@ class LabMap:
         
         (x,y) = self.get_coordinates_for_index( re_result.start() )
         self.guard_status = GuardStatus(x,y,re_result.group())
-        
+
         self.content = self.content[:re_result.start()] + '.' + self.content[re_result.start()+1:]
 
     def get_width(self):
@@ -85,7 +86,8 @@ class LabMap:
         return self.height
     
     def __str__(self):
-        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y )        
+        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y ) 
+
         content_with_guard = self.content[:guard_index] + self.guard_status.orientation + self.content[guard_index+1:]
 
         # insert line breaks
@@ -109,11 +111,24 @@ class LabMap:
     def walk_guard(self):
         next_x, next_y = self.guard_status.get_next_position()
         
+        if ( self.is_out_of_bounds ( next_x, next_y)):
+            return False
+
         if ( self.is_occupied ( next_x, next_y ) ):
             self.guard_status = self.guard_status.turn_right()
         else:
             self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
+            self.mark_guard_position()
+
+        return True
 
     def is_occupied ( self, x, y) -> bool :
         return self.content[self.get_index_for_coordinates(x,y)] == '#'
+    
+    def is_out_of_bounds (self, x, y ) -> bool :
+        return x<0 or y<0 or x>=self.width or y >= self.height
+    
+    def run_patrol ( self ): 
+        while ( self.walk_guard() ):
+            pass
 
