@@ -12,3 +12,10 @@ def test_width(init_str, expected_width) -> None:
     assert testee.get_width() == expected_width
 
 
+def test_str() -> None:
+    map = '''..#.
+..v.
+.#..
+'''
+    testee = LabMap(map)
+    assert testee.__str__() == map 

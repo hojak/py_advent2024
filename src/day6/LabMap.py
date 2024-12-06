@@ -21,3 +21,7 @@ class LabMap:
     
     def get_height(self):
         return self.height
+    
+    def __str__(self):
+        # insert line breaks
+        return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', self.content)
