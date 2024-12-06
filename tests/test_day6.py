@@ -41,6 +41,11 @@ def test_start_guide_status(init_str, expected_status) -> None:
     ('.....\n..<..', '.....\n.<...\n'),
     ('..\n^.', '^.\n..\n'),
     ('.v\n..', '..\n.v\n'),
+
+    ('>#\n..', 'v#\n..\n'),
+    ('#<\n..', '#^\n..\n'),
+    ('.#\n.^', '.#\n.>\n'),
+    ('v.\n#.', '<.\n#.\n'),
 ])
 def test_walk_guard(init_str, expected_result) -> None:
     testee = LabMap(init_str)

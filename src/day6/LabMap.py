@@ -27,6 +27,16 @@ class GuardStatus:
             case 'v': return self.x, self.y+1
 
         return self.x,self.y
+    
+    def turn_right(self) :
+        match self.orientation:
+            case '<': return GuardStatus(self.x, self.y, '^')
+            case '>': return GuardStatus(self.x, self.y, 'v')
+            case '^': return GuardStatus(self.x, self.y, '>')
+            case 'v': return GuardStatus(self.x, self.y, '<')
+        
+        return self
+
         
 
 
@@ -83,7 +93,12 @@ class LabMap:
     
     def walk_guard(self):
         next_x, next_y = self.guard_status.get_next_position()
+        
+        if ( self.is_occupied ( next_x, next_y ) ):
+            self.guard_status = self.guard_status.turn_right()
+        else:
+            self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
 
-        self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
+    def is_occupied ( self, x, y) -> bool :
+        return self.content[self.get_index_for_coordinates(x,y)] == '#'
 
-        # has_obstacle = self.is_occupied ( next_x, next_y )
