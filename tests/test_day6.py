@@ -97,8 +97,6 @@ def test_run_patrol(map, expected_length):
 
 
 
-
-
 @pytest.mark.parametrize('map, expected_result', [
     ('>...\n....', False),
     ('.#..\n.>.#\n#...\n..#.', True),
@@ -106,3 +104,12 @@ def test_run_patrol(map, expected_length):
 def test_is_loop(map, expected_result):
     testee = LabMap ( map)
     assert testee.ends_in_loop () == expected_result
+
+
+@pytest.mark.parametrize('map, expected_result', [
+    ('>...\n....', False),
+    ('.#..\n..>.\n#...\n..#.', True),
+])
+def test_is_next_posistion_a_possible_loop_obstacle(map, expected_result):
+    testee = LabMap ( map)
+    assert testee.is_next_posistion_a_possible_loop_obstacle () == expected_result

@@ -86,7 +86,7 @@ class LabMap:
         return self.height
     
     def __str__(self):
-        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y ) 
+        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y )
 
         content_with_guard = self.content[:guard_index] + self.guard_status.orientation + self.content[guard_index+1:]
 
@@ -148,3 +148,20 @@ class LabMap:
                 return True
             
         return False
+    
+
+    def is_next_posistion_a_possible_loop_obstacle(self) -> bool:
+        next_guard_x, next_guard_y = self.guard_status.get_next_position()
+
+        if ( self.is_occupied ( next_guard_x, next_guard_y )):
+            return False
+
+        map_to_check = self.__str__()
+        next_index = self.get_index_for_coordinates(next_guard_x, next_guard_y)
+        map_to_check = map_to_check[:next_index+1] + '#' +map_to_check[next_index+2:]
+
+        map = LabMap ( map_to_check )
+
+        return map.ends_in_loop()
+
+
