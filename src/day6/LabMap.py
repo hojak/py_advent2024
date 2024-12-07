@@ -47,6 +47,7 @@ class LabMap:
     width: int
     height: int
     guard_status: GuardStatus
+    number_of_possible_obstacles : int = 0
 
     def __init__(self, init_str):
         self.content = init_str.replace('\n', '')
@@ -56,6 +57,9 @@ class LabMap:
         else:
             self.width = len(init_str)
         self.height = math.ceil(len(self.content) / self.width)
+
+        if ( self.width * self.height != len(self.content)):
+            raise Exception ( "illegal length of map definition")
         
         self.init_guard_status()
         self.init_trail()
@@ -129,11 +133,15 @@ class LabMap:
         return self.content[self.get_index_for_coordinates(x,y)] == '#'
     
     def is_out_of_bounds (self, x, y ) -> bool :
-        return x<0 or y<0 or x>=self.width or y >= self.height
+        return x<0 or y<0 or x>=self.width or y>=self.height
     
     def run_patrol ( self ): 
+        if ( self.is_next_posistion_a_possible_loop_obstacle ()):
+            self.number_of_possible_obstacles += 1
+
         while ( self.walk_guard() ):
-            pass
+            if ( self.is_next_posistion_a_possible_loop_obstacle ()):
+                self.number_of_possible_obstacles += 1
 
     def ends_in_loop ( self ) -> bool:
         already_visited = {}
@@ -153,15 +161,21 @@ class LabMap:
     def is_next_posistion_a_possible_loop_obstacle(self) -> bool:
         next_guard_x, next_guard_y = self.guard_status.get_next_position()
 
+        if ( self.is_out_of_bounds(next_guard_x, next_guard_y) ):
+            return False
+        
         if ( self.is_occupied ( next_guard_x, next_guard_y )):
             return False
 
-        map_to_check = self.__str__()
+        map_to_check = self.content
         next_index = self.get_index_for_coordinates(next_guard_x, next_guard_y)
-        map_to_check = map_to_check[:next_index+1] + '#' +map_to_check[next_index+2:]
+        map_to_check = map_to_check[:next_index] + '#' +map_to_check[next_index+1:]
+        guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
+        map_to_check = map_to_check[:guard_index] + self.guard_status.orientation + map_to_check[guard_index+1:]
 
-        map = LabMap ( map_to_check )
+        map = LabMap ( self.break_lines(map_to_check) )
 
         return map.ends_in_loop()
-
-
+    
+    def get_number_of_possible_obstacles ( self ) -> int:
+        return self.number_of_possible_obstacles

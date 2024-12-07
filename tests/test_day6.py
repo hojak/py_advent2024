@@ -11,6 +11,24 @@ def test_width(init_str, expected_width) -> None:
     testee = LabMap(init_str)
     assert testee.get_width() == expected_width
 
+@pytest.mark.parametrize('init_str, expected_height', [
+    ('''....
+.^..
+....''', 3),
+    ('''....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...''', 10)
+])
+def test_height(init_str, expected_height) -> None:
+    testee = LabMap(init_str)
+    assert testee.get_height() == expected_height
 
 
 @pytest.mark.parametrize('map',[
@@ -113,3 +131,25 @@ def test_is_loop(map, expected_result):
 def test_is_next_posistion_a_possible_loop_obstacle(map, expected_result):
     testee = LabMap ( map)
     assert testee.is_next_posistion_a_possible_loop_obstacle () == expected_result
+
+
+
+@pytest.mark.parametrize('map, expected_obstacle_count', [
+    ('>...\n....', 0),
+    ('.#..\n.>..\n#...\n..#.', 1),
+    ('.#..\n..>.\n#...\n..#.', 1),
+    ('''....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...''', 6)
+])
+def test_run_patrol_counts_possible_obstacles(map, expected_obstacle_count):
+    testee = LabMap (map)
+    testee.run_patrol()
+    assert testee.get_number_of_possible_obstacles() == expected_obstacle_count
