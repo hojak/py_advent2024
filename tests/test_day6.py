@@ -101,7 +101,8 @@ def test_run_patrol(map, expected_length):
 
 @pytest.mark.parametrize('map, expected_result', [
     ('>...\n....', False),
+    ('.#..\n.>.#\n#...\n..#.', True),
 ])
 def test_is_loop(map, expected_result):
     testee = LabMap ( map)
-    assert testee.is_loop () == expected_result
+    assert testee.ends_in_loop () == expected_result

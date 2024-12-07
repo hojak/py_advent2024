@@ -135,6 +135,16 @@ class LabMap:
         while ( self.walk_guard() ):
             pass
 
+    def ends_in_loop ( self ) -> bool:
+        already_visited = {}
 
-    def is_loop ( self ) -> bool:
+        while (self.walk_guard()):
+            current_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y)
+            if ( not current_index in already_visited ):
+                already_visited[current_index] = [self.guard_status.orientation]
+            elif ( not self.guard_status.orientation in already_visited[current_index] ):
+                already_visited[current_index].append(self.guard_status.orientation)
+            else:
+                return True
+            
         return False
