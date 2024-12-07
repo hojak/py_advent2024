@@ -135,3 +135,6 @@ class LabMap:
         while ( self.walk_guard() ):
             pass
 
+
+    def is_loop ( self ) -> bool:
+        return False
