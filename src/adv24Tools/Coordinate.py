@@ -17,3 +17,6 @@ class Coordinate:
 
     def __str__(self) -> str:
         return "("+str(self.x) + "/" + str(self.y) + ")"
+    
+    def __eq__(self, value):
+        return self.x == value.x and self.y == value.y
