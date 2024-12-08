@@ -123,6 +123,16 @@ class LabMap:
 
         if ( self.is_occupied ( next_x, next_y ) ):
             self.guard_status = self.guard_status.turn_right()
+
+            look_ahead_x, look_ahead_y = self.guard_status.get_next_position()
+
+            # results in 1750
+            # check for walting into a "trap" like ..>#
+            #                                      ..#.
+            if ( self.is_out_of_bounds ( look_ahead_x, look_ahead_y) or self.is_occupied ( look_ahead_x, look_ahead_y ) ):
+                print ("walked into an edge!")
+                return False
+
         else:
             self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
             self.mark_guard_position()
@@ -187,13 +197,13 @@ class LabMap:
         map_for_possible_loop = LabMap ( self.break_lines(map_to_check) )
 
         if ( map_for_possible_loop.ends_in_loop() ):
-            print ("Found possible loop obstacle location at: " + str(next_guard_x) + "/" + str(next_guard_y))
-
-            self.print_map_combination ( \
-                map_to_check[:next_index] + "O" + map_to_check[next_index+1:], \
-                self.trail, \
-                map_for_possible_loop.already_visited \
-            )
+            #print ("Found possible loop obstacle location at: " + str(next_guard_x) + "/" + str(next_guard_y))
+            # 
+            #self.print_map_combination ( \
+            #    map_to_check[:next_index] + "O" + map_to_check[next_index+1:], \
+            #    self.trail, \
+            #    map_for_possible_loop.already_visited \
+            #)
 
             return True
         else:
@@ -203,9 +213,9 @@ class LabMap:
         return len(self.possible_obstacle_locations)
     
     def get_possible_obstacle_locations ( self ) -> list :
-        for location in self.possible_obstacle_locations:
-            (x,y) = self.get_coordinates_for_index(location)
-            print (" -> (" + str(x) + "/" + str(y) + ")")
+        #for location in self.possible_obstacle_locations:
+        #    (x,y) = self.get_coordinates_for_index(location)
+        #    print (" -> (" + str(x) + "/" + str(y) + ")")
 
         return self.possible_obstacle_locations
     
