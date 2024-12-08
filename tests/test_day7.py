@@ -1,6 +1,6 @@
 import pytest
 
-from day7.tools import is_reachable
+from day7.tools import is_reachable, split_line
 
 @pytest.mark.parametrize('target, numbers, expected_result', [
     (10, [10], True),
@@ -19,3 +19,9 @@ from day7.tools import is_reachable
 ])
 def test_is_reachable(target, numbers, expected_result) -> None:
     assert is_reachable(target, numbers) == expected_result
+
+
+def test_split_line():
+    (number, list) = split_line ( "190: 10 19")
+    assert number == 190
+    assert list == [10, 19]
