@@ -1,5 +1,5 @@
-from adv24_tools.problemSolver import problemSolver
-from adv24_tools.tools import split_lines_into_numbers
+from adv24Tools.problemSolver import problemSolver
+from adv24Tools.tools import split_lines_into_numbers
 from day1.analyze_coordinates import distance, similarity_score
 
 

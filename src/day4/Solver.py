@@ -1,5 +1,5 @@
 from day4.word_riddle import WordRiddle
-from adv24_tools.problemSolver import problemSolver
+from adv24Tools.problemSolver import problemSolver
 
 
 class Solver(problemSolver):

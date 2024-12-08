@@ -1,6 +1,6 @@
 
 from day3.tools import get_multiplication_results, get_program_result
-from adv24_tools.problemSolver import problemSolver
+from adv24Tools.problemSolver import problemSolver
 
 
 class Solver (problemSolver):

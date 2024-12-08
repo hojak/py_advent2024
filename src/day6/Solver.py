@@ -1,4 +1,4 @@
-from adv24_tools.problemSolver import problemSolver
+from adv24Tools.problemSolver import problemSolver
 from day6.LabMap import LabMap
 
 class Solver(problemSolver):
