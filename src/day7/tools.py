@@ -18,3 +18,14 @@ def split_line ( line: str ):
     numbers = list(map(int, numbers))
 
     return int(number), numbers
+
+
+def add_reachable_lines ( lines: str ):
+    result = 0
+
+    for line in lines.split('\n'):
+        (number, operants ) = split_line ( line )
+        if ( is_reachable ( number, operants)):
+            result += number
+
+    return result
