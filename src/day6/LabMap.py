@@ -47,7 +47,7 @@ class LabMap:
     width: int
     height: int
     guard_status: GuardStatus
-    number_of_possible_obstacles : int = 0
+    possible_obstacle_locations :list = []
 
     def __init__(self, init_str):
         self.content = init_str.replace('\n', '')
@@ -136,12 +136,22 @@ class LabMap:
         return x<0 or y<0 or x>=self.width or y>=self.height
     
     def run_patrol ( self ): 
+        self.possible_obstacle_locations = []
+
         if ( self.is_next_posistion_a_possible_loop_obstacle ()):
-            self.number_of_possible_obstacles += 1
+            next_x,next_y = self.guard_status.get_next_position()
+            next_index = self.get_index_for_coordinates(next_x,next_y)
+            if not next_index in self.possible_obstacle_locations:
+                self.possible_obstacle_locations.append ( self.get_index_for_coordinates(next_x,next_y))
 
         while ( self.walk_guard() ):
             if ( self.is_next_posistion_a_possible_loop_obstacle ()):
-                self.number_of_possible_obstacles += 1
+                next_x,next_y = self.guard_status.get_next_position()
+                next_index = self.get_index_for_coordinates(next_x,next_y)
+                if not next_index in self.possible_obstacle_locations:
+                    self.possible_obstacle_locations.append ( self.get_index_for_coordinates(next_x,next_y))
+
+        self.possible_obstacle_locations.sort()
 
     def ends_in_loop ( self ) -> bool:
         already_visited = {}
@@ -153,6 +163,7 @@ class LabMap:
             elif ( not self.guard_status.orientation in already_visited[current_index] ):
                 already_visited[current_index].append(self.guard_status.orientation)
             else:
+                # ok, i've been here, heading into the same direction -> must be a loop
                 return True
             
         return False
@@ -178,4 +189,11 @@ class LabMap:
         return map.ends_in_loop()
     
     def get_number_of_possible_obstacles ( self ) -> int:
-        return self.number_of_possible_obstacles
+        return len(self.possible_obstacle_locations)
+    
+    def get_possible_obstacle_locations ( self ) -> list :
+        for location in self.possible_obstacle_locations:
+            (x,y) = self.get_coordinates_for_index(location)
+            print (" -> (" + str(x) + "/" + str(y) + ")")
+
+        return self.possible_obstacle_locations

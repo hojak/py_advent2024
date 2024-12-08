@@ -12,4 +12,8 @@ class Solver(problemSolver):
         print ( self.parsed_input.get_trail_length() )
     
     def solve_part2(self):
-        print ("Not implemented, yet")
+        print ("Possible Loop Obstacle Locations:")
+        self.parsed_input.get_possible_obstacle_locations()
+
+        print ("number of possible obstacle locations")
+        print (self.parsed_input.get_number_of_possible_obstacles())

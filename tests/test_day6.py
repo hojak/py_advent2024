@@ -153,3 +153,15 @@ def test_run_patrol_counts_possible_obstacles(map, expected_obstacle_count):
     testee = LabMap (map)
     testee.run_patrol()
     assert testee.get_number_of_possible_obstacles() == expected_obstacle_count
+
+
+@pytest.mark.parametrize('map, expected_obstacle_count', [
+    ('>...\n....', []),
+    ('.#..\n.>..\n#...\n..#.', [7]),
+    ('.#..\n..>.\n#...\n..#.', [7]),
+
+])
+def test_run_patrol_get_possible_obstacles(map, expected_obstacle_count):
+    testee = LabMap (map)
+    testee.run_patrol()
+    assert testee.get_possible_obstacle_locations() == expected_obstacle_count
