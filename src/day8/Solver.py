@@ -11,4 +11,5 @@ class Solver(problemSolver):
         print (self.parsed_input.get_number_of_antinodes())
 
     def solve_part2(self):
-        print ("not implemented, yet")
+        print ("Number of Antinodes with Resonance")
+        print (self.parsed_input.get_number_of_antinodes(True))
