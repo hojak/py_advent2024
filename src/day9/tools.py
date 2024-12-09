@@ -39,3 +39,12 @@ def compact ( input: list) -> list :
             index_to_move -= 1
 
     return result
+
+
+def checksum ( input : list) -> int :
+    result = 0
+    for index in range ( len ( input )):
+        if ( input[index] != '.'):
+            result += index * input[index]
+
+    return result
