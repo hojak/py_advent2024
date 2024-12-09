@@ -48,3 +48,19 @@ def checksum ( input : list) -> int :
             result += index * input[index]
 
     return result
+
+def expand_to_blocks ( input: str) -> list:
+    result = []
+    next_is_block = True
+    block_number = 0
+
+    for char in input: 
+        if ( next_is_block ):
+            result.append ( [int(char), block_number])
+            block_number += 1
+        elif char != '0':
+            result.append ( [int(char), '.'])
+        
+        next_is_block = not next_is_block
+
+    return result
