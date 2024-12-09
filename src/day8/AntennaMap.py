@@ -47,7 +47,23 @@ class AntennaMap:
     
     def get_found_frequencies ( self ) -> list :
         return self.frequencies
-    
 
     def coordinates_for_index ( self, index ) -> Coordinate:
         return Coordinate( index % self.width, math.floor(index / self.width) )
+    
+    def find_antinodes ( self, antenna1, antenna2) -> list :
+        result = []
+        dif = antenna2.sub(antenna1)
+
+        antinote1 = antenna1.sub (dif)
+        if ( self.is_in_bounds (antinote1)):
+            result.append(antinote1)
+        
+        antinote2 = antenna2.add (dif)
+        if ( self.is_in_bounds (antinote2)):
+            result.append(antinote2)
+
+        return result
+    
+    def is_in_bounds ( self, location) -> bool :
+        return location.x >= 0 and location.y >= 0 and location.x < self.width and location.y < self.height

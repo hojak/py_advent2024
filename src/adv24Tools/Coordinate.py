@@ -14,6 +14,9 @@ class Coordinate:
 
     def mul (self, m: int):
         return Coordinate(self.x*m, self.y*m)
+    
+    def sub ( self, a):
+        return Coordinate(self.x - a.x, self.y - a.y)
 
     def __str__(self) -> str:
         return "("+str(self.x) + "/" + str(self.y) + ")"

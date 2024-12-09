@@ -22,3 +22,13 @@ def test_finding_antennas(input, frequency, expected_locations) -> None:
 def test_finding_frequencies(input, expected_frequencies) -> None:
     testee = AntennaMap(input)
     assert testee.get_found_frequencies() == expected_frequencies    
+
+@pytest.mark.parametrize('map, coor1, coor2, expected_antinodes', [
+    ('...\n...\n...\n...', Coordinate(1,1), Coordinate(1,2), [Coordinate(1,0), Coordinate(1,3)]),
+])
+def test_finding_antinodes(map, coor1, coor2, expected_antinodes) -> None:
+    testee = AntennaMap(map)
+    possible_antinotes = testee.find_antinodes(coor1, coor2)
+    assert possible_antinotes == expected_antinodes
+
+
