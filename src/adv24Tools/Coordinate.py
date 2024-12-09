@@ -1,4 +1,4 @@
-class Coordinate:
+class Coordinates:
     x: int
     y: int
 
@@ -10,13 +10,13 @@ class Coordinate:
         return width*self.y + self.x
 
     def add (self, a):
-        return Coordinate(self.x + a.x, self.y + a.y)
+        return Coordinates(self.x + a.x, self.y + a.y)
 
     def mul (self, m: int):
-        return Coordinate(self.x*m, self.y*m)
+        return Coordinates(self.x*m, self.y*m)
     
     def sub ( self, a):
-        return Coordinate(self.x - a.x, self.y - a.y)
+        return Coordinates(self.x - a.x, self.y - a.y)
 
     def __str__(self) -> str:
         return "("+str(self.x) + "/" + str(self.y) + ")"
