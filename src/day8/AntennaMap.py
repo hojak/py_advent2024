@@ -69,16 +69,38 @@ class AntennaMap:
 
         return result
     
+    def find_antinodes_with_resonance ( self, antenna1, antenna2) -> list :
+        dif = antenna2.sub(antenna1)
+        result = []
+
+        possible = antenna1
+        while ( self.is_in_bounds ( possible)):
+            result.append(possible)
+            possible = possible.add ( dif )
+
+        possible = antenna1.sub (dif)
+        while (self.is_in_bounds(possible)):
+            result.append(possible)
+            possible = possible.sub(dif)
+
+        return result        
+
+    
     def is_in_bounds ( self, location) -> bool :
         return location.x >= 0 and location.y >= 0 and location.x < self.width and location.y < self.height
     
-    def get_number_of_antinodes(self) -> int:
+    def get_number_of_antinodes(self, with_resonance: bool = False) -> int:
         found_antinodes = []
 
         for frequency in self.frequencies:
             for index1 in range ( len(self.antenna_locations[frequency])-1):
                 for index2 in range ( index1+1, len(self.antenna_locations[frequency])):
-                    for antinode_location in self.find_antinodes ( self.antenna_locations[frequency][index1],self.antenna_locations[frequency][index2]):
+                    if ( with_resonance ):
+                        antinodes_for_pair = self.find_antinodes_with_resonance ( self.antenna_locations[frequency][index1], self.antenna_locations[frequency][index2])
+                    else:
+                        antinodes_for_pair = self.find_antinodes ( self.antenna_locations[frequency][index1], self.antenna_locations[frequency][index2])
+
+                    for antinode_location in antinodes_for_pair:
                         antinode_index = self.index_for_coordinates ( antinode_location )
                         if ( not antinode_index in found_antinodes ):
                             found_antinodes.append(antinode_index)
