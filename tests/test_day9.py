@@ -1,6 +1,6 @@
 import pytest
 
-from day9.tools import expand, compact, checksum
+from day9.tools import expand, compact, checksum, expand_to_blocks, move_blocks
 
 @pytest.mark.parametrize('input, expected_expandation', [
     ('12345', [0,'.','.',1,1,1,'.','.','.','.',2,2,2,2,2]),
@@ -27,3 +27,20 @@ def test_compact(input, expected_checksum):
     assert checksum ( input ) == expected_checksum
 
 
+@pytest.mark.parametrize('input, expected_expandation', [
+    ('12345', [[1,0],[2,'.'],[3,1],[4,'.'],[5,2]]),
+    ('2333133121414131402', [[2,0],[3,'.'],[3,1],[3,'.'],[1,2],[3,'.'],[3,3],[1,'.'],[2,4],[1,'.'],[4,5],[1,'.'],[4,6],[1,'.'],[3,7],[1,'.'],[4,8],[2,9]] )
+])
+def test_expand_to_blocks(input, expected_expandation) -> None:
+    assert expand_to_blocks ( input ) == expected_expandation
+
+
+
+@pytest.mark.parametrize('input, expected_layout', [
+    ([[1,0],[2,'.'],[3,1],[4,'.'],[5,2]],  [[1,0],[2,'.'],[3,1],[4,'.'],[5,2]]),
+    ([[2,0],[3,'.'],[3,1],[3,'.'],[1,2],[3,'.'],[3,3],[1,'.'],[2,4],[1,'.'],[4,5],[1,'.'],[4,6],[1,'.'],[3,7],[1,'.'],[4,8],[2,9]],
+        [[2,0],[2,9],[1,2],[3,1],[3,7],[1,'.'],[2,4],[1,'.'],[3,3],[4,'.'],[4,5],[1,'.'],[4,6],[5,'.'],[4,8],[2,'.']],
+      )
+])
+def test_moving_blocks(input, expected_layout) -> None:
+    assert move_blocks ( input ) == expected_layout
