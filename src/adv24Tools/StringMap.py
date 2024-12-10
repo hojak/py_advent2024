@@ -30,3 +30,9 @@ class StringMap:
 
     def index_for_coordinates ( self, coordinates: Coordinates) -> int:
         return coordinates.x + coordinates.y * self.width
+    
+    def get_width(self) -> int:
+        return self.width
+    
+    def get_height(self) -> int:
+        return self.height

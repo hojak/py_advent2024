@@ -1,26 +1,12 @@
 import math
 
 from adv24Tools.Coordinate import Coordinates 
+from adv24Tools.StringMap import StringMap
 
-class WordRiddle:
-    content: str
-    width: int
-    height: int
-
+class WordRiddle (StringMap):
     def __init__(self, init_str):
-        self.content = init_str.replace('\n', '')
-        found = init_str.find('\n')
-        if (found >= 0):
-            self.width = found
-        else:
-            self.width = len(init_str)
-        self.height = math.ceil(len(self.content) / self.width)
+        super().__init__(init_str)
 
-    def get_width(self) -> int:
-        return self.width
-    
-    def get_height(self) -> int:
-        return self.height
     
     def get_chars_in_direction (self,x: int,y: int,direction:str,length: int) -> str:
         offsets = self.get_offsets_for_direction(direction, length)
