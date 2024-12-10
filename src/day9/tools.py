@@ -119,3 +119,21 @@ def combine_free_spaces ( blocks ) :
         
     return blocks
 
+
+
+def checksum_for_blocks ( blocks ): 
+    result = 0
+    start_index = 0
+
+    for block in blocks:
+        if ( block [1] != '.'):
+            result += get_block_value ( block, start_index)
+        start_index += block[0]
+
+    return result
+
+def get_block_value ( block, start_index):
+    result = 0
+    for i in range ( block[0]):
+        result += (i + start_index) * block[1]
+    return result

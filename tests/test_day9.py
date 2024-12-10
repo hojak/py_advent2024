@@ -1,6 +1,6 @@
 import pytest
 
-from day9.tools import expand, compact, checksum, expand_to_blocks, move_blocks
+from day9.tools import expand, compact, checksum, expand_to_blocks, move_blocks, checksum_for_blocks
 
 @pytest.mark.parametrize('input, expected_expandation', [
     ('12345', [0,'.','.',1,1,1,'.','.','.','.',2,2,2,2,2]),
@@ -44,3 +44,7 @@ def test_expand_to_blocks(input, expected_expandation) -> None:
 ])
 def test_moving_blocks(input, expected_layout) -> None:
     assert move_blocks ( input ) == expected_layout
+
+
+def test_checksum_for_blocks (): 
+    assert checksum_for_blocks (  [[2,0],[2,9],[1,2],[3,1],[3,7],[1,'.'],[2,4],[1,'.'],[3,3],[4,'.'],[4,5],[1,'.'],[4,6],[5,'.'],[4,8],[2,'.']] ) == 2858
