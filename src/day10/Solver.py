@@ -8,4 +8,8 @@ class Solver (problemSolver):
     def solve_part1(self):
         print ("Scoring the Trailheads:")
         print ( self.parsed_input.sum_of_scores() )
+
+    def solve_part2(self):
+        print ("Scoring the Trailheads:")
+        print ( self.parsed_input.number_of_different_trails() )
         
