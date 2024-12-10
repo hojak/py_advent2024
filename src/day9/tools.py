@@ -107,9 +107,11 @@ def find_free_space ( blocks, size ):
 
 
 def combine_free_spaces ( blocks ) :
-    for index in range(len(blocks) -1):
-        if( blocks[index][1] == '.' and blocks[index+1][1] == '.'):
-            return combine_free_spaces ( blocks[:index] + [[blocks[index][0] + blocks[index+1][0], '.']] + blocks[index+2:] )
+    index = 0
+    while index < len(blocks)-1:
+        while index+1 < len(blocks) and blocks[index][1] == '.' and blocks[index+1][1] == '.':
+            blocks = blocks[:index] + [[blocks[index][0] + blocks[index+1][0], '.']] + blocks[index+2:]
+        index += 1
         
     return blocks
 
