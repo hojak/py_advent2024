@@ -2,6 +2,7 @@ from adv24Tools.Coordinate import Coordinates
 
 
 import math
+import re
 
 
 class StringMap:
@@ -30,6 +31,9 @@ class StringMap:
 
     def index_for_coordinates ( self, coordinates: Coordinates) -> int:
         return coordinates.x + coordinates.y * self.width
+
+    def index_for_xy ( self, x: int, y: int) -> int:
+        return self.index_for_coordinates ( Coordinates(x,y))
     
     def get_width(self) -> int:
         return self.width
@@ -39,3 +43,10 @@ class StringMap:
     
     def is_within_bounds ( self, c : Coordinates ) -> bool: 
         return c.x >= 0 and c.y >= 0 and c.x < self.width and c.y < self.height
+    
+    def is_out_of_bounds (self, x, y ) -> bool :
+        return x<0 or y<0 or x>=self.width or y>=self.height
+    
+    def add_line_breaks ( self, content ): 
+        return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
+

@@ -1,6 +1,8 @@
 import math
 import re
 
+from adv24Tools.StringMap import StringMap
+
 ### not correct answer: 2038
 class GuardStatus:
     x : int
@@ -39,28 +41,16 @@ class GuardStatus:
         
 
 
-class LabMap:
-    content: str
+class LabMap (StringMap):
     trail: str
     came_through: dict = {}
-    width: int
-    height: int
     guard_status: GuardStatus
     possible_obstacle_locations :list = []
     already_visited = {}
 
     def __init__(self, init_str):
-        self.content = init_str.replace('\n', '')
-        found = init_str.find('\n')
-        if (found >= 0):
-            self.width = found
-        else:
-            self.width = len(init_str)
-        self.height = math.ceil(len(self.content) / self.width)
+        super().__init__(init_str)        
 
-        if ( self.width * self.height != len(self.content)):
-            raise Exception ( "illegal length of map definition")
-        
         self.init_guard_status()
         self.init_trail()
 
@@ -69,7 +59,7 @@ class LabMap:
         self.mark_guard_position()
 
     def mark_guard_position(self):
-        guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
+        guard_index = self.index_for_xy(self.guard_status.x, self.guard_status.y)
 
         self.trail = self.trail[0:guard_index] + 'X' + self.trail[guard_index+1:]    
 
@@ -85,43 +75,28 @@ class LabMap:
         if ( re_result == None ):
             raise Exception ("No start position found")
         
-        (x,y) = self.get_coordinates_for_index( re_result.start() )
-        self.guard_status = GuardStatus(x,y,re_result.group())
+        coordinates = self.coordinates_for_index( re_result.start() )
+        self.guard_status = GuardStatus(coordinates.x,coordinates.y,re_result.group())
 
         self.content = self.content[:re_result.start()] + '.' + self.content[re_result.start()+1:]
-
-    def get_width(self):
-        return self.width
-    
-    def get_height(self):
-        return self.height
     
     def __str__(self):
-        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y )
+        guard_index = self.index_for_xy ( self.guard_status.x, self.guard_status.y )
 
         content_with_guard = self.content[:guard_index] + self.guard_status.orientation + self.content[guard_index+1:]
 
         # insert line breaks
-        return self.break_lines(content_with_guard)
+        return self.add_line_breaks(content_with_guard)
     
-    def break_lines ( self, content ): 
-        return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
-
     def get_trail (self):
-        return self.break_lines ( self.trail )
+        return self.add_line_breaks ( self.trail )
     
     def get_trail_length(self):
         return len (re.sub('[^X]','',self.get_trail())) 
     
     def get_guard_status(self):
         return self.guard_status
-    
-    def get_coordinates_for_index ( self, index ):
-        return index % self.width, math.floor(index / self.width)
-    
-    def get_index_for_coordinates(self, x: int, y: int) -> int:
-        return x + y * self.width
-    
+        
     def walk_guard(self):
         next_x, next_y = self.guard_status.get_next_position()
         
@@ -157,29 +132,27 @@ class LabMap:
             return
         
         if ( self.have_come_through(self.guard_status.turn_right())):
-            self.possible_obstacle_locations.append(self.get_index_for_coordinates(possible_x, possible_y))
+            self.possible_obstacle_locations.append(self.index_for_xy(possible_x, possible_y))
 
     def is_occupied ( self, x, y) -> bool :
-        return self.content[self.get_index_for_coordinates(x,y)] == '#'
+        return self.content[self.index_for_xy(x,y)] == '#'
     
-    def is_out_of_bounds (self, x, y ) -> bool :
-        return x<0 or y<0 or x>=self.width or y>=self.height
     
     def run_patrol ( self ): 
         self.possible_obstacle_locations = []
 
         if ( self.is_next_posistion_a_possible_loop_obstacle ()):
             next_x,next_y = self.guard_status.get_next_position()
-            next_index = self.get_index_for_coordinates(next_x,next_y)
+            next_index = self.index_for_xy(next_x,next_y)
             if not next_index in self.possible_obstacle_locations:
-                self.possible_obstacle_locations.append ( self.get_index_for_coordinates(next_x,next_y))
+                self.possible_obstacle_locations.append ( self.index_for_xy(next_x,next_y))
 
         while ( self.walk_guard() ):
             if ( self.is_next_posistion_a_possible_loop_obstacle ()):
                 next_x,next_y = self.guard_status.get_next_position()
-                next_index = self.get_index_for_coordinates(next_x,next_y)
+                next_index = self.index_for_xy(next_x,next_y)
                 if not next_index in self.possible_obstacle_locations:
-                    self.possible_obstacle_locations.append ( self.get_index_for_coordinates(next_x,next_y))
+                    self.possible_obstacle_locations.append ( self.index_for_xy(next_x,next_y))
 
         self.possible_obstacle_locations.sort()
 
@@ -187,7 +160,7 @@ class LabMap:
         self.already_visited = {}
 
         while (self.walk_guard()):
-            current_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y)
+            current_index = self.index_for_xy ( self.guard_status.x, self.guard_status.y)
             if ( not current_index in self.already_visited ):
                 self.already_visited[current_index] = [self.guard_status.orientation]
             elif ( not self.guard_status.orientation in self.already_visited[current_index] ):
@@ -209,12 +182,12 @@ class LabMap:
             return False
 
         map_to_check = self.content
-        next_index = self.get_index_for_coordinates(next_guard_x, next_guard_y)
+        next_index = self.index_for_xy(next_guard_x, next_guard_y)
         map_to_check = map_to_check[:next_index] + '#' +map_to_check[next_index+1:]
-        guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
+        guard_index = self.index_for_xy(self.guard_status.x, self.guard_status.y)
         map_to_check = map_to_check[:guard_index] + self.guard_status.orientation + map_to_check[guard_index+1:]
 
-        map_for_possible_loop = LabMap ( self.break_lines(map_to_check) )
+        map_for_possible_loop = LabMap ( self.add_line_breaks(map_to_check) )
 
         if ( map_for_possible_loop.ends_in_loop() ):
             #print ("Found possible loop obstacle location at: " + str(next_guard_x) + "/" + str(next_guard_y))
@@ -235,7 +208,7 @@ class LabMap:
     
     def get_possible_obstacle_locations ( self ) -> list :
         #for location in self.possible_obstacle_locations:
-        #    (x,y) = self.get_coordinates_for_index(location)
+        #    (x,y) = self.coordinates_for_index(location)
         #    print (" -> (" + str(x) + "/" + str(y) + ")")
 
         return self.possible_obstacle_locations
@@ -255,10 +228,10 @@ class LabMap:
             else:
                 result = result[:index] + "+" + result[index+1:]
 
-        print (self.break_lines(result))
+        print (self.add_line_breaks(result))
 
     def have_come_through ( self, guard ) -> bool:
-        index = self.get_index_for_coordinates( guard.x, guard.y )
+        index = self.index_for_xy( guard.x, guard.y )
         return index in self.came_through and guard.orientation in self.came_through[index]
 
     
