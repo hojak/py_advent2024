@@ -1,6 +1,6 @@
 from adv24Tools.problemSolver import problemSolver
 
-from day9.tools import compact, checksum, expand
+from day9.tools import compact, checksum, expand, expand_to_blocks, checksum_for_blocks, move_blocks
 
 class Solver(problemSolver):
 
@@ -9,4 +9,5 @@ class Solver(problemSolver):
         print (checksum(compact(expand(self.input))))
 
     def solve_part2(self):
-        print ("Part 2 not implemented, yet")
+        print ("computing new checksum when moving blocks")
+        print (checksum_for_blocks(move_blocks(expand_to_blocks(self.input))))
