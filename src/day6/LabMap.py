@@ -1,7 +1,7 @@
 import math
 import re
 
-
+### not correct answer: 2038
 class GuardStatus:
     x : int
     y : int
@@ -43,7 +43,6 @@ class LabMap:
     content: str
     trail: str
     came_through: dict = {}
-    possible_loop_obstacles: int
     width: int
     height: int
     guard_status: GuardStatus
@@ -79,7 +78,6 @@ class LabMap:
         elif not self.guard_status.orientation in self.came_through[guard_index]:
             self.came_through[guard_index].append ( self.guard_status.orientation)
 
-        print ( self.came_through )
 
     def init_guard_status(self):
         re_result = re.search(r'[v^<>]', self.content)
@@ -133,21 +131,33 @@ class LabMap:
         if ( self.is_occupied ( next_x, next_y ) ):
             self.guard_status = self.guard_status.turn_right()
 
-            look_ahead_x, look_ahead_y = self.guard_status.get_next_position()
+            # look_ahead_x, look_ahead_y = self.guard_status.get_next_position()
 
             # results in 1750
             # check for walting into a "trap" like ..>#
             #                                      ..#.
-            if ( self.is_out_of_bounds ( look_ahead_x, look_ahead_y) or self.is_occupied ( look_ahead_x, look_ahead_y ) ):
-                print ("walked into an edge!")
-                return False
+            #if ( self.is_out_of_bounds ( look_ahead_x, look_ahead_y) or self.is_occupied ( look_ahead_x, look_ahead_y ) ):
+            #    print ("walked into an edge!")
+            #    return False
 
         else:
             self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
             self.mark_guard_position()
-            self.count_loop_position_if_possible()
+            # self.count_loop_position_if_possible()
 
         return True
+    
+    def count_loop_position_if_possible(self):
+        possible_x, possible_y = self.guard_status.get_next_position()
+        
+        if ( self.is_out_of_bounds ( possible_x, possible_y)):
+            return
+        
+        if ( self.is_occupied ( possible_x, possible_y )):
+            return
+        
+        if ( self.have_come_through(self.guard_status.turn_right())):
+            self.possible_obstacle_locations.append(self.get_index_for_coordinates(possible_x, possible_y))
 
     def is_occupied ( self, x, y) -> bool :
         return self.content[self.get_index_for_coordinates(x,y)] == '#'
@@ -219,6 +229,7 @@ class LabMap:
         else:
             return False
     
+ 
     def get_number_of_possible_obstacles ( self ) -> int:
         return len(self.possible_obstacle_locations)
     
@@ -245,4 +256,10 @@ class LabMap:
                 result = result[:index] + "+" + result[index+1:]
 
         print (self.break_lines(result))
+
+    def have_come_through ( self, guard ) -> bool:
+        index = self.get_index_for_coordinates( guard.x, guard.y )
+        return index in self.came_through and guard.orientation in self.came_through[index]
+
+    
         
