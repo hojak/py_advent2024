@@ -71,13 +71,9 @@ def move_blocks (input: list) -> list :
 
     id_to_move =  result[len(result)-1][1]
 
-    print (result)
-
     while ( id_to_move > 0):
         index_to_move = find_id ( id_to_move, result)
         item_to_move = result[index_to_move]
-
-        print ( "found id " + str(id_to_move) + " at " + str( index_to_move) + " --> " + str(result[index_to_move]))
 
         target_index = find_free_space ( result, result[index_to_move][0])
 
@@ -87,8 +83,6 @@ def move_blocks (input: list) -> list :
                 insert.append ( [result[target_index][0] - item_to_move[0], '.'] )
 
             result = result[:target_index] + insert + result[target_index+1:index_to_move] + [[item_to_move[0],'.']] + result[index_to_move+1:]
-
-            print (result)
 
         id_to_move -= 1
 
