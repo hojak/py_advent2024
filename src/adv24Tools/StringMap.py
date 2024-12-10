@@ -49,4 +49,7 @@ class StringMap:
     
     def add_line_breaks ( self, content ): 
         return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
+    
+    def get_char_at( self, location: Coordinates ) -> str : 
+        return self.content[self.index_for_coordinates(location)]
 
