@@ -12,7 +12,6 @@ class GuardStatus:
         self.y = y
         self.orientation = orientation
 
-
     def __eq__(self, other): 
         return self.x == other.x and self.y == other.y and self.orientation == other.orientation
     
@@ -44,6 +43,8 @@ class LabMap:
 
     content: str
     trail: str
+    came_through: dict = {}
+    possible_loop_obstacles: int
     width: int
     height: int
     guard_status: GuardStatus
@@ -66,7 +67,14 @@ class LabMap:
 
     def mark_guard_position(self):
         guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
-        self.trail = self.trail[0:guard_index] + 'X' + self.trail[guard_index+1:]        
+        self.trail = self.trail[0:guard_index] + 'X' + self.trail[guard_index+1:]    
+
+        if not guard_index in self.came_through:
+            self.came_through[guard_index] = [self.guard_status.orientation]
+        elif not self.guard_status.orientation in self.came_through[guard_index]:
+            self.came_through[guard_index].append ( self.guard_status.orientation)
+
+        print ( self.came_through )
 
     def init_guard_status(self):
         re_result = re.search(r'[v^<>]', self.content)
@@ -122,6 +130,7 @@ class LabMap:
         else:
             self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
             self.mark_guard_position()
+            self.count_loop_position_if_possible()
 
         return True
 
@@ -132,6 +141,35 @@ class LabMap:
         return x<0 or y<0 or x>=self.width or y >= self.height
     
     def run_patrol ( self ): 
+        self.possible_loop_obstacles = 0
+
         while ( self.walk_guard() ):
             pass
+
+        print ( self.break_lines(self.content))
+        print ( self.break_lines(self.trail))
+
+
+    def get_possible_loop_obstacles(self):
+        return self.possible_loop_obstacles
+    
+    def count_loop_position_if_possible(self):
+        possible_x, possible_y = self.guard_status.get_next_position()
+        
+        if ( self.is_out_of_bounds ( possible_x, possible_y)):
+            return
+        
+        if ( self.is_occupied ( possible_x, possible_y )):
+            return
+        
+        if ( self.have_come_through(self.guard_status.turn_right())):
+            self.possible_loop_obstacles += 1
+
+        
+    def have_come_through ( self, guard ) -> bool:
+        index = self.get_index_for_coordinates( guard.x, guard.y )
+        return index in self.came_through and guard.orientation in self.came_through[index]
+
+    
+        
 
