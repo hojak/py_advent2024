@@ -56,9 +56,6 @@ class WordRiddle (StringMap):
             result += self.content[ char_index ]
         
         return result
-
-    def is_within_bounds ( self, c ) -> bool: 
-        return c.x >= 0 and c.y >= 0 and c.x < self.width and c.y < self.height
     
     def count_x_of_mas(self) -> int: 
         offsets = [Coordinates(0,0),Coordinates(-1,-1),Coordinates(1,-1),Coordinates(1,1),Coordinates(-1,1)]

@@ -36,3 +36,6 @@ class StringMap:
     
     def get_height(self) -> int:
         return self.height
+    
+    def is_within_bounds ( self, c : Coordinates ) -> bool: 
+        return c.x >= 0 and c.y >= 0 and c.x < self.width and c.y < self.height
