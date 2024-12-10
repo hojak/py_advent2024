@@ -1,33 +1,16 @@
-import math
 import re
-from adv24Tools.Coordinate import Coordinates
+from day8.StringMap import StringMap
 
-class AntennaMap:
-    content: str
+class AntennaMap ( StringMap ):
     frequencies : list
     antenna_locations: dict
-    width: int
-    heigth: int
-
+    
     def __init__(self, map : str ):
-        self.content = map
-
-        self.init_map (map)
+        super().__init__(map)
 
         self.init_frequencies()
         self.init_antenna_locations()
 
-    def init_map(self, init_str):
-        self.content = init_str.replace('\n', '')
-        found = init_str.find('\n')
-        if (found >= 0):
-            self.width = found
-        else:
-            self.width = len(init_str)
-        self.height = math.ceil(len(self.content) / self.width)
-
-        if ( self.width * self.height != len(self.content)):
-            raise Exception ( "illegal length of map definition")
 
 
     def init_frequencies(self):
@@ -48,12 +31,6 @@ class AntennaMap:
     
     def get_found_frequencies ( self ) -> list :
         return self.frequencies
-
-    def coordinates_for_index ( self, index ) -> Coordinates:
-        return Coordinates( index % self.width, math.floor(index / self.width) )
-    
-    def index_for_coordinates ( self, coordinates: Coordinates) -> int:
-        return coordinates.x + coordinates.y * self.width
     
     def find_antinodes ( self, antenna1, antenna2) -> list :
         result = []
