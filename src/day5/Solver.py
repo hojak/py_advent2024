@@ -1,4 +1,4 @@
-from adv24_tools.problemSolver import problemSolver
+from adv24Tools.problemSolver import problemSolver
 from day5.ReleaseRequirements import ReleaseRequirements
 
 class Solver(problemSolver):

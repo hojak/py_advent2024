@@ -42,7 +42,7 @@ ptw . --now --last-failed --new-first
 
 ### Run the Day 1 Solution
 ```shell
-python src/day1/main.py data/day1/input.txt
+python src/adv24_tools/main.py 1 input.txt
 ```
 
 ## Links

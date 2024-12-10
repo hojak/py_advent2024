@@ -40,7 +40,6 @@ class GuardStatus:
 
 
 class LabMap:
-
     content: str
     trail: str
     came_through: dict = {}
@@ -48,6 +47,8 @@ class LabMap:
     width: int
     height: int
     guard_status: GuardStatus
+    possible_obstacle_locations :list = []
+    already_visited = {}
 
     def __init__(self, init_str):
         self.content = init_str.replace('\n', '')
@@ -57,6 +58,9 @@ class LabMap:
         else:
             self.width = len(init_str)
         self.height = math.ceil(len(self.content) / self.width)
+
+        if ( self.width * self.height != len(self.content)):
+            raise Exception ( "illegal length of map definition")
         
         self.init_guard_status()
         self.init_trail()
@@ -67,6 +71,7 @@ class LabMap:
 
     def mark_guard_position(self):
         guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
+
         self.trail = self.trail[0:guard_index] + 'X' + self.trail[guard_index+1:]    
 
         if not guard_index in self.came_through:
@@ -94,7 +99,7 @@ class LabMap:
         return self.height
     
     def __str__(self):
-        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y ) 
+        guard_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y )
 
         content_with_guard = self.content[:guard_index] + self.guard_status.orientation + self.content[guard_index+1:]
 
@@ -127,6 +132,16 @@ class LabMap:
 
         if ( self.is_occupied ( next_x, next_y ) ):
             self.guard_status = self.guard_status.turn_right()
+
+            look_ahead_x, look_ahead_y = self.guard_status.get_next_position()
+
+            # results in 1750
+            # check for walting into a "trap" like ..>#
+            #                                      ..#.
+            if ( self.is_out_of_bounds ( look_ahead_x, look_ahead_y) or self.is_occupied ( look_ahead_x, look_ahead_y ) ):
+                print ("walked into an edge!")
+                return False
+
         else:
             self.guard_status = GuardStatus(next_x, next_y, self.guard_status.orientation)
             self.mark_guard_position()
@@ -138,38 +153,96 @@ class LabMap:
         return self.content[self.get_index_for_coordinates(x,y)] == '#'
     
     def is_out_of_bounds (self, x, y ) -> bool :
-        return x<0 or y<0 or x>=self.width or y >= self.height
+        return x<0 or y<0 or x>=self.width or y>=self.height
     
     def run_patrol ( self ): 
-        self.possible_loop_obstacles = 0
+        self.possible_obstacle_locations = []
+
+        if ( self.is_next_posistion_a_possible_loop_obstacle ()):
+            next_x,next_y = self.guard_status.get_next_position()
+            next_index = self.get_index_for_coordinates(next_x,next_y)
+            if not next_index in self.possible_obstacle_locations:
+                self.possible_obstacle_locations.append ( self.get_index_for_coordinates(next_x,next_y))
 
         while ( self.walk_guard() ):
-            pass
+            if ( self.is_next_posistion_a_possible_loop_obstacle ()):
+                next_x,next_y = self.guard_status.get_next_position()
+                next_index = self.get_index_for_coordinates(next_x,next_y)
+                if not next_index in self.possible_obstacle_locations:
+                    self.possible_obstacle_locations.append ( self.get_index_for_coordinates(next_x,next_y))
 
-        print ( self.break_lines(self.content))
-        print ( self.break_lines(self.trail))
+        self.possible_obstacle_locations.sort()
 
+    def ends_in_loop ( self ) -> bool:
+        self.already_visited = {}
 
-    def get_possible_loop_obstacles(self):
-        return self.possible_loop_obstacles
+        while (self.walk_guard()):
+            current_index = self.get_index_for_coordinates ( self.guard_status.x, self.guard_status.y)
+            if ( not current_index in self.already_visited ):
+                self.already_visited[current_index] = [self.guard_status.orientation]
+            elif ( not self.guard_status.orientation in self.already_visited[current_index] ):
+                self.already_visited[current_index].append(self.guard_status.orientation)
+            else:
+                # ok, i've been here, heading into the same direction -> must be a loop
+                return True
+            
+        return False
     
-    def count_loop_position_if_possible(self):
-        possible_x, possible_y = self.guard_status.get_next_position()
-        
-        if ( self.is_out_of_bounds ( possible_x, possible_y)):
-            return
-        
-        if ( self.is_occupied ( possible_x, possible_y )):
-            return
-        
-        if ( self.have_come_through(self.guard_status.turn_right())):
-            self.possible_loop_obstacles += 1
 
-        
-    def have_come_through ( self, guard ) -> bool:
-        index = self.get_index_for_coordinates( guard.x, guard.y )
-        return index in self.came_through and guard.orientation in self.came_through[index]
+    def is_next_posistion_a_possible_loop_obstacle(self) -> bool:
+        next_guard_x, next_guard_y = self.guard_status.get_next_position()
 
+        if ( self.is_out_of_bounds(next_guard_x, next_guard_y) ):
+            return False
+        
+        if ( self.is_occupied ( next_guard_x, next_guard_y )):
+            return False
+
+        map_to_check = self.content
+        next_index = self.get_index_for_coordinates(next_guard_x, next_guard_y)
+        map_to_check = map_to_check[:next_index] + '#' +map_to_check[next_index+1:]
+        guard_index = self.get_index_for_coordinates(self.guard_status.x, self.guard_status.y)
+        map_to_check = map_to_check[:guard_index] + self.guard_status.orientation + map_to_check[guard_index+1:]
+
+        map_for_possible_loop = LabMap ( self.break_lines(map_to_check) )
+
+        if ( map_for_possible_loop.ends_in_loop() ):
+            #print ("Found possible loop obstacle location at: " + str(next_guard_x) + "/" + str(next_guard_y))
+            # 
+            #self.print_map_combination ( \
+            #    map_to_check[:next_index] + "O" + map_to_check[next_index+1:], \
+            #    self.trail, \
+            #    map_for_possible_loop.already_visited \
+            #)
+
+            return True
+        else:
+            return False
     
-        
+    def get_number_of_possible_obstacles ( self ) -> int:
+        return len(self.possible_obstacle_locations)
+    
+    def get_possible_obstacle_locations ( self ) -> list :
+        #for location in self.possible_obstacle_locations:
+        #    (x,y) = self.get_coordinates_for_index(location)
+        #    print (" -> (" + str(x) + "/" + str(y) + ")")
 
+        return self.possible_obstacle_locations
+    
+
+    def print_map_combination ( self, map, trail, loop ):
+        result = "";
+        for index in range ( len ( map )):
+            if ( trail[index] == "X"):
+                result += "x"
+            else:
+                result += map[index]
+
+        for index in loop:
+            if len ( loop[index] ) == 1:
+                result = result[:index] + loop[index][0] + result[index+1:]
+            else:
+                result = result[:index] + "+" + result[index+1:]
+
+        print (self.break_lines(result))
+        

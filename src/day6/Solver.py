@@ -1,4 +1,4 @@
-from adv24_tools.problemSolver import problemSolver
+from adv24Tools.problemSolver import problemSolver
 from day6.LabMap import LabMap
 
 class Solver(problemSolver):
@@ -12,4 +12,8 @@ class Solver(problemSolver):
         print ( self.parsed_input.get_trail_length() )
     
     def solve_part2(self):
-        print ("Not implemented, yet")
+        print ("Possible Loop Obstacle Locations:")
+        self.parsed_input.get_possible_obstacle_locations()
+
+        print ("number of possible obstacle locations")
+        print (self.parsed_input.get_number_of_possible_obstacles())

@@ -11,6 +11,24 @@ def test_width(init_str, expected_width) -> None:
     testee = LabMap(init_str)
     assert testee.get_width() == expected_width
 
+@pytest.mark.parametrize('init_str, expected_height', [
+    ('''....
+.^..
+....''', 3),
+    ('''....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...''', 10)
+])
+def test_height(init_str, expected_height) -> None:
+    testee = LabMap(init_str)
+    assert testee.get_height() == expected_height
 
 
 @pytest.mark.parametrize('map',[
@@ -96,10 +114,29 @@ def test_run_patrol(map, expected_length):
     assert testee.get_trail_length() == expected_length
 
 
+@pytest.mark.parametrize('map, expected_result', [
+    ('>...\n....', False),
+    ('.#..\n.>.#\n#...\n..#.', True),
+])
+def test_is_loop(map, expected_result):
+    testee = LabMap ( map)
+    assert testee.ends_in_loop () == expected_result
 
-@pytest.mark.parametrize('map, expected_length', [
+
+@pytest.mark.parametrize('map, expected_result', [
+    ('>...\n....', False),
+    ('.#..\n..>.\n#...\n..#.', True),
+])
+def test_is_next_posistion_a_possible_loop_obstacle(map, expected_result):
+    testee = LabMap ( map)
+    assert testee.is_next_posistion_a_possible_loop_obstacle () == expected_result
+
+
+
+@pytest.mark.parametrize('map, expected_obstacle_count', [
     ('>...\n....', 0),
-    ('....\n>...#\n#...\n..#.', 1),
+    ('.#..\n.>..\n#...\n..#.', 1),
+    ('.#..\n..>.\n#...\n..#.', 1),
     ('''....#.....
 .........#
 ..........
@@ -111,9 +148,29 @@ def test_run_patrol(map, expected_length):
 #.........
 ......#...''', 6)
 ])
-def test_run_patrol(map, expected_length):
+def test_run_patrol_counts_possible_obstacles(map, expected_obstacle_count):
     testee = LabMap (map)
     testee.run_patrol()
-    assert testee.get_possible_loop_obstacles() == expected_length
+    assert testee.get_number_of_possible_obstacles() == expected_obstacle_count
 
 
+
+@pytest.mark.parametrize('map, expected_obstacle_count', [
+    ('>...\n....', []),
+    ('.#..\n.>..\n#...\n..#.', [7]),
+    ('.#..\n..>.\n#...\n..#.', [7]),
+    ('''....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...''', [63,76,77,81,83,97])
+])
+def test_run_patrol_get_possible_obstacles(map, expected_obstacle_count):
+    testee = LabMap (map)
+    testee.run_patrol()
+    assert testee.get_possible_obstacle_locations() == expected_obstacle_count
