@@ -1,5 +1,5 @@
 import re
-from day8.StringMap import StringMap
+from adv24Tools.StringMap import StringMap
 
 class AntennaMap ( StringMap ):
     frequencies : list
