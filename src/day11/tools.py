@@ -11,6 +11,6 @@ def blink ( list_of_stones : list ) -> list :
             result.append ( int(stone_as_string[:half_length]))
             result.append ( int(stone_as_string[half_length:]))
         else:
-            result.append(stone)
+            result.append(stone*2024)
 
     return result

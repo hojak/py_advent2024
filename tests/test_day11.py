@@ -6,6 +6,7 @@ from day11.tools import blink
     ([0], [1]),
     ([11, 0], [1,1,1]),
     ([1000, 0], [10, 0, 1]),
+    ([1000, 0, 2], [10, 0, 1, 4048]),
 ])
 def test_blink(input, expected_list):
     assert blink (input) == expected_list
