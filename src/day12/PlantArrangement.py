@@ -14,7 +14,7 @@ class PlantArrangement:
     def __init__(self, map):
         self.map = StringMap(map)
 
-    def get_area_of_region ( self, start_point: Coordinates):
+    def get_data_of_region ( self, start_point: Coordinates):
         work_map = StringMap(self.map.__str__())
         plant = self.map.get_char_at(start_point)
 
@@ -32,7 +32,7 @@ class PlantArrangement:
                     work_map.set_char_at(next, " ")
                     look_into.append (next)
 
-        return area
+        return { 'area': area }
     
     def has_been_visited ( self, work_map: StringMap, location:Coordinates):
         return work_map.get_char_at(location) == " "

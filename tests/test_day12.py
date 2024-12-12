@@ -11,7 +11,8 @@ from day12.PlantArrangement import PlantArrangement
 ])
 def test_area_of_region(input, start_point, expected_result):
     testee = PlantArrangement (input)
-    assert testee.get_area_of_region(start_point) == expected_result
+    result = testee.get_data_of_region(start_point)
+    assert result['area'] == expected_result
 
 
 @pytest.mark.parametrize('input, coordinates, expected_result', [
