@@ -55,4 +55,11 @@ class StringMap:
             return ''
         
         return self.content[self.index_for_coordinates(location)]
+    
+    def set_char_at ( self, location: Coordinates, new_char: str):
+        index = self.index_for_coordinates(location)
+        self.content = self.content[:index] + new_char + self.content[index+1:]
+
+    def __str__(self):
+        return self.add_line_breaks(self.content)
 
