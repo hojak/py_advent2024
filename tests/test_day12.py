@@ -9,9 +9,9 @@ from day12.PlantArrangement import PlantArrangement
     ('XXX\nXAX\nXXX', Coordinates(1,1), 1),
     ('XXX\nXAX\nXXX', Coordinates(0,0), 8),
 ])
-def test_area_size(input, start_point, expected_result):
+def test_area_of_region(input, start_point, expected_result):
     testee = PlantArrangement (input)
-    assert testee.get_area_size(start_point) == expected_result
+    assert testee.get_area_of_region(start_point) == expected_result
 
 
 @pytest.mark.parametrize('input, coordinates, expected_result', [

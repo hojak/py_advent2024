@@ -14,17 +14,17 @@ class PlantArrangement:
     def __init__(self, map):
         self.map = StringMap(map)
 
-    def get_area_size ( self, start_point: Coordinates):
+    def get_area_of_region ( self, start_point: Coordinates):
         work_map = StringMap(self.map.__str__())
         plant = self.map.get_char_at(start_point)
 
         look_into = [ start_point ]
-        result = 0
+        area = 0
         work_map.set_char_at (start_point, " ")
 
         while len(look_into) > 0:
             current = look_into.pop()
-            result += 1            
+            area += 1            
 
             possible_nexts = self.get_neighbors_with_same_plant(current)
             for next in possible_nexts:
@@ -32,7 +32,7 @@ class PlantArrangement:
                     work_map.set_char_at(next, " ")
                     look_into.append (next)
 
-        return result
+        return area
     
     def has_been_visited ( self, work_map: StringMap, location:Coordinates):
         return work_map.get_char_at(location) == " "
