@@ -1,6 +1,6 @@
 import pytest
 
-from adv24Tools.Coordinate import Coordinates
+from adv24Tools.Coordinates import Coordinates
 from day12.PlantArrangement import PlantArrangement
 
 @pytest.mark.parametrize('input, start_point, expected_result', [

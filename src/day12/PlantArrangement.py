@@ -1,5 +1,5 @@
 from adv24Tools.StringMap import StringMap
-from adv24Tools.Coordinate import Coordinates
+from adv24Tools.Coordinates import Coordinates
 
 class PlantArrangement (StringMap):
 

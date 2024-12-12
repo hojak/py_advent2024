@@ -1,6 +1,6 @@
 import math
 
-from adv24Tools.Coordinate import Coordinates 
+from adv24Tools.Coordinates import Coordinates 
 from adv24Tools.StringMap import StringMap
 
 class WordRiddle (StringMap):

@@ -1,4 +1,4 @@
-from adv24Tools.Coordinate import Coordinates
+from adv24Tools.Coordinates import Coordinates
 
 def test_subtract():
     a = Coordinates(4,5)

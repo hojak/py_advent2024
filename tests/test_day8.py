@@ -1,7 +1,7 @@
 import pytest
 
 from day8.AntennaMap import AntennaMap
-from adv24Tools.Coordinate import Coordinates
+from adv24Tools.Coordinates import Coordinates
 
 @pytest.mark.parametrize('input, frequency, expected_locations', [
     ('A', 'A', [Coordinates(0,0)]),

@@ -1,6 +1,6 @@
 import pytest
 
-from adv24Tools.Coordinate import Coordinates
+from adv24Tools.Coordinates import Coordinates
 from day10.TopographicMap import TopographicMap
 
 @pytest.mark.parametrize('map, location, expected_score', [
