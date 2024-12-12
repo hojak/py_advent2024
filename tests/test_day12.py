@@ -4,7 +4,10 @@ from adv24Tools.Coordinates import Coordinates
 from day12.PlantArrangement import PlantArrangement
 
 @pytest.mark.parametrize('input, start_point, expected_result', [
-    ('X', Coordinates(1,1), 1),
+    ('X', Coordinates(0,0), 1),
+ #   ('XX\nXX', Coordinates(1,1), 4),
+    ('XXX\nXAX\nXXX', Coordinates(1,1), 1),
+    ('XXX\nXAX\nXXX', Coordinates(0,0), 8),
 ])
 def test_area_size(input, start_point, expected_result):
     testee = PlantArrangement (input)
