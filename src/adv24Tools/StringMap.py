@@ -51,5 +51,8 @@ class StringMap:
         return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
     
     def get_char_at( self, location: Coordinates ) -> str : 
+        if not self.is_within_bounds(location):
+            return ''
+        
         return self.content[self.index_for_coordinates(location)]
 
