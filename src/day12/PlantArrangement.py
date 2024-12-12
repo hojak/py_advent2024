@@ -20,19 +20,22 @@ class PlantArrangement:
 
         look_into = [ start_point ]
         area = 0
+        perimeter = 0
         work_map.set_char_at (start_point, " ")
 
         while len(look_into) > 0:
             current = look_into.pop()
-            area += 1            
-
+            area += 1   
             possible_nexts = self.get_neighbors_with_same_plant(current)
+
+            perimeter += 4 - len ( possible_nexts)
+
             for next in possible_nexts:
                 if ( work_map.get_char_at(next) == plant ):
                     work_map.set_char_at(next, " ")
                     look_into.append (next)
 
-        return { 'area': area }
+        return { 'area': area, 'perimeter': perimeter }
     
     def has_been_visited ( self, work_map: StringMap, location:Coordinates):
         return work_map.get_char_at(location) == " "

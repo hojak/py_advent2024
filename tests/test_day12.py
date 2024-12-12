@@ -5,7 +5,7 @@ from day12.PlantArrangement import PlantArrangement
 
 @pytest.mark.parametrize('input, start_point, expected_result', [
     ('X', Coordinates(0,0), 1),
- #   ('XX\nXX', Coordinates(1,1), 4),
+    ('XX\nXX', Coordinates(1,1), 4),
     ('XXX\nXAX\nXXX', Coordinates(1,1), 1),
     ('XXX\nXAX\nXXX', Coordinates(0,0), 8),
 ])
@@ -13,6 +13,19 @@ def test_area_of_region(input, start_point, expected_result):
     testee = PlantArrangement (input)
     result = testee.get_data_of_region(start_point)
     assert result['area'] == expected_result
+
+
+@pytest.mark.parametrize('input, start_point, expected_result', [
+    ('X', Coordinates(0,0), 4),
+    ('XX\nXX', Coordinates(1,1), 8),
+    ('XXX\nXAX\nXXX', Coordinates(1,1), 4),
+    ('XXX\nXAX\nXXX', Coordinates(0,0), 16),
+])
+def test_perimeter_of_region(input, start_point, expected_result):
+    testee = PlantArrangement (input)
+    result = testee.get_data_of_region(start_point)
+    assert result['perimeter'] == expected_result
+
 
 
 @pytest.mark.parametrize('input, coordinates, expected_result', [
