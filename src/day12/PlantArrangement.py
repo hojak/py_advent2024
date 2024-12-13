@@ -53,3 +53,16 @@ class PlantArrangement:
               result.append ( position.add(direction))
 
         return result
+    
+
+    def price_for_fences ( self ) :
+        result = 0
+
+        for index in range(len (self.map.content)):
+            coordinates = self.map.coordinates_for_index(index)
+            if ( not self.has_been_visited(coordinates)):
+                region_data = self.get_data_of_region ( coordinates )
+                result += region_data['area'] * region_data['perimeter']
+                
+        return result
+

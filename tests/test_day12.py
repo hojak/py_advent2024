@@ -27,10 +27,31 @@ def test_perimeter_of_region(input, start_point, expected_result):
     assert result['perimeter'] == expected_result
 
 
-
 @pytest.mark.parametrize('input, coordinates, expected_result', [
     ('.X.\n.XX\n', Coordinates(1,1), 2),
 ])
 def test_count_neighbors_with_same_plant(input, coordinates, expected_result):
     testee = PlantArrangement (input)
     assert testee.count_neighbors_with_same_plant(coordinates) == expected_result    
+
+
+
+@pytest.mark.parametrize('input, expected_result', [
+    ('X', 4),
+    ('XX\nXX', 32),
+    ('XXX\nXAX\nXXX', 132),
+    ('OOOOO\nOXOXO\nOOOOO\nOXOXO\nOOOOO', 772),
+    ('''RRRRIICCFF
+RRRRIICCCF
+VVRRRCCFFF
+VVRCCCJFFF
+VVVVCJJCFE
+VVIVCCJJEE
+VVIIICJJEE
+MIIIIIJJEE
+MIIISIJEEE
+MMMISSJEEE''', 1930)
+])
+def test_price_for_fences(input, expected_result):
+    testee = PlantArrangement (input)
+    assert testee.price_for_fences() == expected_result
