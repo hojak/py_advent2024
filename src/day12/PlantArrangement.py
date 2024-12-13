@@ -10,35 +10,34 @@ directions = [
 
 class PlantArrangement:
     map : StringMap
+    still_to_visit : StringMap
 
     def __init__(self, map):
         self.map = StringMap(map)
+        self.still_to_visit = StringMap(self.map.__str__())
 
     def get_data_of_region ( self, start_point: Coordinates):
-        work_map = StringMap(self.map.__str__())
-        plant = self.map.get_char_at(start_point)
-
         look_into = [ start_point ]
         area = 0
         perimeter = 0
-        work_map.set_char_at (start_point, " ")
+        self.still_to_visit.set_char_at (start_point, " ")
 
         while len(look_into) > 0:
             current = look_into.pop()
-            area += 1   
             possible_nexts = self.get_neighbors_with_same_plant(current)
 
+            area += 1   
             perimeter += 4 - len ( possible_nexts)
 
             for next in possible_nexts:
-                if ( work_map.get_char_at(next) == plant ):
-                    work_map.set_char_at(next, " ")
+                if ( not self.has_been_visited ( next )):
+                    self.still_to_visit.set_char_at(next, " ")
                     look_into.append (next)
 
         return { 'area': area, 'perimeter': perimeter }
     
-    def has_been_visited ( self, work_map: StringMap, location:Coordinates):
-        return work_map.get_char_at(location) == " "
+    def has_been_visited ( self, location:Coordinates):
+        return self.still_to_visit.get_char_at(location) == " "
     
     
     def count_neighbors_with_same_plant ( self, position: Coordinates): 
