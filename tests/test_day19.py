@@ -32,3 +32,20 @@ brgr
 bbrgwb''')
 
     assert 6 == count_possible_patterns(desired_patterns, towels)
+
+
+@pytest.mark.parametrize('pattern, expected', [
+    ('a', 1),
+    ('aaaa', 1),
+    ('aaba', 1),
+    ('abcc', 1),
+    ('aacc', 1),
+    ('aXaba', 0),
+    ('aX', 0),
+    ('dd', 2),
+    ('ddd', 3),
+    ('dddd', 1+2+2),
+])
+def test_count_possible_solutions(pattern, expected):
+    available = ['a', 'ab', 'cc', 'd', 'dd']
+    assert expected == count_possible_solutions(pattern, available)
