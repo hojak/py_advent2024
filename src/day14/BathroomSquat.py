@@ -35,3 +35,10 @@ class BathroomSquat:
                 result += 1
 
         return result
+    
+    def safty_factor ( self ):
+        result = 1
+        for quadrant in range(3):
+            result *= self.number_of_robots_in_quadrant(quadrant)
+
+        return result
