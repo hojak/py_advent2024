@@ -22,3 +22,7 @@ class Roboter:
         result.y = result.y % max_size.y
         return result
     
+    def walk ( self, steps, max_size):
+        for i in range(steps):
+            self.position = self.next_position(max_size)
+    

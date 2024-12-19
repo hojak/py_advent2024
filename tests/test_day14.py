@@ -14,9 +14,16 @@ def test_parse_roboter_line():
     ("p=1,1 v=2,3", Coordinates(3,4)),
     ("p=1,2 v=10,10", Coordinates(1,2)),
 ])
-def test_roboter_walk(init_line, expected_position):
+def test_roboter_step(init_line, expected_position):
     max_size = Coordinates(10,10)
 
     testee = Roboter.parse_line(init_line)
     next_position = testee.next_position(max_size)
     assert next_position == expected_position
+
+
+def test_roboter_walk():
+    max_size = Coordinates(150,150)
+    testee = Roboter.parse_line("p=2,4 v=1,2")
+    testee.walk ( 100, max_size)
+    assert testee.position == Coordinates ( 102, 54)
