@@ -1,7 +1,5 @@
 import sys
 
-from day1.Solver import Solver
-
 def main(day: str, input_file) -> None:
     mod = __import__("day" + day + ".Solver", fromlist=['Solver'])
     solver_class = getattr(mod, 'Solver')
