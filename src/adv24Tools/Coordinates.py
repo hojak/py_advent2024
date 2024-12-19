@@ -23,3 +23,9 @@ class Coordinates:
     
     def __eq__(self, value):
         return self.x == value.x and self.y == value.y
+    
+    def is_in_box ( self, top_left, bottom_right):
+        return self.x >= top_left.x \
+            and self.x <= bottom_right.x \
+            and self.y >= top_left.y \
+            and self.y <= bottom_right.y
