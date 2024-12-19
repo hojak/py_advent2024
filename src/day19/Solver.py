@@ -11,3 +11,7 @@ class Solver(problemSolver):
         print ("number of possible patterns")
         print (count_possible_patterns(self.parsed_input, self.towels))
         
+
+    def solve_part2(self):
+        print ("number of all possible solutions")
+        print (count_all_solutions(self.parsed_input, self.towels))

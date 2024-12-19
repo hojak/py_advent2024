@@ -49,3 +49,18 @@ bbrgwb''')
 def test_count_possible_solutions(pattern, expected):
     available = ['a', 'ab', 'cc', 'd', 'dd']
     assert expected == count_possible_solutions(pattern, available)
+
+
+def test_count_all_solutions ():
+    towels = parse_available_towels('r, wr, b, g, bwu, rb, gb, br')
+
+    desired_patterns = re.split ( '\n', '''brwrr
+bggr
+gbbr
+rrbgbr
+ubwu
+bwurrg
+brgr
+bbrgwb''')
+
+    assert 16 == count_all_solutions(desired_patterns, towels)    
