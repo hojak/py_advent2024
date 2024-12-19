@@ -16,6 +16,9 @@ class Roboter:
         result.velocity = Coordinates(int(match.group(3)),int(match.group(4)))
         return result
     
-    def next_position(self) -> Coordinates:
-        return self.position.add ( self.velocity)
+    def next_position(self, max_size) -> Coordinates:
+        result = self.position.add ( self.velocity)
+        result.x = result.x % max_size.x
+        result.y = result.y % max_size.y
+        return result
     

@@ -12,8 +12,11 @@ def test_parse_roboter_line():
 
 @pytest.mark.parametrize('init_line, expected_position', [
     ("p=1,1 v=2,3", Coordinates(3,4)),
+    ("p=1,2 v=10,10", Coordinates(1,2)),
 ])
 def test_roboter_walk(init_line, expected_position):
+    max_size = Coordinates(10,10)
+
     testee = Roboter.parse_line(init_line)
-    next_position = testee.next_position()
+    next_position = testee.next_position(max_size)
     assert next_position == expected_position
