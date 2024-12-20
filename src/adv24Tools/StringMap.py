@@ -1,4 +1,4 @@
-from adv24Tools.Coordinates import Coordinates
+from adv24Tools.Coordinates import Coordinates, directions
 
 
 import math
@@ -54,6 +54,37 @@ class StringMap:
     def is_accessible ( self, coordinates: Coordinates):
         return self.is_within_bounds(coordinates) and self.get_char_at(coordinates) == StringMap.CHAR_FREE
     
+
+    def length_of_path ( self, from_position, to_position ) -> int :
+        CHAR_MARKER = 'O'
+
+        if ( not self.is_accessible(from_position)):
+            return -1
+        
+        step = 0
+
+        queue = [(from_position, 0)]
+
+        while len(queue) > 0:
+            (current_position, steps_till_here) = queue.pop(0) # shift
+
+            if ( not self.is_accessible ( current_position)):
+                continue
+
+            if ( current_position == to_position):
+                self.content = self.content.replace(CHAR_MARKER, StringMap.CHAR_FREE)
+                return steps_till_here
+
+            self.set_char_at(current_position, CHAR_MARKER)
+
+            for direction in directions:
+                next = current_position.add(direction)
+                if ( self.is_accessible(next)):
+                    queue.append( (next, steps_till_here+1))
+                
+        return -1
+
+
     def add_line_breaks ( self, content ): 
         return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
     
