@@ -17,12 +17,11 @@ class MemoryGrid ( StringMap ):
         map = ("." * width + '\n') * height
         super().__init__(map)
 
-
     def mark_corruption(self, coordinates: Coordinates):
         self.set_char_at(coordinates, '#')
 
     def is_accessible ( self, coordinates: Coordinates):
-        return self.get_char_at(coordinates) == '.'
+        return self.is_within_bounds(coordinates) and self.get_char_at(coordinates) == '.'
     
     def steps_to_exit ( self, from_position, to_position ) -> int :
         if ( not self.is_accessible(from_position)):
@@ -62,7 +61,6 @@ class MemoryGrid ( StringMap ):
             print ( str ( lower_end) + " - " + str(upper_end) + " -> " + str(check) )
 
             grid = MemoryGrid.initialize_grid(width, height, list_of_coordinates[:check+1])
-
             if ( grid.steps_to_exit(Coordinates(0,0), Coordinates(width-1, height-1)) >= 0):
                 lower_end = check
             else:

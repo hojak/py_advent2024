@@ -9,6 +9,7 @@ def test_create_grid():
     testee = MemoryGrid(width, height)
     assert height == testee.get_height()
     assert width == testee.get_width()
+    assert len(testee.content) == testee.get_width() * testee.get_height()
 
 
 def test_mark_corruption():
