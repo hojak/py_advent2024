@@ -29,13 +29,14 @@ class RaceMap (StringMap):
         
         return self.length_of_path(cheat_end, self.end()) + 2 
     
-    def number_of_possible_cheats ( self ):
+    def number_of_possible_cheats ( self, threshold: int = 0 ):
         CHAR_MARKER = 'o'
 
         if ( not self.is_accessible(self.start())):
             return 0
         
         number_of_cheats = 0
+        length_of_track = self.length_of_path ( self.start(), self.end())
         
         queue = [(self.start(), 0)]
         while len(queue) > 0:
@@ -54,26 +55,27 @@ class RaceMap (StringMap):
                 next = current_position.add(direction)
                 if ( self.is_accessible(next)):
                     queue.append( (next, steps_till_here+1))
-                elif self.is_possible_cheat ( current_position, direction ):
-                    number_of_cheats += 1
+                else:
+                    remaining_with_cheat = self.get_remaining_length_with_cheat ( current_position, direction )
+
+                    if ( remaining_with_cheat >= 0 and (length_of_track - remaining_with_cheat - 2 - steps_till_here) >= threshold):
+                        number_of_cheats += 1
 
         self.content = self.content.replace(CHAR_MARKER, StringMap.CHAR_FREE)      
         return number_of_cheats
     
 
-    def is_possible_cheat ( self, position, direction ):
+    def get_remaining_length_with_cheat ( self, position, direction ):
         if not self.is_within_bounds(position.add(direction) or not self.is_within_bounds(position.add(direction.mul(2)))):
-            return False
+            return -1
         
         if self.get_char_at(position.add(direction)) != StringMap.CHAR_BLOCK:
-            return False
+            return -1
         
         if not self.is_accessible(position.add(direction.mul(2))):
-            return False
+            return -1
         
-        path_to_go = self.length_of_path(position.add(direction.mul(2)), self.end())
-
-        return path_to_go >= 0
+        return self.length_of_path(position.add(direction.mul(2)), self.end())
 
 
     def print_cheat(self, position, direction):

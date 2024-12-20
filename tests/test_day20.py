@@ -1,6 +1,8 @@
 from day20.RaceMap import RaceMap
 from adv24Tools.Coordinates import Coordinates
 
+import pytest
+
 def test_start_and_end():
     testee = RaceMap('''###############
 #...#...#.....#
@@ -62,3 +64,29 @@ def test_number_op_possible_cheats():
 #...#...#...###
 ###############''')
     assert  44 == testee.number_of_possible_cheats()
+
+
+@pytest.mark.parametrize('threshold, expected_count', [
+    (0, 44),
+    (64, 1),
+    (40, 2),
+    (38, 3),
+    (36, 4),
+])
+def test_number_op_possible_cheats_better_than_threshold(threshold, expected_count):
+    testee = RaceMap('''###############
+#...#...#.....#
+#.#.#.#.#.###.#
+#S#...#.#.#...#
+#######.#.#.###
+#######.#.#...#
+#######.#.###.#
+###..E#...#...#
+###.#######.###
+#...###...#...#
+#.#####.#.###.#
+#.#...#.#.#...#
+#.#.#.#.#.#.###
+#...#...#...###
+###############''')
+    assert  expected_count == testee.number_of_possible_cheats(threshold)
