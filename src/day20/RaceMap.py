@@ -20,3 +20,10 @@ class RaceMap (StringMap):
 
     def end(self):
         return self.end_position
+    
+
+    def length_of_cheat ( self, cheat_start, cheat_end):
+        if not self.is_accessible(cheat_end):
+            return -1
+        
+        return self.length_of_path(cheat_end, self.end()) + 2 
