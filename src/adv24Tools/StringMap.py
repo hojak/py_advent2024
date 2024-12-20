@@ -51,6 +51,9 @@ class StringMap:
     def is_out_of_bounds (self, x, y ) -> bool :
         return not self.is_within_bounds(Coordinates(x,y))
     
+    def is_accessible ( self, coordinates: Coordinates):
+        return self.is_within_bounds(coordinates) and self.get_char_at(coordinates) == StringMap.CHAR_FREE
+    
     def add_line_breaks ( self, content ): 
         return re.sub('(.{'+str(self.get_width())+'})',r'\1\n', content)[:-1]
     

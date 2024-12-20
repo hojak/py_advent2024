@@ -18,9 +18,6 @@ class MemoryGrid ( StringMap ):
 
     def mark_corruption(self, coordinates: Coordinates):
         self.set_char_at(coordinates, StringMap.CHAR_BLOCK)
-
-    def is_accessible ( self, coordinates: Coordinates):
-        return self.is_within_bounds(coordinates) and self.get_char_at(coordinates) == StringMap.CHAR_FREE
     
     def length_of_path ( self, from_position, to_position ) -> int :
         CHAR_MARKER = 'O'
