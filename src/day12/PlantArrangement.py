@@ -1,12 +1,6 @@
 from adv24Tools.StringMap import StringMap
-from adv24Tools.Coordinates import Coordinates
+from adv24Tools.Coordinates import Coordinates, directions
 
-directions = [
-    Coordinates(1,0),
-    Coordinates(0,1),
-    Coordinates(-1,0),
-    Coordinates(0,-1),
-]
 
 class PlantArrangement:
     map : StringMap
