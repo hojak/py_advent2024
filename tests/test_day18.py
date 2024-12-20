@@ -42,7 +42,7 @@ def test_steps_to_exit():
     for coordinates in parse_coordinates ( corruptions ):
         testee.mark_corruption(coordinates)
 
-    assert 22 == testee.steps_to_exit( Coordinates(0,0), Coordinates(6,6) )
+    assert 22 == testee.length_of_path( Coordinates(0,0), Coordinates(6,6) )
 
 
 def test_find_blocking_coordinates():

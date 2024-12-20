@@ -65,7 +65,7 @@ class MemoryGrid ( StringMap ):
             print ( str ( lower_end) + " - " + str(upper_end) + " -> " + str(check) )
 
             grid = MemoryGrid.initialize_grid(width, height, list_of_coordinates[:check+1])
-            if ( grid.steps_to_exit(Coordinates(0,0), Coordinates(width-1, height-1)) >= 0):
+            if ( grid.length_of_path(Coordinates(0,0), Coordinates(width-1, height-1)) >= 0):
                 lower_end = check
             else:
                 upper_end = check

@@ -15,7 +15,7 @@ class Solver(problemSolver):
             testee.mark_corruption(self.parsed_input[i])
 
         print ("number of steps from (0/0) to (70/70)")
-        print ( testee.steps_to_exit(Coordinates(0,0), Coordinates(70,70)))
+        print ( testee.length_of_path(Coordinates(0,0), Coordinates(70,70)))
 
 
     def solve_part2(self):
