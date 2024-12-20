@@ -1,3 +1,4 @@
+
 class Coordinates:
     x: int
     y: int
@@ -29,3 +30,13 @@ class Coordinates:
             and self.x <= bottom_right.x \
             and self.y >= top_left.y \
             and self.y <= bottom_right.y
+    
+
+
+
+directions = [
+    Coordinates(1,0),
+    Coordinates(0,1),
+    Coordinates(-1,0),
+    Coordinates(0,-1),
+]
