@@ -27,19 +27,26 @@ class MemoryGrid ( StringMap ):
         if ( not self.is_accessible(from_position)):
             return -1
         
-        if ( from_position == to_position ):
-            return 0
-        
-        self.set_char_at(from_position, '#')
+        step = 0
 
-        result = -1
-        for direction in directions:
-            next = from_position.add(direction)
-            if ( self.is_accessible(next)):
-                steps_for_this_direction = self.steps_to_exit(next, to_position)
-                if ( steps_for_this_direction >= 0 and ( result == -1 or result > steps_for_this_direction)):
-                    result = steps_for_this_direction + 1
+        queue = [(from_position, 0)]
 
-        self.set_char_at(from_position, '.')
+        while len(queue) > 0:
+            (current_position, steps_till_here) = queue.pop(0) # shift
 
-        return result
+            if ( not self.is_accessible ( current_position)):
+                continue
+
+            if ( current_position == to_position):
+                self.content = self.content.replace('O', '.')
+                return steps_till_here
+
+            self.set_char_at(current_position, 'O')
+
+            for direction in directions:
+                next = current_position.add(direction)
+                if ( self.is_accessible(next)):
+                    queue.append( (next, steps_till_here+1))
+                
+        return -1
+
