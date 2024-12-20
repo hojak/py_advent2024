@@ -16,3 +16,10 @@ class Solver(problemSolver):
 
         print ("number of steps from (0/0) to (70/70)")
         print ( testee.steps_to_exit(Coordinates(0,0), Coordinates(70,70)))
+
+
+    def solve_part2(self):
+        print ("find the blocking corruption")
+        print ( MemoryGrid.find_blocking_coordinates(71, 71, self.parsed_input))
+
+        ## it's not 69/69
