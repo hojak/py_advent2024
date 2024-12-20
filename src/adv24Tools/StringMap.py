@@ -6,9 +6,13 @@ import re
 
 
 class StringMap:
-    content: str
-    width: int
-    heigth: int
+    CHAR_FREE = '.'
+    CHAR_BLOCK = '#'
+
+    # instance attributes
+    # content: str
+    # width: int
+    # heigth: int
 
     def __init__(self, map: str):
         self.content = map

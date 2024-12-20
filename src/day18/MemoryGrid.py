@@ -12,18 +12,15 @@ def parse_coordinates ( input: str) -> [Coordinates] :
 
 
 class MemoryGrid ( StringMap ):
-    CHAR_FREE = '.'
-    CHAR_BLOCK = '#'
-
     def __init__(self, width: int, height: int):
-        map = (MemoryGrid.CHAR_FREE * width + '\n') * height
+        map = (StringMap.CHAR_FREE * width + '\n') * height
         super().__init__(map)
 
     def mark_corruption(self, coordinates: Coordinates):
-        self.set_char_at(coordinates, MemoryGrid.CHAR_BLOCK)
+        self.set_char_at(coordinates, StringMap.CHAR_BLOCK)
 
     def is_accessible ( self, coordinates: Coordinates):
-        return self.is_within_bounds(coordinates) and self.get_char_at(coordinates) == MemoryGrid.CHAR_FREE
+        return self.is_within_bounds(coordinates) and self.get_char_at(coordinates) == StringMap.CHAR_FREE
     
     def length_of_path ( self, from_position, to_position ) -> int :
         CHAR_MARKER = 'O'
@@ -42,7 +39,7 @@ class MemoryGrid ( StringMap ):
                 continue
 
             if ( current_position == to_position):
-                self.content = self.content.replace(CHAR_MARKER, MemoryGrid.CHAR_FREE)
+                self.content = self.content.replace(CHAR_MARKER, StringMap.CHAR_FREE)
                 return steps_till_here
 
             self.set_char_at(current_position, CHAR_MARKER)
