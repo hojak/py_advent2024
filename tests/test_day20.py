@@ -43,4 +43,22 @@ def test_length_of_cheat():
 ###############''')
     assert 72 == testee.length_of_cheat( Coordinates(6,3), Coordinates(7,3))
     assert -1 == testee.length_of_cheat( Coordinates(10,2), Coordinates(11,2))
-    
+
+
+def test_number_op_possible_cheats():
+    testee = RaceMap('''###############
+#...#...#.....#
+#.#.#.#.#.###.#
+#S#...#.#.#...#
+#######.#.#.###
+#######.#.#...#
+#######.#.###.#
+###..E#...#...#
+###.#######.###
+#...###...#...#
+#.#####.#.###.#
+#.#...#.#.#...#
+#.#.#.#.#.#.###
+#...#...#...###
+###############''')
+    assert  44 == testee.number_of_possible_cheats()
