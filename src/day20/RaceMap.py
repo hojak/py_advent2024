@@ -42,6 +42,8 @@ class RaceMap (StringMap):
         while len(queue) > 0:
             (current_position, steps_till_here) = queue.pop(0) # shift
 
+            print ("still to go: " + str(length_of_track-steps_till_here))
+
             if ( not self.is_accessible ( current_position)):
                 continue
 
