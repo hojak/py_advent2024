@@ -29,3 +29,6 @@ def sum_for_buyers ( list_of_secreats: list ) -> int:
     for secret in list_of_secreats:
         result += apply_n_secret_steps(secret, 2000)
     return result
+
+def get_price ( value: int) -> int : 
+    return value % 10

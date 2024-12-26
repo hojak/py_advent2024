@@ -1,4 +1,4 @@
-from day22.tools import mix_in, prune, next_secret_value, apply_n_secret_steps, sum_for_buyers
+from day22.tools import *
 
 import pytest
 
@@ -40,6 +40,14 @@ def test_next_secret_value(value, expected):
 def test_apply_n_sectret_steps (base, steps, expected):
     assert apply_n_secret_steps(base, steps) == expected
 
-
 def test_sum_for_buyers():
     assert sum_for_buyers([1,10,100,2024]) == 37327623
+
+
+@pytest.mark.parametrize('value, expected_price', [
+    (10,0),
+    (103,3),
+    (124123423,3),
+])
+def test_get_price(value, expected_price):
+    assert get_price ( value) == expected_price
