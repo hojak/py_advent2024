@@ -17,3 +17,9 @@ def step2 ( current: int ) -> int :
 
 def step3 ( current: int ) -> int :
     return prune ( mix_in ( current * 2048, current))
+
+def apply_n_secret_steps ( base: int, steps: int ) -> int :
+    result = base
+    for step in range(steps):
+        result = next_secret_value(result)
+    return result

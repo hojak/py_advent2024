@@ -1,4 +1,4 @@
-from day22.tools import mix_in, prune, next_secret_value
+from day22.tools import mix_in, prune, next_secret_value, apply_n_secret_steps
 
 import pytest
 
@@ -26,3 +26,16 @@ def test_prune(value, expected):
 ])
 def test_next_secret_value(value, expected):
     assert next_secret_value(value) == expected
+
+
+@pytest.mark.parametrize('base, steps, expected', [
+    (10,0,10),
+    (123, 1, 15887950),
+    (123, 2, 16495136),
+    (1, 2000, 8685429),
+    (10, 2000, 4700978),
+    (100, 2000, 15273692),
+    (2024, 2000, 8667524),
+])
+def test_apply_n_sectret_steps (base, steps, expected):
+    assert apply_n_secret_steps(base, steps) == expected
