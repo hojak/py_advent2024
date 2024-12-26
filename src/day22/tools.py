@@ -23,3 +23,9 @@ def apply_n_secret_steps ( base: int, steps: int ) -> int :
     for step in range(steps):
         result = next_secret_value(result)
     return result
+
+def sum_for_buyers ( list_of_secreats: list ) -> int:
+    result = 0
+    for secret in list_of_secreats:
+        result += apply_n_secret_steps(secret, 2000)
+    return result

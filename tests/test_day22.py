@@ -1,4 +1,4 @@
-from day22.tools import mix_in, prune, next_secret_value, apply_n_secret_steps
+from day22.tools import mix_in, prune, next_secret_value, apply_n_secret_steps, sum_for_buyers
 
 import pytest
 
@@ -39,3 +39,7 @@ def test_next_secret_value(value, expected):
 ])
 def test_apply_n_sectret_steps (base, steps, expected):
     assert apply_n_secret_steps(base, steps) == expected
+
+
+def test_sum_for_buyers():
+    assert sum_for_buyers([1,10,100,2024]) == 37327623
