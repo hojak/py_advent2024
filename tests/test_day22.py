@@ -51,3 +51,10 @@ def test_sum_for_buyers():
 ])
 def test_get_price(value, expected_price):
     assert get_price ( value) == expected_price
+
+
+def test_sequence_str():
+    assert str(Sequence ([1,2,3,4])) == "1/2/3/4"
+
+def test_next_sequence():
+    assert Sequence([1,2,3,4]).next(5) == Sequence ([2,3,4,5])

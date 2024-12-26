@@ -32,3 +32,17 @@ def sum_for_buyers ( list_of_secreats: list ) -> int:
 
 def get_price ( value: int) -> int : 
     return value % 10
+
+
+class Sequence:
+    def __init__(self, sequence : list):
+        self.sequence = sequence
+
+    def next(self, value):
+        return Sequence(self.sequence[1:] + [value])
+    
+    def __eq__(self, value):
+        return self.sequence == value.sequence
+    
+    def __str__(self):
+        return '/'.join( list(map(lambda i: str(i), self.sequence )))
