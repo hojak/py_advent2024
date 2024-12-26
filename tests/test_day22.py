@@ -1,4 +1,4 @@
-from day22.tools import mix_in
+from day22.tools import mix_in, prune
 
 import pytest
 
@@ -10,3 +10,9 @@ import pytest
 ])
 def test_mix_in(a, b, expected):   
     assert mix_in(a, b) == expected
+
+@pytest.mark.parametrize('value, expected', [
+    (100000000, 16113920)
+])
+def test_prune(value, expected):
+    assert prune ( value ) == expected
