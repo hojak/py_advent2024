@@ -1,4 +1,4 @@
-from day22.tools import mix_in, prune
+from day22.tools import mix_in, prune, next_secret_value
 
 import pytest
 
@@ -16,3 +16,13 @@ def test_mix_in(a, b, expected):
 ])
 def test_prune(value, expected):
     assert prune ( value ) == expected
+
+@pytest.mark.parametrize('value, expected', [
+    (123, 15887950),
+    (15887950, 16495136),
+    (16495136, 527345),
+    (527345, 704524),
+    (704524, 1553684),
+])
+def test_next_secret_value(value, expected):
+    assert next_secret_value(value) == expected
