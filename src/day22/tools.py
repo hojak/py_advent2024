@@ -73,7 +73,6 @@ class SequenceGains:
 
 
     def get_best_sequence(self):
-        print (self.sequence_gains)
         stored_by_price = sorted(self.sequence_gains.items(), key=lambda x:x[1], reverse=True)
         (sequence, price) = stored_by_price[0]
         return sequence
