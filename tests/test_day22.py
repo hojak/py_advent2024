@@ -58,3 +58,11 @@ def test_sequence_str():
 
 def test_next_sequence():
     assert Sequence([1,2,3,4]).next(5) == Sequence ([2,3,4,5])
+
+
+def test_banana_collector():
+    testee = BananaCollector()
+    testee.compute_possible_buyer_sequences(123, 10)
+    
+    assert Sequence([-1,-1,0,2]) == testee.get_best_sequence()
+    assert 6 == testee.get_gain_for_sequence(Sequence([-1,-1,0,2]))

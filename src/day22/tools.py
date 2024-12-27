@@ -42,7 +42,47 @@ class Sequence:
         return Sequence(self.sequence[1:] + [value])
     
     def __eq__(self, value):
-        return self.sequence == value.sequence
+        return str(self) == str(value)
     
     def __str__(self):
         return '/'.join( list(map(lambda i: str(i), self.sequence )))
+    
+
+class BananaCollector:
+    def __init__(self):
+        self.sequence_gains = {}
+
+
+    def register_gain ( self, sequence, price):
+        index = str(sequence)
+        if ( not index in self.sequence_gains):
+            self.sequence_gains[index] = price
+        else:
+            print ("already seen " + str(sequence))
+
+    def compute_possible_buyer_sequences(self, secret, steps):
+        current_secret = secret
+        price = get_price(current_secret)
+
+        sequence = Sequence([0,0,0,0])
+        for i in range(steps):
+            last_price = price
+            current_secret = next_secret_value(current_secret)
+            price = get_price(current_secret)
+            sequence = sequence.next(price - last_price)
+            
+            if (i>3):
+                self.register_gain (sequence, price)
+
+
+
+    def get_best_sequence(self):
+        print (self.sequence_gains)
+        stored_by_price = sorted(self.sequence_gains.items(), key=lambda x:x[1], reverse=True)
+        (sequence, price) = stored_by_price[0]
+        return sequence
+
+
+    def get_gain_for_sequence(self, sequence):
+        return self.sequence_gains[str(sequence)]
+
