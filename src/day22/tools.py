@@ -52,8 +52,7 @@ class SequenceGains:
     def __init__(self):
         self.sequence_gains = {}
 
-
-    def register_gain ( self, sequence, price):
+    def register_gain(self, sequence, price):
         index = str(sequence)
         if ( not index in self.sequence_gains):
             self.sequence_gains[index] = price
@@ -82,4 +81,26 @@ class SequenceGains:
 
     def get_gain_for_sequence(self, sequence):
         return self.sequence_gains[str(sequence)]
+    
+
+    def merge ( self, other_sequence_gain ):
+        for key in other_sequence_gain.sequence_gains:
+            if ( key in self.sequence_gains):
+                self.sequence_gains[key] += other_sequence_gain.sequence_gains[key]
+            else:
+                self.sequence_gains[key] = other_sequence_gain.sequence_gains[key]
+
+
+    def best_sequence_for_buyers ( buyer_secrets: list ):
+        sequence_gain = SequenceGains()
+
+        for secret in buyer_secrets:
+            buyer_sequences = SequenceGains()
+            buyer_sequences.compute_possible_buyer_sequences(secret, 2000)
+
+            sequence_gain.merge ( buyer_sequences )
+
+        best_sequence = sequence_gain.get_best_sequence()
+
+        return ( best_sequence, sequence_gain.get_gain_for_sequence ( best_sequence ))
 

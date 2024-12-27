@@ -66,3 +66,9 @@ def test_banana_collector():
     
     assert Sequence([-1,-1,0,2]) == testee.get_best_sequence()
     assert 6 == testee.get_gain_for_sequence(Sequence([-1,-1,0,2]))
+
+def test_getting_sequence_for_multimple_buyers():
+    (sequence, result) = SequenceGains.best_sequence_for_buyers([1,2,3,2024])
+
+    assert sequence == "-2/1/-1/3"
+    assert result == 23
