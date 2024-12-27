@@ -48,7 +48,7 @@ class Sequence:
         return '/'.join( list(map(lambda i: str(i), self.sequence )))
     
 
-class BananaCollector:
+class SequenceGains:
     def __init__(self):
         self.sequence_gains = {}
 
@@ -73,7 +73,6 @@ class BananaCollector:
             
             if (i>3):
                 self.register_gain (sequence, price)
-
 
 
     def get_best_sequence(self):

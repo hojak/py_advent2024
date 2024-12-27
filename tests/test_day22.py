@@ -61,7 +61,7 @@ def test_next_sequence():
 
 
 def test_banana_collector():
-    testee = BananaCollector()
+    testee = SequenceGains()
     testee.compute_possible_buyer_sequences(123, 10)
     
     assert Sequence([-1,-1,0,2]) == testee.get_best_sequence()
