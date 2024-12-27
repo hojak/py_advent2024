@@ -57,9 +57,7 @@ class SequenceGains:
         index = str(sequence)
         if ( not index in self.sequence_gains):
             self.sequence_gains[index] = price
-        else:
-            print ("already seen " + str(sequence))
-
+    
     def compute_possible_buyer_sequences(self, secret, steps):
         current_secret = secret
         price = get_price(current_secret)
