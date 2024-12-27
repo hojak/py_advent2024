@@ -1,4 +1,4 @@
-from day22.tools import mix_in, prune, next_secret_value, apply_n_secret_steps, sum_for_buyers
+from day22.tools import *
 
 import pytest
 
@@ -40,6 +40,35 @@ def test_next_secret_value(value, expected):
 def test_apply_n_sectret_steps (base, steps, expected):
     assert apply_n_secret_steps(base, steps) == expected
 
-
 def test_sum_for_buyers():
     assert sum_for_buyers([1,10,100,2024]) == 37327623
+
+
+@pytest.mark.parametrize('value, expected_price', [
+    (10,0),
+    (103,3),
+    (124123423,3),
+])
+def test_get_price(value, expected_price):
+    assert get_price ( value) == expected_price
+
+
+def test_sequence_str():
+    assert str(Sequence ([1,2,3,4])) == "1/2/3/4"
+
+def test_next_sequence():
+    assert Sequence([1,2,3,4]).next(5) == Sequence ([2,3,4,5])
+
+
+def test_banana_collector():
+    testee = SequenceGains()
+    testee.compute_possible_buyer_sequences(123, 10)
+    
+    assert Sequence([-1,-1,0,2]) == testee.get_best_sequence()
+    assert 6 == testee.get_gain_for_sequence(Sequence([-1,-1,0,2]))
+
+def test_getting_sequence_for_multimple_buyers():
+    (sequence, result) = SequenceGains.best_sequence_for_buyers([1,2,3,2024])
+
+    assert sequence == "-2/1/-1/3"
+    assert result == 23
