@@ -14,3 +14,19 @@ class Solver (problemSolver):
                 self.holes.append(Keyhole(definition))
             else:
                 self.keys.append(Key(definition))
+
+    def count_number_of_fits(self): 
+        result = 0
+
+        for key in self.keys:
+            for hole in self.holes:
+                if key.fits_into(hole):
+                    result += 1
+
+        return result
+
+
+    def solve_part1(self):
+        pass
+
+        
