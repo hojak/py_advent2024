@@ -21,3 +21,21 @@ def test_create_keys (init_string, expected_heights):
     testee = Key ( init_string)
     for column in range(len(expected_heights)):
         assert testee.get_height(column) == expected_heights[column]
+
+@pytest.mark.parametrize('key_definition, hole_definition', [
+    (".....\n.....\n.....\n.....\n.....\n.....\n#####","#####\n.....\n.....\n.....\n.....\n.....\n....."),
+    (".....\n#####\n#####\n#####\n#####\n#####\n#####","#####\n.....\n.....\n.....\n.....\n.....\n....."),
+])
+def test_fits_into(key_definition, hole_definition):
+    key = Key (key_definition )
+    hole = Keyhole (hole_definition )
+    assert key.fits_into(hole)
+
+@pytest.mark.parametrize('key_definition, hole_definition', [
+    (".....\n.....\n#....\n#....\n#....\n#....\n#####","#####\n#....\n#....\n.....\n.....\n.....\n....."),
+    (".....\n.....\n.....\n#....\n#....\n#....\n#####","#####\n#....\n#....\n#....\n.....\n.....\n....."),
+])
+def test_does_not_fit_into(key_definition, hole_definition):
+    key = Key (key_definition )
+    hole = Keyhole (hole_definition )
+    assert key.fits_into(hole) == False
