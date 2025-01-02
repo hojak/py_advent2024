@@ -27,6 +27,7 @@ class Solver (problemSolver):
 
 
     def solve_part1(self):
-        pass
+        print ("Number of possible key / hole pairs")
+        print (self.count_number_of_fits())
 
         
