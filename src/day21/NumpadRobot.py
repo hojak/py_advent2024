@@ -12,3 +12,7 @@ class NumpadRobot (StringMap):
     
     def current_key(self):
         return self.get_char_at(self.position)
+    
+    def get_coordinates_for(self, key):
+        return self.coordinates_for_index(self.content.index(key))
+    
