@@ -1,18 +1,14 @@
 from adv24Tools.Coordinates import Coordinates
+from adv24Tools.StringMap import StringMap
 
-class NumpadRobot:
-    keys = [
-        ['7','8','9'],
-        ['4','5','6'],
-        ['1','2','3'],
-        [' ','0','A']
-    ]
+class NumpadRobot (StringMap):
 
     def __init__(self):
+        super().__init__("789\n456\n123\n 0A")
         self.position = Coordinates(2,3)
         
     def current_position(self):
         return self.position
     
     def current_key(self):
-        return NumpadRobot.keys[self.position.y][self.position.x]
+        return self.get_char_at(self.position)
