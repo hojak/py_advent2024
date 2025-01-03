@@ -72,3 +72,4 @@ def test_getting_sequence_for_multimple_buyers():
 
     assert sequence == "-2/1/-1/3"
     assert result == 23
+    
