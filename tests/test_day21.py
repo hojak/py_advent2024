@@ -25,12 +25,12 @@ def test_numpad_robot_path_to_current_key(key):
     testee.position = testee.get_coordinates_for(key)
     assert testee.go_to_key (key) == ""
 
-
-@pytest.mark.parametrize('key, expected_path', [
-    ("9", "^^^"),
-    ("6", '^^'),
-    ('7', '^^^<<'),
+@pytest.mark.parametrize('start_key, target_key, expected_path', [
+    ("A", "9", "^^^"),
+    ("A", "6", '^^'),
+    ("A", '7', '^^^<<'),
 ])
-def test_numpad_robot_path_from_A_to_given_key(key, expected_path):
+def test_numpad_robot_path_between_given_keys(start_key, target_key, expected_path):
     testee = NumpadRobot()
-    assert testee.go_to_key(key) == expected_path
+    testee.position = testee.get_coordinates_for(start_key)
+    assert testee.go_to_key(target_key) == expected_path
