@@ -43,3 +43,11 @@ def test_directionpad_robot_path_between_given_keys(start_key, target_key, expec
     testee.position = testee.get_coordinates_for(start_key)
     assert testee.go_to_key(target_key) == expected_path
     assert testee.current_position() == testee.get_coordinates_for(target_key)
+
+
+def test_steer_a_numpad_robot():
+    testee = DirectionpadRobot()
+    numpad_robot = NumpadRobot()
+    testee.assign_robot_to_steer(numpad_robot)
+
+    assert testee.make_numpad_go_to_key ('0') == 'v<<A'
