@@ -29,6 +29,9 @@ class NumpadRobot (StringMap):
         if ( target.x < self.current_position().x):
             path += "<" * (self.current_position().x - target.x)
 
+        if ( target.y > self.current_position().y):
+            path += "v" * (target.y - self.current_position().y)
+
         return path
     
     
