@@ -47,6 +47,8 @@ def test_directionpad_robot_path_between_given_keys(start_key, target_key, expec
 
 @pytest.mark.parametrize('key, expected_path', [
     ("0", 'v<<A' + '>>^A'),
+    ("6", '<A' + 'A' + '>A'), # ^^A
+    ("7", '<A' + 'A' + 'A' + 'v<A' + 'A' + '>>^A'), # ^^^<<A
 ])
 def test_make_a_numpad_robot_press_key(key, expected_path):
     testee = DirectionpadRobot()
