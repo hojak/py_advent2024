@@ -82,3 +82,13 @@ class DirectionpadRobot (Robot):
 
         return my_path
     
+    def make_numpad_press_key(self, target_key):
+        path_of_assigned = self.robot_to_steer.go_to_key(target_key) + "A"
+
+        my_path = ""
+        for key in path_of_assigned:
+            my_path += self.go_to_key(key) + "A"
+
+        return my_path
+
+    
