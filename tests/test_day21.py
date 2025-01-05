@@ -55,7 +55,7 @@ def test_make_a_numpad_robot_press_key(key, expected_path):
     numpad_robot = NumpadRobot()
     testee.assign_robot_to_steer(numpad_robot)
 
-    assert testee.make_numpad_press_key (key) == expected_path
+    assert testee.make_assigned_press_key (key) == expected_path
 
 
 @pytest.mark.parametrize('sequence, expected_path', [
@@ -66,4 +66,4 @@ def test_make_a_numpad_robot_press_key(sequence, expected_path):
     numpad_robot = NumpadRobot()
     testee.assign_robot_to_steer(numpad_robot)
 
-    assert testee.make_numpad_press_sequence(sequence) == expected_path
+    assert testee.make_assigned_press_sequence(sequence) == expected_path

@@ -17,6 +17,8 @@ class Robot(StringMap):
     def current_position(self):
         return self.position
     
+    def press_key ( self, key):
+        return self.go_to_key(key) + "A"
 
     
 
@@ -69,23 +71,24 @@ class DirectionpadRobot (Robot):
         self.position = target
 
         return path     
+    
 
     def assign_robot_to_steer(self, robot: Robot):
         self.robot_to_steer = robot
     
-    def make_numpad_press_key(self, target_key):
+    def make_assigned_press_key(self, target_key):
         path_of_assigned = self.robot_to_steer.go_to_key(target_key) + "A"
 
         my_path = ""
         for key in path_of_assigned:
-            my_path += self.go_to_key(key) + "A"
+            my_path += self.press_key(key)
 
         return my_path
     
-    def make_numpad_press_sequence(self, sequence):
+    def make_assigned_press_sequence(self, sequence):
         result = ''
         for key in sequence:
-            result += self.make_numpad_press_key(key)
+            result += self.make_assigned_press_key(key)
 
         return result
 
