@@ -88,6 +88,7 @@ def test_make_a_directionpad_robot_enter_sequence(sequence, expected_path):
 # instead of
 # v<A<AA>>^AvAA^<A>Av<<A>>^AvA^Av<A>^A<Av<A>>^AAvA^Av<A<A>>^AAAvA^<A>A
 # v<<A>>^A<A>AvA^<AA>Av<AAA>^A
+# -> yes, the next test shows, it is a problem
 @pytest.mark.parametrize('sequence, expected_path', [
     ("0", 'v<A<AA>>^AvAA^<A>A'), # 0 -> '<A' -> 'v<<A>>^A' -> 'v<A<AA>>^AvAA^<A>A'
     ('029A', 'v<A<AA>>^AvAA^<A>Av<<A>>^AvA^Av<A>^A<Av<A>>^AAvA^Av<A<A>>^AAAvA^<A>A'),
@@ -104,6 +105,10 @@ def test_make_final_robot_with_intermediate_enter_sequence(sequence, expected_pa
 
 @pytest.mark.parametrize('code, expected_length', [
     ('029A', len('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A')),
+    ('980A', len('<v<A>>^AAAvA^A<vA<AA>>^AvAA<^A>A<v<A>A>^AAAvA<^A>A<vA>^A<A>A')),
+    ('179A', len('<v<A>>^A<vA<A>>^AAvAA<^A>A<v<A>>^AAvA^A<vA>^AA<A>A<v<A>A>^AAAvA<^A>A') ),
+    ('456A', len('<v<A>>^AA<vA<A>>^AAvAA<^A>A<vA>^A<A>A<vA>^A<A>A<v<A>A>^AAvA<^A>A')),
+    ('379A', len('<v<A>>^AvA^A<vA<AA>>^AAvA<^A>AAvA^A<vA>^AA<A>A<v<A>A>^AAAvA<^A>A')),
 ])
 def test_sequence_length_for_code(code, expected_length):
     testee = DirectionpadRobot()
