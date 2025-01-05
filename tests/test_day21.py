@@ -29,6 +29,7 @@ def test_numpad_robot_path_to_current_key(key):
 @pytest.mark.parametrize('key, expected_path', [
     ("9", "^^^"),
     ("6", '^^'),
+    ('7', '^^^<<'),
 ])
 def test_numpad_robot_path_from_A_to_given_key(key, expected_path):
     testee = NumpadRobot()
