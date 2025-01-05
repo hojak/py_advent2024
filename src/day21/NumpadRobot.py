@@ -20,5 +20,9 @@ class NumpadRobot (StringMap):
         target = self.get_coordinates_for(key)
         path = ''
 
+        if ( target.y < self.current_position().y):
+            path += "^" * (self.current_position().y - target.y)
+
         return path
+    
     

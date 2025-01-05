@@ -1,6 +1,7 @@
 from day21.NumpadRobot import NumpadRobot
 from adv24Tools.Coordinates import Coordinates
 
+import pytest
 
 def test_numpad_robot_create ():
     testee = NumpadRobot()
@@ -25,6 +26,6 @@ def test_numpad_robot_path_to_current_key(key):
     assert testee.go_to_key (key) == ""
 
 
-def test_numpad_robot_path_from_A_to_A():
+def test_numpad_robot_path_from_A_to_9():
     testee = NumpadRobot()
-    assert testee.go_to_key ('A') == ""
+    assert testee.go_to_key("9") == "^^^"
