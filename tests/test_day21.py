@@ -28,3 +28,4 @@ def test_numpad_robot_path_between_given_keys(start_key, target_key, expected_pa
     testee = NumpadRobot()
     testee.position = testee.get_coordinates_for(start_key)
     assert testee.go_to_key(target_key) == expected_path
+    assert testee.current_position() == testee.get_coordinates_for(target_key)
