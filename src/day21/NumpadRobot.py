@@ -81,5 +81,12 @@ class DirectionpadRobot (Robot):
             my_path += self.go_to_key(key) + "A"
 
         return my_path
+    
+    def make_numpad_press_sequence(self, sequence):
+        result = ''
+        for key in sequence:
+            result += self.make_numpad_press_key(key)
+
+        return result
 
     
