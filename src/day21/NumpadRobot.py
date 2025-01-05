@@ -7,6 +7,7 @@ class Robot(StringMap):
     def __init__(self, map, start_position):
         super().__init__(map)
         self.position = start_position
+        self.robot_to_steer = None
 
     def get_coordinates_for(self, key):
         return self.coordinates_for_index(self.content.index(key))
@@ -20,6 +21,18 @@ class Robot(StringMap):
     def press_key ( self, key):
         return self.go_to_key(key) + "A"
 
+    def make_final_robot_enter(self, sequence):
+        if self.robot_to_steer == None:
+            my_sequence = sequence
+        else:
+            my_sequence = self.robot_to_steer.make_final_robot_enter(sequence)
+        
+        print ("sequence: "+sequence + " -> " + my_sequence)
+
+        result = ''
+        for key in my_sequence:
+            result += self.press_key(key)
+        return result
     
 
 class NumpadRobot (Robot):
@@ -93,3 +106,4 @@ class DirectionpadRobot (Robot):
         return result
 
     
+            
