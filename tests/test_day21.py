@@ -101,3 +101,15 @@ def test_make_final_robot_with_intermediate_enter_sequence(sequence, expected_pa
 
     assert testee.make_final_robot_enter(sequence) == expected_path
 
+
+@pytest.mark.parametrize('code, expected_length', [
+    ('029A', len('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A')),
+])
+def test_sequence_length_for_code(code, expected_length):
+    testee = DirectionpadRobot()
+    intermediate = DirectionpadRobot()
+    numpad = NumpadRobot()
+    intermediate.assign_robot_to_steer(numpad)
+    testee.assign_robot_to_steer(intermediate)
+
+    assert testee.length_of_sequence_for_code(code) == expected_length

@@ -34,6 +34,8 @@ class Robot(StringMap):
             result += self.press_key(key)
         return result
     
+    def length_of_sequence_for_code(self, code):
+        return len ( self.make_final_robot_enter(code))
 
 class NumpadRobot (Robot):
     def __init__(self):
