@@ -71,6 +71,7 @@ def test_make_a_numpad_robot_enter_sequence(sequence, expected_path):
 
 @pytest.mark.parametrize('sequence, expected_path', [
     ("<", 'v<A<AA>>^A'), 
+    ("v<", 'v<A<A>>^Av<<A>>^A'), # 'v<A<A'), 
 ])
 def test_make_a_directionpad_robot_enter_sequence(sequence, expected_path):
     testee = DirectionpadRobot()
