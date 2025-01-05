@@ -21,6 +21,7 @@ def test_robot_get_coordinates_of_key():
     ("A", "9", "^^^"),
     ("A", "6", '^^'),
     ("A", '7', '^^^<<'),
+    ('7', '9', '>>'),
 ])
 def test_numpad_robot_path_between_given_keys(start_key, target_key, expected_path):
     testee = NumpadRobot()
