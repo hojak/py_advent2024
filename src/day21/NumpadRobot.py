@@ -16,3 +16,9 @@ class NumpadRobot (StringMap):
     def get_coordinates_for(self, key):
         return self.coordinates_for_index(self.content.index(key))
     
+    def go_to_key(self, key):
+        target = self.get_coordinates_for(key)
+        path = ''
+
+        return path
+    
