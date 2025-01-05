@@ -14,18 +14,10 @@ def test_robot_get_coordinates_of_key():
     assert testee.get_coordinates_for ('2') == Coordinates(1,2)
     assert testee.get_coordinates_for ('9') == Coordinates(2,0)
     
-
-@pytest.mark.parametrize('key', [
-    ("A"),
-    ("1"),
-    ("7"),
-])
-def test_numpad_robot_path_to_current_key(key):
-    testee = NumpadRobot()
-    testee.position = testee.get_coordinates_for(key)
-    assert testee.go_to_key (key) == ""
-
 @pytest.mark.parametrize('start_key, target_key, expected_path', [
+    ("A", "A", ""),
+    ("1", "1", ""),
+    ("7", "7", ""),
     ("A", "9", "^^^"),
     ("A", "6", '^^'),
     ("A", '7', '^^^<<'),
