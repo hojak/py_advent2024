@@ -35,6 +35,26 @@ def test_numpad_robot_path_between_given_keys(start_key, target_key, expected_pa
     assert testee.go_to_key(target_key) == expected_path
     assert testee.current_position() == testee.get_coordinates_for(target_key)
 
+##
+# assumptions:
+#  - it is never longer only to walk in one diretion completly (only ^^>> and >>^^, not ^>^> or >^>^)
+@pytest.mark.parametrize('start_key, target_key, expected_paths', [
+    ("A", "A", ['']),
+    ("1", "1", ['']),
+    ("7", "7", ['']),
+    ("A", "9", ['^^^']),
+    ("A", "6", ['^^']),
+    ("A", '7', ['^^^<<']),
+    ('7', '9', ['>>']),
+    ('7', 'A', ['>>vvv']),
+    ('3', '5', ['<^','^<'])
+])
+def test_numpad_robot_all_paths_between_given_keys(start_key, target_key, expected_paths):
+    testee = NumpadRobot()
+    testee.position = testee.get_coordinates_for(start_key)
+    assert testee.go_to_key_and_return_all_paths(target_key) == expected_paths
+    assert testee.current_position() == testee.get_coordinates_for(target_key)
+
 
 
 @pytest.mark.parametrize('start_key, target_key, expected_path', [

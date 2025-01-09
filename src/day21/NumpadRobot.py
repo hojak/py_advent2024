@@ -61,6 +61,31 @@ class NumpadRobot (Robot):
         self.position = target
 
         return path
+    
+    def go_to_key_and_return_all_paths(self, key):
+        target = self.get_coordinates_for(key)
+        directions = []
+
+        if ( target.x > self.current_position().x):
+            directions += [ ">" * (target.x - self.current_position().x) ]
+        if ( target.x < self.current_position().x):
+            directions += [ "<" * (self.current_position().x - target.x) ]
+        if ( target.y < self.current_position().y):
+            directions += [ "^" * (self.current_position().y - target.y) ]
+        if ( target.y > self.current_position().y):
+            directions += [ "v" * (target.y - self.current_position().y) ]
+
+        old_position = self.position
+        self.position = target
+
+        if ( len(directions) <= 1 ):
+            return ["".join(directions)]
+        elif target.x == self.illegal.x and self.illegal.y == old_position.y:
+            return [directions[1] + directions[0]]
+        elif target.y == self.illegal.y and self.illegal.x == old_position.x:
+            return [directions[0] + directions[1]]
+        else:
+            return [directions[0] + directions[1], directions[1] + directions[0]]
 
         
 class DirectionpadRobot (Robot):
