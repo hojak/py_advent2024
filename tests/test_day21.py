@@ -7,6 +7,11 @@ def test_numpad_robot_create ():
     testee = NumpadRobot()
     assert testee.current_position() == Coordinates (2,3)
     assert testee.current_key() == 'A'
+    assert testee.illegal == Coordinates(0,3)
+
+def test_directionpad_robot_create():
+    testee = DirectionpadRobot()
+    assert testee.illegal == Coordinates(0,0)
 
 
 def test_robot_get_coordinates_of_key():

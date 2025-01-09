@@ -8,6 +8,7 @@ class Robot(StringMap):
         super().__init__(map)
         self.position = start_position
         self.robot_to_steer = None
+        self.illegal = self.get_coordinates_for(" ")
 
     def get_coordinates_for(self, key):
         return self.coordinates_for_index(self.content.index(key))
