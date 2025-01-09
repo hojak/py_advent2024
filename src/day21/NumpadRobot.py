@@ -117,21 +117,6 @@ class DirectionpadRobot (Robot):
     def assign_robot_to_steer(self, robot: Robot):
         self.robot_to_steer = robot
     
-    def make_assigned_press_key(self, target_key):
-        path_of_assigned = self.robot_to_steer.go_to_key(target_key) + "A"
-
-        my_path = ""
-        for key in path_of_assigned:
-            my_path += self.press_key(key)
-
-        return my_path
-    
-    def make_assigned_press_sequence(self, sequence):
-        result = ''
-        for key in sequence:
-            result += self.make_assigned_press_key(key)
-
-        return result
 
     
             

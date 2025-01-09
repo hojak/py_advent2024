@@ -70,41 +70,6 @@ def test_directionpad_robot_path_between_given_keys(start_key, target_key, expec
     assert testee.current_position() == testee.get_coordinates_for(target_key)
 
 
-@pytest.mark.parametrize('key, expected_path', [
-    ("0", 'v<<A' + '>>^A'),
-    ("6", '<A' + 'A' + '>A'), # ^^A
-    ("7", '<A' + 'A' + 'A' + 'v<A' + 'A' + '>>^A'), # ^^^<<A
-])
-def test_make_a_numpad_robot_press_key(key, expected_path):
-    testee = DirectionpadRobot()
-    numpad_robot = NumpadRobot()
-    testee.assign_robot_to_steer(numpad_robot)
-
-    assert testee.make_assigned_press_key (key) == expected_path
-
-
-@pytest.mark.parametrize('sequence, expected_path', [
-    ("029A", 'v<<A>>^A<A>AvA^<AA>Av<AAA>^A'),
-])
-def test_make_a_numpad_robot_enter_sequence(sequence, expected_path):
-    testee = DirectionpadRobot()
-    numpad_robot = NumpadRobot()
-    testee.assign_robot_to_steer(numpad_robot)
-
-    assert testee.make_assigned_press_sequence(sequence) == expected_path
-
-
-@pytest.mark.parametrize('sequence, expected_path', [
-    ("<", 'v<A<AA>>^A'), 
-    ("v<", 'v<A<A>>^Av<<A>>^A'), # 'v<A<A'), 
-])
-def test_make_a_directionpad_robot_enter_sequence(sequence, expected_path):
-    testee = DirectionpadRobot()
-    to_steer = DirectionpadRobot()
-    testee.assign_robot_to_steer(to_steer)
-
-    assert testee.make_assigned_press_sequence(sequence) == expected_path
-
 
 
 # is it a problem, the a different intermediate path leads to a complete different path of the same length?
