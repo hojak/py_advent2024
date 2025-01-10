@@ -55,8 +55,6 @@ def test_numpad_robot_all_paths_between_given_keys(start_key, target_key, expect
     assert testee.go_to_key_and_return_all_paths(target_key) == expected_paths
     assert testee.current_position() == testee.get_coordinates_for(target_key)
 
-
-
 @pytest.mark.parametrize('start_key, target_key, expected_path', [
     ("A", "A", ""),
     ("^", "^", ""),
@@ -70,8 +68,6 @@ def test_directionpad_robot_path_between_given_keys(start_key, target_key, expec
     assert testee.current_position() == testee.get_coordinates_for(target_key)
 
 
-
-
 @pytest.mark.parametrize('sequence, expected_paths', [
     ("2", ['^<A', '<^A']),
     ("26", ['^<A^>A','<^A^>A','^<A>^A','<^A>^A',]),
@@ -80,6 +76,19 @@ def test_directionpad_robot_path_between_given_keys(start_key, target_key, expec
 def test_numpad_robot_returns_all_paths_for_sequence(sequence, expected_paths):
     testee = NumpadRobot()
     assert set(testee.make_final_robot_enter(sequence)) == set(expected_paths)
+
+
+@pytest.mark.parametrize('sequence, expected_paths', [
+    ("2", ['<Av<A>>^A','v<<A>^A>A']), # ['^<A', '<^A']),
+])
+def test_steered_numpad_robot_returns_all_paths_for_sequence(sequence, expected_paths):
+    testee = DirectionpadRobot()
+    numpad = NumpadRobot()
+    testee.assign_robot_to_steer(numpad)
+
+    assert set(testee.make_final_robot_enter(sequence)) == set(expected_paths)
+
+
 
 
 

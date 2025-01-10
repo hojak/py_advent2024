@@ -22,17 +22,20 @@ class Robot(StringMap):
     def press_key ( self, key):
         return list(map(lambda path: path+'A', self.go_to_key_and_return_all_paths (key)))
 
-    def make_final_robot_enter(self, sequence):
+    def make_final_robot_enter(self, path):
         if self.robot_to_steer == None:
-            my_sequence = sequence
+            my_paths = [path]
         else:
-            my_sequence = self.robot_to_steer.make_final_robot_enter(sequence)
-        
-        result = [""]
-        for key in my_sequence:
-            next_path_steps = self.press_key(key)
-            result = [first_part + next_path for first_part in result for next_path in next_path_steps]
-            
+            my_paths = self.robot_to_steer.make_final_robot_enter(path)
+
+        result = []
+        for path in my_paths:
+            directions_for_this_path = ['']
+            for key in path:
+                next_path_steps = self.press_key(key)
+                directions_for_this_path = [first_part + next_path for first_part in directions_for_this_path for next_path in next_path_steps]
+            result += directions_for_this_path
+
         return result
     
     def length_of_sequence_for_code(self, code):
