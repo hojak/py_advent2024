@@ -89,14 +89,6 @@ def test_steered_numpad_robot_returns_all_paths_for_sequence(sequence, expected_
     assert set(testee.make_final_robot_enter(sequence)) == set(expected_paths)
 
 
-# is it a problem, the a different intermediate path leads to a complete different path of the same length?
-# <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
-# v<<A>>^A<A>AvA<^AA>A<vAAA>^A
-# instead of
-# v<A<AA>>^AvAA^<A>Av<<A>>^AvA^Av<A>^A<Av<A>>^AAvA^Av<A<A>>^AAAvA^<A>A
-# v<<A>>^A<A>AvA^<AA>Av<AAA>^A
-# -> yes, the next test shows, it is a problem
-# todo: fix
 @pytest.mark.parametrize('sequence, expected_path', [
     ("0", 'v<A<AA>>^AvAA^<A>A'), # 0 -> '<A' -> 'v<<A>>^A' -> 'v<A<AA>>^AvAA^<A>A'
     ('029A', 'v<A<AA>>^AvAA^<A>Av<<A>>^AvA^Av<A>^A<Av<A>>^AAvA^Av<A<A>>^AAAvA^<A>A'),
