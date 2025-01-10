@@ -38,8 +38,12 @@ class Robot(StringMap):
 
         return result
     
-    def length_of_sequence_for_code(self, code):
-        return len ( self.make_final_robot_enter(code))
+    def shortest_length_of_sequence_for_code(self, code):
+        result = -1
+        for path in self.make_final_robot_enter(code):
+            if result < 0 or len(path) < result:
+                result = len(path)
+        return result
 
     def go_to_key_and_return_all_paths(self, key):
         target = self.get_coordinates_for(key)

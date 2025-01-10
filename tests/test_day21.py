@@ -104,17 +104,16 @@ def test_steered_numpad_robot_returns_all_paths_for_sequence(sequence, expected_
     ("0", 'v<A<AA>>^AvAA^<A>A'), # 0 -> '<A' -> 'v<<A>>^A' -> 'v<A<AA>>^AvAA^<A>A'
     ('029A', 'v<A<AA>>^AvAA^<A>Av<<A>>^AvA^Av<A>^A<Av<A>>^AAvA^Av<A<A>>^AAAvA^<A>A'),
 ])
-def disable_test_make_final_robot_with_intermediate_enter_sequence(sequence, expected_path):
+def test_make_final_robot_with_intermediate_enter_sequence(sequence, expected_path):
     testee = DirectionpadRobot()
     intermediate = DirectionpadRobot()
     numpad = NumpadRobot()
     intermediate.assign_robot_to_steer(numpad)
     testee.assign_robot_to_steer(intermediate)
 
-    assert testee.make_final_robot_enter(sequence) == expected_path
+    assert expected_path in testee.make_final_robot_enter(sequence)
 
 
-# todo: reenable test, when problem can be solved
 @pytest.mark.parametrize('code, expected_length', [
     ('029A', len('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A')),
     ('980A', len('<v<A>>^AAAvA^A<vA<AA>>^AvAA<^A>A<v<A>A>^AAAvA<^A>A<vA>^A<A>A')),
@@ -122,11 +121,11 @@ def disable_test_make_final_robot_with_intermediate_enter_sequence(sequence, exp
     ('456A', len('<v<A>>^AA<vA<A>>^AAvAA<^A>A<vA>^A<A>A<vA>^A<A>A<v<A>A>^AAvA<^A>A')),
     ('379A', len('<v<A>>^AvA^A<vA<AA>>^AAvA<^A>AAvA^A<vA>^AA<A>A<v<A>A>^AAAvA<^A>A')),
 ])
-def disabled_test_sequence_length_for_code(code, expected_length):
+def test_sequence_length_for_code(code, expected_length):
     testee = DirectionpadRobot()
     intermediate = DirectionpadRobot()
     numpad = NumpadRobot()
     intermediate.assign_robot_to_steer(numpad)
     testee.assign_robot_to_steer(intermediate)
 
-    assert testee.length_of_sequence_for_code(code) == expected_length
+    assert testee.shortest_length_of_sequence_for_code(code) == expected_length
