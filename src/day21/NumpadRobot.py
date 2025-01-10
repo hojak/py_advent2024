@@ -1,6 +1,12 @@
 from adv24Tools.Coordinates import Coordinates
 from adv24Tools.StringMap import StringMap
 
+import re
+
+def get_numeric_part ( string ): 
+    match = re.match(r'(\d+)', string)
+    return int ( match.group(1))
+
 
 class Robot(StringMap):
 
@@ -69,6 +75,13 @@ class Robot(StringMap):
             return [directions[0] + directions[1]]
         else:
             return [directions[0] + directions[1], directions[1] + directions[0]]
+
+
+    def get_code_complexity(self, code):
+        length_of_shortest_path = self.shortest_length_of_sequence_for_code(code)
+        numeric_part = get_numeric_part(code)
+
+        return length_of_shortest_path * numeric_part
 
 class NumpadRobot (Robot):
     def __init__(self):

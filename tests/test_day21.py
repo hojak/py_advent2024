@@ -1,4 +1,4 @@
-from day21.NumpadRobot import NumpadRobot, DirectionpadRobot
+from day21.NumpadRobot import NumpadRobot, DirectionpadRobot, get_numeric_part
 from adv24Tools.Coordinates import Coordinates
 
 import pytest
@@ -89,9 +89,6 @@ def test_steered_numpad_robot_returns_all_paths_for_sequence(sequence, expected_
     assert set(testee.make_final_robot_enter(sequence)) == set(expected_paths)
 
 
-
-
-
 # is it a problem, the a different intermediate path leads to a complete different path of the same length?
 # <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
 # v<<A>>^A<A>AvA<^AA>A<vAAA>^A
@@ -129,3 +126,25 @@ def test_sequence_length_for_code(code, expected_length):
     testee.assign_robot_to_steer(intermediate)
 
     assert testee.shortest_length_of_sequence_for_code(code) == expected_length
+
+
+
+@pytest.mark.parametrize('code, expected_complexity', [
+    ('029A', 68*29),
+    ('980A', 60*980),
+    ('179A', 68*179),
+    ('456A', 64*456),
+    ('379A', 64*379),
+])
+def test_sequence_length_for_code(code, expected_complexity):
+    testee = DirectionpadRobot()
+    intermediate = DirectionpadRobot()
+    numpad = NumpadRobot()
+    intermediate.assign_robot_to_steer(numpad)
+    testee.assign_robot_to_steer(intermediate)
+
+    assert testee.get_code_complexity(code) == expected_complexity
+
+
+def test_numeric_part ():
+    assert get_numeric_part ("029A") == 29
