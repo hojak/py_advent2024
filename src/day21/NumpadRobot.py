@@ -20,7 +20,7 @@ class Robot(StringMap):
         return self.position
     
     def press_key ( self, key):
-        return self.go_to_key(key) + "A"
+        return list(map(lambda path: path+'A', self.go_to_key_and_return_all_paths (key)))
 
     def make_final_robot_enter(self, sequence):
         if self.robot_to_steer == None:
@@ -28,40 +28,16 @@ class Robot(StringMap):
         else:
             my_sequence = self.robot_to_steer.make_final_robot_enter(sequence)
         
-        print ("sequence: "+sequence + " -> " + my_sequence)
-
-        result = ''
+        result = [""]
         for key in my_sequence:
-            result += self.press_key(key)
+            next_path_steps = self.press_key(key)
+            result = [first_part + next_path for first_part in result for next_path in next_path_steps]
+            
         return result
     
     def length_of_sequence_for_code(self, code):
         return len ( self.make_final_robot_enter(code))
 
-class NumpadRobot (Robot):
-    def __init__(self):
-        super().__init__("789\n456\n123\n 0A", Coordinates(2,3))
-
-    def go_to_key(self, key):
-        target = self.get_coordinates_for(key)
-        path = ''
-
-        if ( target.x > self.current_position().x):
-            path += ">" * (target.x - self.current_position().x)
-
-        if ( target.y < self.current_position().y):
-            path += "^" * (self.current_position().y - target.y)
-
-        if ( target.x < self.current_position().x):
-            path += "<" * (self.current_position().x - target.x)
-
-        if ( target.y > self.current_position().y):
-            path += "v" * (target.y - self.current_position().y)
-
-        self.position = target
-
-        return path
-    
     def go_to_key_and_return_all_paths(self, key):
         target = self.get_coordinates_for(key)
         directions = []
@@ -87,6 +63,30 @@ class NumpadRobot (Robot):
         else:
             return [directions[0] + directions[1], directions[1] + directions[0]]
 
+class NumpadRobot (Robot):
+    def __init__(self):
+        super().__init__("789\n456\n123\n 0A", Coordinates(2,3))
+
+    def go_to_key(self, key):
+        target = self.get_coordinates_for(key)
+        path = ''
+
+        if ( target.x > self.current_position().x):
+            path += ">" * (target.x - self.current_position().x)
+
+        if ( target.y < self.current_position().y):
+            path += "^" * (self.current_position().y - target.y)
+
+        if ( target.x < self.current_position().x):
+            path += "<" * (self.current_position().x - target.x)
+
+        if ( target.y > self.current_position().y):
+            path += "v" * (target.y - self.current_position().y)
+
+        self.position = target
+
+        return path
+    
         
 class DirectionpadRobot (Robot):
     def __init__(self):
