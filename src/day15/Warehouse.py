@@ -19,8 +19,14 @@ class Warehouse (StringMap):
         next_position = current_position.add(Warehouse.vector_for_direction(direction))        
         
         if ( self.get_char_at(next_position) == Warehouse.free_space):
-            self.set_char_at(current_position, Warehouse.free_space)
-            self.set_char_at(next_position, Warehouse.robot)
+            self.move_to(next_position)
+
+
+    def move_to(self, next_position):
+        current_position = self.get_robot_position()
+        self.set_char_at(current_position, Warehouse.free_space)
+        self.set_char_at(next_position, Warehouse.robot)
+
 
     def vector_for_direction(direction):
         vectors = {
