@@ -3,6 +3,7 @@ from adv24Tools.Coordinates import Coordinates
 class Warehouse (StringMap):
     free_space = '.'
     robot = '@'
+    box = 'O'
 
     def __init__(self, map):
         super().__init__(map)
@@ -20,15 +21,30 @@ class Warehouse (StringMap):
         
         if ( self.is_free(next_position)):
             self.move_to(next_position)
+        elif ( self.is_box(next_position)):
+            self.push_box(direction)
 
     def is_free(self, position):
         return self.get_char_at(position) == Warehouse.free_space
+    
+    def is_box(self, position):
+        return self.get_char_at(position) == Warehouse.box
 
 
     def move_to(self, next_position):
         current_position = self.get_robot_position()
         self.set_char_at(current_position, Warehouse.free_space)
         self.set_char_at(next_position, Warehouse.robot)
+
+    def push_box(self, direction):
+        movement_vector = Warehouse.vector_for_direction(direction)
+        current_position = self.get_robot_position()
+        box_position = current_position.add(movement_vector)
+        behind_box = box_position.add(movement_vector)
+
+        self.set_char_at(current_position, Warehouse.free_space)
+        self.set_char_at(box_position, Warehouse.robot)
+        self.set_char_at(behind_box, Warehouse.box)
 
 
     def vector_for_direction(direction):
