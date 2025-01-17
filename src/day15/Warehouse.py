@@ -60,6 +60,10 @@ class Warehouse (StringMap):
             '>': Coordinates(1,0)
         }
         return vectors[direction]
+    
+    def follow_plan(self, list_of_directions):
+        for direction in list_of_directions:
+            self.move(direction)
         
 
     

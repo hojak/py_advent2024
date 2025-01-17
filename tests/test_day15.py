@@ -29,3 +29,27 @@ def test_simple_movement(initial_map, direction, expected_resulting_map):
     testee = Warehouse(initial_map)
     testee.move(direction)
     assert testee.__str__() == expected_resulting_map
+
+
+def test_follow_a_plan():
+    testee = Warehouse(
+'''########
+#..O.O.#
+##@.O..#
+#...O..#
+#.#.O..#
+#...O..#
+#......#
+########'''
+    )
+    testee.follow_plan('<^^>>>vv<v>>v<<')
+
+    assert testee.__str__() == '''########
+#....OO#
+##.....#
+#.....O#
+#.#O@..#
+#...O..#
+#...O..#
+########'''
+    
