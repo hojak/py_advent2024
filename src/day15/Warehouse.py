@@ -14,10 +14,17 @@ class Warehouse (StringMap):
     def move(self, direction):
         current_position = self.get_robot_position()
 
-        next_position = current_position.add(Coordinates(1,0))        
+        next_position = current_position.add(Warehouse.vector_for_direction(direction))        
         
         self.set_char_at(current_position, '.')
         self.set_char_at(next_position, '@')
+
+    def vector_for_direction(direction):
+        vectors = {
+            '<': Coordinates(-1,0),
+            '>': Coordinates(1,0)
+        }
+        return vectors[direction]
         
 
     
