@@ -64,6 +64,16 @@ class Warehouse (StringMap):
     def follow_plan(self, list_of_directions):
         for direction in list_of_directions:
             self.move(direction)
+
+    def sum_of_coordinates(self):
+        result = 0
+
+        for x in range(self.get_width()):
+            for y in range(self.get_height()):
+                if ( self.is_box(Coordinates(x,y))):
+                    result += 100 * y + x
+
+        return result
         
 
     

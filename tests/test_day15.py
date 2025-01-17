@@ -52,4 +52,29 @@ def test_follow_a_plan():
 #...O..#
 #...O..#
 ########'''
+
+
+def test_sum_of_coordinates():
+    testee = Warehouse('''##########
+#.O.O.OOO#
+#........#
+#OO......#
+#OO@.....#
+#O#.....O#
+#O.....OO#
+#O.....OO#
+#OO....OO#
+##########''')
+    assert testee.sum_of_coordinates() == 10092
     
+
+def test_sum_of_coordinates2():
+    testee = Warehouse('''########
+#....OO#
+##.....#
+#.....O#
+#.#O@..#
+#...O..#
+#...O..#
+########''')
+    assert testee.sum_of_coordinates() == 2028    
