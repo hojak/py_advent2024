@@ -18,8 +18,11 @@ class Warehouse (StringMap):
 
         next_position = current_position.add(Warehouse.vector_for_direction(direction))        
         
-        if ( self.get_char_at(next_position) == Warehouse.free_space):
+        if ( self.is_free(next_position)):
             self.move_to(next_position)
+
+    def is_free(self, position):
+        return self.get_char_at(position) == Warehouse.free_space
 
 
     def move_to(self, next_position):
