@@ -6,8 +6,16 @@ def test_initial_map_with_robot():
         "####\n"+
         "#..#\n"+
         "#@.#\n"+
-        "####\n"
+        "####"
     )
     
     assert testee.get_robot_position() == Coordinates (1,2)
 
+def test_simple_movement():
+    testee = Warehouse(
+        "####\n"+
+        "#@.#\n"+
+        "####"
+    )
+    testee.move(">")
+    assert testee.__str__() == "####\n" + "#.@#\n" + "####"
