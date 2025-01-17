@@ -23,7 +23,7 @@ def test_initial_map_with_robot():
     ("#####\n#.O@#\n#####", "<", "#####\n#O@.#\n#####"), # push a box to the left
     ("####\n#@O#\n####", ">", "####\n#@O#\n####"), # don't push a box into a wall
     ("########\n#@OOOO.#\n########", ">", "########\n#.@OOOO#\n########"), # push multiple boxes to the right
-
+    ("#######\n#@OOOO#\n#######", ">", "#######\n#@OOOO#\n#######"), # don't push multiple boxes into a wall
 ])
 def test_simple_movement(initial_map, direction, expected_resulting_map):
     testee = Warehouse(initial_map)
