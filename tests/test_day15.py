@@ -16,6 +16,8 @@ def test_initial_map_with_robot():
 @pytest.mark.parametrize('initial_map, direction, expected_resulting_map', [
     ("####\n#@.#\n####", ">", "####\n#.@#\n####"),
     ("####\n#.@#\n####", "<", "####\n#@.#\n####"),
+    ("####\n#.@#\n#..#\n####", "v", "####\n#..#\n#.@#\n####"),
+    ("####\n#..#\n#.@#\n####", "^", "####\n#.@#\n#..#\n####"),
 ])
 def test_simple_movement(initial_map, direction, expected_resulting_map):
     testee = Warehouse(initial_map)

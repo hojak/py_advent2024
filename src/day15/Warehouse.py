@@ -21,6 +21,8 @@ class Warehouse (StringMap):
 
     def vector_for_direction(direction):
         vectors = {
+            'v': Coordinates(0,1),
+            '^': Coordinates(0,-1),
             '<': Coordinates(-1,0),
             '>': Coordinates(1,0)
         }
