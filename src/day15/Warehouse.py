@@ -42,9 +42,10 @@ class Warehouse (StringMap):
         box_position = current_position.add(movement_vector)
         behind_box = box_position.add(movement_vector)
 
-        self.set_char_at(current_position, Warehouse.free_space)
-        self.set_char_at(box_position, Warehouse.robot)
-        self.set_char_at(behind_box, Warehouse.box)
+        if ( self.is_free(behind_box)):
+            self.set_char_at(current_position, Warehouse.free_space)
+            self.set_char_at(box_position, Warehouse.robot)
+            self.set_char_at(behind_box, Warehouse.box)
 
 
     def vector_for_direction(direction):

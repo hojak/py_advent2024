@@ -21,6 +21,7 @@ def test_initial_map_with_robot():
     ("####\n#@.#\n####", "<", "####\n#@.#\n####"), # don't run into a wall
     ("#####\n#@O.#\n#####", ">", "#####\n#.@O#\n#####"), # push a box to the right
     ("#####\n#.O@#\n#####", "<", "#####\n#O@.#\n#####"), # push a box to the left
+    ("####\n#@O#\n####", ">", "####\n#@O#\n####"), # don't push a box into a wall
 ])
 def test_simple_movement(initial_map, direction, expected_resulting_map):
     testee = Warehouse(initial_map)
