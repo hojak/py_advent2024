@@ -16,8 +16,9 @@ class Warehouse (StringMap):
 
         next_position = current_position.add(Warehouse.vector_for_direction(direction))        
         
-        self.set_char_at(current_position, '.')
-        self.set_char_at(next_position, '@')
+        if ( self.get_char_at(next_position) == '.'):
+            self.set_char_at(current_position, '.')
+            self.set_char_at(next_position, '@')
 
     def vector_for_direction(direction):
         vectors = {
