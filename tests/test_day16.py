@@ -26,6 +26,9 @@ def test_reindeer_start_position_and_heading():
     assert testee.reindeer_heading == ReindeerMaze.Headings.east
 
 
-def test_score_path():
-    testee = ReindeerPath([ReindeerPath.Step.forward])
-    assert testee.score() == 1
+@pytest.mark.parametrize('path, expected_score', [
+    ([ReindeerPath.Step.forward], 1), 
+])
+def test_score_path(path, expected_score):
+    testee = ReindeerPath(path)
+    assert testee.score() == expected_score
