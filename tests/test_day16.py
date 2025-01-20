@@ -29,6 +29,7 @@ def test_reindeer_start_position_and_heading():
 @pytest.mark.parametrize('path, expected_score', [
     ([ReindeerPath.Step.forward], 1), 
     ([ReindeerPath.Step.forward, ReindeerPath.Step.forward, ReindeerPath.Step.forward], 3), 
+    ([ReindeerPath.Step.forward, ReindeerPath.Step.turn_right, ReindeerPath.Step.forward, ReindeerPath.Step.turn_left, ReindeerPath.Step.forward], 2003), 
 ])
 def test_score_path(path, expected_score):
     testee = ReindeerPath(path)

@@ -24,7 +24,8 @@ class ReindeerPath:
         self.steps = list_of_steps
 
     def score(self):
-        return len(self.steps)
+        return len([step for step in self.steps if step == ReindeerPath.Step.forward]) + \
+            1000* len([step for step in self.steps if step != ReindeerPath.Step.forward])
 
     class Step (Enum):
         forward = 1
