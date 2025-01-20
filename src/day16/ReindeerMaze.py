@@ -3,5 +3,9 @@ from adv24Tools.Coordinates import Coordinates
 
 class ReindeerMaze(StringMap):
 
-    def start_position(self):
-        return Coordinates(1,1)
+    start_position_char = "S"
+
+    def __init__(self, map):
+        super().__init__(map)
+
+        self.start_position = self.get_coordinates_for(ReindeerMaze.start_position_char)
