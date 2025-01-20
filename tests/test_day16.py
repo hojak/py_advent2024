@@ -1,7 +1,11 @@
 from adv24Tools.Coordinates import Coordinates
 from day16.ReindeerMaze import ReindeerMaze
+import pytest
 
 
-def test_maze_with_start():
-    testee = ReindeerMaze('###\n#S#\n###')
-    assert testee.start_position() == Coordinates(1,1)
+@pytest.mark.parametrize('map_description, expected_start_position', [
+    ('###\n#S#\n###', Coordinates(1,1)), # walk right
+])
+def test_maze_with_start(map_description, expected_start_position):
+    testee = ReindeerMaze(map_description)
+    assert testee.start_position() == expected_start_position
