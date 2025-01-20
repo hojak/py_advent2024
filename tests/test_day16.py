@@ -18,3 +18,9 @@ def test_maze_with_start(map_description, expected_start_position):
 def test_maze_with_end(map_description, expected_end_position):
     testee = ReindeerMaze(map_description)
     assert testee.end_position == expected_end_position
+
+
+def test_reindeer_start_position_and_heading():
+    testee = ReindeerMaze('####\n#S.#\n#.E#\n####')
+    assert testee.reindeer_position == Coordinates(1,1)
+    assert testee.reindeer_heading == ReindeerMaze.Headings.east
