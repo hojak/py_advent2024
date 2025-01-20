@@ -16,8 +16,6 @@ class Robot(StringMap):
         self.robot_to_steer = None
         self.illegal = self.get_coordinates_for(" ")
 
-    def get_coordinates_for(self, key):
-        return self.coordinates_for_index(self.content.index(key))
     
     def current_key(self):
         return self.get_char_at(self.position)
