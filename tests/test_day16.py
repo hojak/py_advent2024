@@ -35,7 +35,11 @@ def test_score_path(path, expected_score):
     testee = ReindeerPath(path)
     assert testee.score() == expected_score
 
-def test_find_one_step():
-    testee = ReindeerMaze('####\n#S.#\n#.E#\n####')
-    assert testee.lowest_score_for_path_to_finish() == 1
+
+@pytest.mark.parametrize('maze, expected_score', [
+    ('####\n#S.#\n#.E#\n####', 1),
+])
+def test_find_one_step(maze, expected_score):
+    testee = ReindeerMaze(maze)
+    assert testee.lowest_score_for_path_to_finish() == expected_score
 
