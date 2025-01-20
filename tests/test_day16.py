@@ -39,8 +39,16 @@ def test_score_path(path, expected_score):
 @pytest.mark.parametrize('maze, expected_score', [
     ('####\n#SE#\n####', 1), # one simple step top the east
     ('######\n#S..E#\n######', 3), # score for three steps to the east
+    ('###\n#S#\n#.#\n#E#\n###', 1002), # rotate right at start
+    ('###\n#E#\n#.#\n#S#\n###', 1002), # rotate left at start
 ])
 def test_find_one_step(maze, expected_score):
     testee = ReindeerMaze(maze)
     assert testee.lowest_score_for_path_to_finish() == expected_score
 
+@pytest.mark.parametrize('maze, path_so_far, expected_possible_steps', [
+    ('#####\n#...#\n#.S.#\n#..E#\n#####', ReindeerPath(Coordinates(2,2), ReindeerMaze.Headings.east), [ReindeerPath.Step.forward, ReindeerPath.Step.turn_left, ReindeerPath.Step.turn_right]),     
+])
+def test_possible_nenxt_steps(maze, path_so_far, expected_possible_steps):
+    testee = ReindeerMaze(maze)
+    assert set(testee.possible_next_steps(path_so_far)) == set(expected_possible_steps)
