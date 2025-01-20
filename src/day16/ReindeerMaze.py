@@ -23,11 +23,18 @@ class ReindeerMaze(StringMap):
         current_path = queue.pop()
 
         while current_path.end_position != self.end_position:
-            queue.append ( current_path.add_step(ReindeerPath.Step.forward) )
+            possible_steps = self.possible_next_steps()
+        
+            for possible in possible_steps: 
+                queue.append ( current_path.add_step(possible) )
+
             current_path= queue.pop()
 
         return current_path.score()
 
+
+    def possible_next_steps(self):
+        return [ReindeerPath.Step.forward]
 
 class ReindeerPath:
 
