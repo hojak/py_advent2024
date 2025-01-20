@@ -1,5 +1,5 @@
 from adv24Tools.Coordinates import Coordinates
-from day16.ReindeerMaze import ReindeerMaze
+from day16.ReindeerMaze import ReindeerMaze, ReindeerPath
 import pytest
 
 
@@ -24,3 +24,8 @@ def test_reindeer_start_position_and_heading():
     testee = ReindeerMaze('####\n#S.#\n#.E#\n####')
     assert testee.reindeer_position == Coordinates(1,1)
     assert testee.reindeer_heading == ReindeerMaze.Headings.east
+
+
+def test_score_path():
+    testee = ReindeerPath([ReindeerPath.Step.forward])
+    assert testee.score() == 1

@@ -16,3 +16,17 @@ class ReindeerMaze(StringMap):
         self.end_position = self.get_coordinates_for(ReindeerMaze.end_position_char)
         self.reindeer_position = self.start_position
         self.reindeer_heading = ReindeerMaze.Headings.east
+
+
+class ReindeerPath:
+
+    def __init__(self, list_of_steps):
+        self.steps = list_of_steps
+
+    def score(self):
+        return 1
+
+    class Step (Enum):
+        forward = 1
+        turn_left = 2
+        turn_right = 3
