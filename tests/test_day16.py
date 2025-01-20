@@ -32,7 +32,7 @@ def test_reindeer_start_position_and_heading():
     ([ReindeerPath.Step.forward, ReindeerPath.Step.turn_right, ReindeerPath.Step.forward, ReindeerPath.Step.turn_left, ReindeerPath.Step.forward], 2003), 
 ])
 def test_score_path(path, expected_score):
-    testee = ReindeerPath(path)
+    testee = ReindeerPath(Coordinates(1,1), Coordinates(1,1), path)
     assert testee.score() == expected_score
 
 

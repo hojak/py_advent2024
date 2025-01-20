@@ -18,21 +18,22 @@ class ReindeerMaze(StringMap):
         self.reindeer_heading = ReindeerMaze.Headings.east
 
     def lowest_score_for_path_to_finish(self):
-        queue = [(ReindeerPath([]), self.reindeer_position, self.reindeer_heading)]
+        queue = [(ReindeerPath(self.reindeer_position, self.reindeer_heading))]
 
-        (current_path, current_position, current_heading) = queue.pop()
+        current_path = queue.pop()
 
-        while current_position != self.end_position:
-            queue.append ( (current_path.add_step(ReindeerPath.Step.forward), current_position.add(current_heading.value), current_heading) )
-
-            (current_path, current_position, current_heading) = queue.pop()
+        while current_path.end_position != self.end_position:
+            queue.append ( current_path.add_step(ReindeerPath.Step.forward) )
+            current_path= queue.pop()
 
         return current_path.score()
 
 
 class ReindeerPath:
 
-    def __init__(self, list_of_steps):
+    def __init__(self, end_position, end_heading, list_of_steps = []):
+        self.end_position = end_position
+        self.end_heading = end_heading
         self.steps = list_of_steps
 
     def score(self):
@@ -40,7 +41,9 @@ class ReindeerPath:
             1000 * len([step for step in self.steps if step != ReindeerPath.Step.forward])
     
     def add_step (self, step):
-        return ReindeerPath(self.steps + [step])
+        match step:
+            case ReindeerPath.Step.forward:
+                return ReindeerPath( self.end_position.add(self.end_heading.value), self.end_heading, self.steps + [step])
     
     class Step (Enum):
         forward = 1
