@@ -37,7 +37,8 @@ def test_score_path(path, expected_score):
 
 
 @pytest.mark.parametrize('maze, expected_score', [
-    ('####\n#S.#\n#.E#\n####', 1),
+    ('####\n#SE#\n####', 1), # one simple step top the east
+    ('######\n#S..E#\n######', 3), # score for three steps to the east
 ])
 def test_find_one_step(maze, expected_score):
     testee = ReindeerMaze(maze)
