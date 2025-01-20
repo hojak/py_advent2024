@@ -34,3 +34,8 @@ def test_reindeer_start_position_and_heading():
 def test_score_path(path, expected_score):
     testee = ReindeerPath(path)
     assert testee.score() == expected_score
+
+def test_find_one_step():
+    testee = ReindeerMaze('####\n#S.#\n#.E#\n####')
+    assert testee.lowest_score_for_path_to_finish() == 1
+

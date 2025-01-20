@@ -17,6 +17,9 @@ class ReindeerMaze(StringMap):
         self.reindeer_position = self.start_position
         self.reindeer_heading = ReindeerMaze.Headings.east
 
+    def lowest_score_for_path_to_finish(self):
+        return 1
+
 
 class ReindeerPath:
 
@@ -25,7 +28,7 @@ class ReindeerPath:
 
     def score(self):
         return len([step for step in self.steps if step == ReindeerPath.Step.forward]) + \
-            1000* len([step for step in self.steps if step != ReindeerPath.Step.forward])
+            1000 * len([step for step in self.steps if step != ReindeerPath.Step.forward])
 
     class Step (Enum):
         forward = 1
