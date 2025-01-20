@@ -64,6 +64,9 @@ class ReindeerMaze(StringMap):
         if ( len(path_so_far.steps) == 0):
             result += [ReindeerPath.Step.turn_left, ReindeerPath.Step.turn_right]
 
+        if ( len(path_so_far.steps) == 1 and path_so_far.steps[0] == ReindeerPath.Step.turn_right):
+            result += [ReindeerPath.Step.turn_right]
+
         return result
 
 class ReindeerPath:
