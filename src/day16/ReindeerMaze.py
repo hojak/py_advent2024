@@ -103,10 +103,19 @@ class ReindeerPath:
             case ReindeerPath.Step.turn_right:
                 return ReindeerPath( self.end_position, self.end_heading.rotate_right(), self.steps + [step])
     
+    def __str__(self):
+        return "".join( map(lambda step: str(step), self.steps))
+
     class Step (Enum):
         forward = 1
         turn_left = 2
         turn_right = 3
+
+        def __str__(self):
+            match ( self ):
+                case ReindeerPath.Step.forward: return "^"
+                case ReindeerPath.Step.turn_left: return "<"
+                case ReindeerPath.Step.turn_right: return ">"
 
 def merge_lists_of_paths( list1, list2):
     result = []
