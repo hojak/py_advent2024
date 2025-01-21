@@ -48,7 +48,17 @@ class ReindeerMaze(StringMap):
         current_path = queue.pop(0)
         result = []
 
+        iteration = 0
+
         while current_path != None and (fixed_score == -1 or current_path.score() <= fixed_score):
+            iteration += 1
+
+            if ( iteration % 250 == 0):
+                print ( str(iteration) + ": " + str(len(maze_field_scores)) 
+                       + " of possibly " + str(self.get_height() * self.get_width()) 
+                       + " have a score, current score: " + str( current_path.score()) 
+                       + "   queue: " + str(len(queue)) )
+
             if current_path.end_position == self.end_position:
                 result.append(current_path)
                 fixed_score = current_path.score()
@@ -104,8 +114,14 @@ class ReindeerPath:
         self.end_position = end_position
         self.end_heading = end_heading
         self.steps = list_of_steps
+        self.cached_score = None
 
     def score(self):
+        if self.cached_score == None:
+            self.cached_score = self.compute_score()
+        return self.cached_score
+    
+    def compute_score(self):
         return len([step for step in self.steps if step == ReindeerPath.Step.forward]) + \
             1000 * len([step for step in self.steps if step != ReindeerPath.Step.forward])
     
