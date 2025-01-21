@@ -98,6 +98,10 @@ def test_getting_multiple_paths_with_lowest_score():
 
 @pytest.mark.parametrize('path, expected_coordinates', [
     (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, []), [Coordinates(5,1)]),     
+    (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, [ReindeerPath.Step.forward]), [Coordinates(5,1), Coordinates(4,1)]),     
+    (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, [ReindeerPath.Step.turn_right,ReindeerPath.Step.forward]), [Coordinates(5,1), Coordinates(4,1)]),     
+    (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, [ReindeerPath.Step.forward,ReindeerPath.Step.turn_right,ReindeerPath.Step.forward]), [Coordinates(5,1), Coordinates(4,1), Coordinates(4,2)]),     
+    (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, [ReindeerPath.Step.forward,ReindeerPath.Step.turn_left,ReindeerPath.Step.forward,ReindeerPath.Step.turn_right,ReindeerPath.Step.forward]), [Coordinates(5,1), Coordinates(4,1), Coordinates(4,2), Coordinates(3,2)]),     
 ])
 def test_path_coordinates(path, expected_coordinates):
     testee = path

@@ -118,6 +118,20 @@ class ReindeerPath:
     
     def touched_coordinates(self):
         touched = [self.end_position]
+
+        current_position = self.end_position
+        current_heading = self.end_heading
+
+        for step in self.steps[::-1]:
+            match step:
+                case ReindeerPath.Step.forward:
+                    current_position = current_position.sub(current_heading.value)
+                    touched.append(current_position)
+                case ReindeerPath.Step.turn_left:
+                    current_heading = current_heading.rotate_right()
+                case ReindeerPath.Step.turn_right:
+                    current_heading = current_heading.rotate_left()
+
         return set(touched)
 
     class Step (Enum):
