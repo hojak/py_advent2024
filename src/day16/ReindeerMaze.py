@@ -38,14 +38,20 @@ class ReindeerMaze(StringMap):
 
     def lowest_score_for_path_to_finish(self):
         queue = [ReindeerPath(self.reindeer_position, self.reindeer_heading)]
+        maze_field_scores = {}
 
         current_path = queue.pop(0)
 
         while current_path.end_position != self.end_position:
-            possible_steps = self.possible_next_steps(current_path)
-            possible_next_paths = list(map(lambda step: current_path.add_step(step), possible_steps))
-                                       
-            queue = merge_lists_of_paths ( queue, possible_next_paths )
+            if ( not current_path.end_position in maze_field_scores or maze_field_scores[current_path.end_position] > current_path.score()
+                or current_path.steps[-1] != ReindeerPath.Step.forward):                    
+
+                maze_field_scores[current_path.end_position] = current_path.score()
+                
+                possible_steps = self.possible_next_steps(current_path)
+                possible_next_paths = list(map(lambda step: current_path.add_step(step), possible_steps))
+                                        
+                queue = merge_lists_of_paths ( queue, possible_next_paths )
 
             current_path= queue.pop(0)
 
