@@ -42,7 +42,16 @@ def test_score_path(path, expected_score):
     ('###\n#S#\n#.#\n#E#\n###', 1002), # rotate right at start
     ('###\n#E#\n#.#\n#S#\n###', 1002), # rotate left at start
     ('######\n#E..S#\n######', 2003), # turn around at the start
-    ('####\n#S.#\n##E#\n####\n',1002), # turn once on the way
+    ('####\n#S.#\n##E#\n####',1002), # turn once on the way
+    ('''######
+#S...#
+#.##.#
+#..#.#
+##.#.#
+#..#.#
+#.##.#
+#E...#
+######''' ,2012), # find the path with the lowest score
 ])
 def test_find_the_way(maze, expected_score):
     testee = ReindeerMaze(maze)

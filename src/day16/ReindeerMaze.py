@@ -39,15 +39,15 @@ class ReindeerMaze(StringMap):
     def lowest_score_for_path_to_finish(self):
         queue = [ReindeerPath(self.reindeer_position, self.reindeer_heading)]
 
-        current_path = queue.pop()
+        current_path = queue.pop(0)
 
         while current_path.end_position != self.end_position:
             possible_steps = self.possible_next_steps(current_path)
-        
-            for possible in possible_steps: 
-                queue.append ( current_path.add_step(possible) )
+            possible_next_paths = list(map(lambda step: current_path.add_step(step), possible_steps))
+                                       
+            queue = merge_lists_of_paths ( queue, possible_next_paths )
 
-            current_path= queue.pop()
+            current_path= queue.pop(0)
 
         return current_path.score()
     
@@ -97,3 +97,19 @@ class ReindeerPath:
         forward = 1
         turn_left = 2
         turn_right = 3
+
+def merge_lists_of_paths( list1, list2):
+    result = []
+
+    index1 = 0
+    index2 = 0
+
+    while ( index1<len(list1) or index2<len(list2)):
+        if ( not index1 >= len(list1) and (index2 >= len(list2) or list1[index1].score() <= list2[index2].score())):
+            result.append ( list1[index1])
+            index1 +=1
+        else:
+            result.append ( list2[index2])
+            index2 +=1
+            
+    return result
