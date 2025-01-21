@@ -53,7 +53,7 @@ class ReindeerMaze(StringMap):
         while current_path != None and (fixed_score == -1 or current_path.score() <= fixed_score):
             iteration += 1
 
-            if ( iteration % 250 == 0):
+            if ( iteration % 2500 == 0):
                 print ( str(iteration) + ": " + str(len(maze_field_scores)) 
                        + " of possibly " + str(self.get_height() * self.get_width()) 
                        + " have a score, current score: " + str( current_path.score()) 
