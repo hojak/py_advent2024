@@ -63,3 +63,22 @@ def test_find_the_way(maze, expected_score):
 def test_possible_nenxt_steps(maze, path_so_far, expected_possible_steps):
     testee = ReindeerMaze(maze)
     assert set(testee.possible_next_steps(path_so_far)) == set(expected_possible_steps)
+
+
+def test_complex_input():
+    testee = ReindeerMaze('''###############
+#.......#....E#
+#.#.###.#.###.#
+#.....#.#...#.#
+#.###.#####.#.#
+#.#.#.......#.#
+#.#.#####.###.#
+#...........#.#
+###.#.#####.#.#
+#...#.....#.#.#
+#.#.#.###.#.#.#
+#.....#...#.#.#
+#.###.#.#.#.#.#
+#S..#.....#...#
+###############''')
+    assert testee.lowest_score_for_path_to_finish() == 7036
