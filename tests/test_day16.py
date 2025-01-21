@@ -94,3 +94,7 @@ def test_getting_multiple_paths_with_lowest_score():
         assert path.score() == 4006
     assert len(paths) == 2
     
+
+def test_path_coordinates():
+    testee = ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, [])
+    assert testee.touched_coordinates() == set([Coordinates(5,1)])

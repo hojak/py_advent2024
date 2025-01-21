@@ -115,6 +115,10 @@ class ReindeerPath:
     
     def __str__(self):
         return "".join( map(lambda step: str(step), self.steps))
+    
+    def touched_coordinates(self):
+        touched = [self.end_position]
+        return set(touched)
 
     class Step (Enum):
         forward = 1
