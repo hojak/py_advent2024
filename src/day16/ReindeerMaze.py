@@ -150,18 +150,20 @@ class ReindeerPath:
                 case ReindeerPath.Step.turn_left: return "<"
                 case ReindeerPath.Step.turn_right: return ">"
 
-def merge_lists_of_paths( list1, list2):
-    result = []
+def merge_lists_of_paths(list1, list2):
+    ## assumption: both lists are sorted
+    ## assumption: list2 has 0 to 3 elements
+    if (len(list1) == 0):
+        return list2
+    if ( len(list2) == 0):
+        return list1
 
     index1 = 0
-    index2 = 0
+    result = list1
 
-    while ( index1<len(list1) or index2<len(list2)):
-        if ( not index1 >= len(list1) and (index2 >= len(list2) or list1[index1].score() <= list2[index2].score())):
-            result.append ( list1[index1])
-            index1 +=1
-        else:
-            result.append ( list2[index2])
-            index2 +=1
-            
+    for item in list2:
+        while ( index1 < len(list1) and item.score() >= list1[index1].score()):
+            index1+=1
+        result.insert (index1, item)
+        
     return result
