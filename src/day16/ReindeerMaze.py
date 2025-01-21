@@ -38,16 +38,21 @@ class ReindeerMaze(StringMap):
 
 
     def lowest_score_for_path_to_finish(self):
-        return self.path_to_finish_with_lowest_score().score()
+        return self.paths_to_finish_with_lowest_score()[0].score()
     
-    def path_to_finish_with_lowest_score(self):
+    def paths_to_finish_with_lowest_score(self):
         queue = [ReindeerPath(self.reindeer_position, self.reindeer_heading)]
         maze_field_scores = {}
+        fixed_score = -1
 
         current_path = queue.pop(0)
+        result = []
 
-        while current_path.end_position != self.end_position:
-            if ( not current_path.end_position in maze_field_scores or maze_field_scores[current_path.end_position] > current_path.score()
+        while current_path != None and (fixed_score == -1 or current_path.score() <= fixed_score):
+            if current_path.end_position == self.end_position:
+                result.append(current_path)
+                fixed_score = current_path.score()
+            elif ( not current_path.end_position in maze_field_scores or maze_field_scores[current_path.end_position] >= current_path.score()
                 or current_path.steps[-1] != ReindeerPath.Step.forward):                    
 
                 maze_field_scores[current_path.end_position] = current_path.score()
@@ -57,9 +62,14 @@ class ReindeerMaze(StringMap):
                                         
                 queue = merge_lists_of_paths ( queue, possible_next_paths )
 
-            current_path= queue.pop(0)
+            for path in queue: print ("      -> " + str(path))
 
-        return current_path
+
+            if len(queue) > 0: 
+                current_path = queue.pop(0)
+            else:
+                current_path = None
+        return result
     
     def is_free(self, coordinates):
         return self.get_char_at(coordinates) == ReindeerMaze.free_char or self.get_char_at(coordinates) == ReindeerMaze.end_position_char

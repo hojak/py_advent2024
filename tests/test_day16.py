@@ -82,3 +82,15 @@ def test_complex_input():
 #S..#.....#...#
 ###############''')
     assert testee.lowest_score_for_path_to_finish() == 7036
+
+def test_getting_multiple_paths_with_lowest_score():
+    testee = ReindeerMaze('''#######
+##...##
+#S.#.E#
+##...##
+#######''')
+    paths = testee.paths_to_finish_with_lowest_score()
+    for path in paths:
+        assert path.score() == 4006
+    assert len(paths) == 2
+    
