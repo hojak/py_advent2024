@@ -36,7 +36,11 @@ class ReindeerMaze(StringMap):
         self.reindeer_position = self.start_position
         self.reindeer_heading = ReindeerMaze.Headings.east
 
+
     def lowest_score_for_path_to_finish(self):
+        return self.path_to_finish_with_lowest_score().score()
+    
+    def path_to_finish_with_lowest_score(self):
         queue = [ReindeerPath(self.reindeer_position, self.reindeer_heading)]
         maze_field_scores = {}
 
@@ -55,7 +59,7 @@ class ReindeerMaze(StringMap):
 
             current_path= queue.pop(0)
 
-        return current_path.score()
+        return current_path
     
     def is_free(self, coordinates):
         return self.get_char_at(coordinates) == ReindeerMaze.free_char or self.get_char_at(coordinates) == ReindeerMaze.end_position_char
