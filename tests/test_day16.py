@@ -95,7 +95,6 @@ def test_getting_multiple_paths_with_lowest_score():
     assert len(paths) == 2
     
 
-
 @pytest.mark.parametrize('path, expected_coordinates', [
     (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, []), [Coordinates(5,1)]),     
     (ReindeerPath(Coordinates(5,1), ReindeerMaze.Headings.east, [ReindeerPath.Step.forward]), [Coordinates(5,1), Coordinates(4,1)]),     
@@ -106,3 +105,23 @@ def test_getting_multiple_paths_with_lowest_score():
 def test_path_coordinates(path, expected_coordinates):
     testee = path
     assert testee.touched_coordinates() == set(expected_coordinates)
+
+
+def test_get_number_of_interesting_path_coordinates():
+    testee = ReindeerMaze('''###############
+#.......#....E#
+#.#.###.#.###.#
+#.....#.#...#.#
+#.###.#####.#.#
+#.#.#.......#.#
+#.#.#####.###.#
+#...........#.#
+###.#.#####.#.#
+#...#.....#.#.#
+#.#.#.###.#.#.#
+#.....#...#.#.#
+#.###.#.#.#.#.#
+#S..#.....#...#
+###############''')
+
+    assert testee.get_number_of_interesting_path_coordinates() == 45

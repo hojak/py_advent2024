@@ -62,9 +62,6 @@ class ReindeerMaze(StringMap):
                                         
                 queue = merge_lists_of_paths ( queue, possible_next_paths )
 
-            for path in queue: print ("      -> " + str(path))
-
-
             if len(queue) > 0: 
                 current_path = queue.pop(0)
             else:
@@ -90,8 +87,16 @@ class ReindeerMaze(StringMap):
         if ( len(path_so_far.steps) == 1 and path_so_far.steps[0] == ReindeerPath.Step.turn_right):
             result += [ReindeerPath.Step.turn_right]
         
-
         return result
+    
+    def get_number_of_interesting_path_coordinates(self):
+        possible_paths = self.paths_to_finish_with_lowest_score()
+
+        set_of_coordinates = set([])
+        for path in possible_paths:
+            set_of_coordinates |= path.touched_coordinates()
+
+        return len ( set_of_coordinates)
 
 class ReindeerPath:
 
