@@ -16,6 +16,8 @@ class Computer:
 
         self.current_instruction_pointer = 0
 
+        self.output = []
+
     def instruction_pointer(self):
         return self.current_instruction_pointer
 
@@ -37,6 +39,7 @@ class Computer:
             case 2: self.do_bst()
             case 3: self.do_jnz()
             case 4: self.do_bxc()
+            case 5: self.do_out()
             case 6: self.do_bdv()
             case 7: self.do_cdv()
             case _: raise Exception( "op " + str(self.program[self.current_instruction_pointer]) + " is not known" )
@@ -44,11 +47,14 @@ class Computer:
     def current_instruction(self):
         return self.program[self.current_instruction_pointer]
 
-    def current_operant(self):
+    def current_literal_operant(self):
         return self.program[self.current_instruction_pointer+1]
+    
+    def current_combo_operant(self):
+        return self.combo(self.current_literal_operant())
 
     def compute_dv_value(self):
-        return math.floor(self.registerA / ( 2 ** self.combo(self.current_operant()) ))
+        return math.floor(self.registerA / ( 2 ** self.combo(self.current_literal_operant())))
 
     def do_adv(self):
         self.registerA = self.compute_dv_value()
@@ -70,11 +76,11 @@ class Computer:
         self.current_instruction_pointer = index
 
     def do_bxl(self):
-        self.registerB = self.registerB ^ self.current_operant()
+        self.registerB = self.registerB ^ self.current_literal_operant()
         self.goto_next_instruction()
 
     def do_bst(self):
-        self.registerB = self.combo(self.current_operant()) % 8
+        self.registerB = self.current_combo_operant() % 8
         self.goto_next_instruction()
 
     def do_bxc(self):
@@ -85,7 +91,18 @@ class Computer:
         if ( self.registerA == 0):
             self.goto_next_instruction()
         else:
-            self.goto(self.current_operant())
+            self.goto(self.current_literal_operant())
+
+    def do_out(self):
+        self.output.append ( self.current_combo_operant() % 8)
+        self.goto_next_instruction()
+
+    def get_output(self):
+        return ",".join( map( lambda i: str(i), self.output))
+    
+    def run(self):
+        while ( self.instruction_pointer() < len(self.program)):
+            self.do_next_instruction()
 
 def get_value_for_register(str):
     (name, value) = str.strip().split(":")
