@@ -43,3 +43,22 @@ Register C: 30
 Program: 0''')
     
     assert testee.instruction_pointer() == 0
+
+
+
+def test_bxl():
+    # 0101 (5) xor 0110 (6) -> 0011
+    testee = Computer('''Register A: 10
+Register B: 5
+Register C: 30
+
+Program: 1,6''')
+    
+    testee.do_next_instruction()
+
+    assert testee.instruction_pointer() == 2
+    assert testee.registerB == 3
+    assert testee.registerA == 10
+    assert testee.registerC == 30
+
+
