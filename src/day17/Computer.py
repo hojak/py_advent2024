@@ -46,12 +46,15 @@ class Computer:
     def current_operant(self):
         return self.program[self.current_instruction_pointer+1]
 
+    def compute_dv_value(self):
+        return math.floor(self.registerA / ( 2 ** self.combo(self.current_operant()) ))
+
     def do_adv(self):
-        self.registerA = math.floor(self.registerA / ( 2 ** self.combo(self.current_operant()) ))
+        self.registerA = self.compute_dv_value()
         self.goto_next_instruction()
 
     def do_bdv(self):
-        self.registerB = math.floor(self.registerA / ( 2 ** self.combo(self.current_operant()) ))
+        self.registerB = self.compute_dv_value()
         self.goto_next_instruction()
 
     def goto_next_instruction(self):
