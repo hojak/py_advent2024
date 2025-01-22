@@ -41,11 +41,14 @@ class Computer:
         return self.program[self.current_instruction_pointer+1]
 
     def do_adv(self):
+        self.goto_next_instruction()
+
+    def goto_next_instruction(self):
         self.current_instruction_pointer += 2
 
     def do_bxl(self):
         self.registerB = self.registerB ^ self.current_operant()
-        self.current_instruction_pointer += 2
+        self.goto_next_instruction()
 
 def get_value_for_register(str):
     (name, value) = str.strip().split(":")
