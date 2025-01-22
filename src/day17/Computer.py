@@ -29,9 +29,12 @@ class Computer:
                 return self.registerC
             
     def do_next_instruction(self):
-        match self.program[self.current_instruction_pointer]:
+        match self.current_instruction():
             case 1: self.do_bxl()
             case _: raise Exception( "op " + str(self.program[self.current_instruction_pointer]) + " is not known" )
+
+    def current_instruction(self):
+        return self.program[self.current_instruction_pointer]
 
     def current_operant(self):
         return self.program[self.current_instruction_pointer+1]

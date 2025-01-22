@@ -45,6 +45,17 @@ Program: 0''')
     assert testee.instruction_pointer() == 0
 
 
+def test_init_instruction_and_operant():
+    testee = Computer('''Register A: 10
+Register B: 20
+Register C: 30
+
+Program: 2,10''')
+    
+    assert testee.current_instruction() == 2
+    assert testee.current_operant() == 10
+
+
 
 def test_bxl():
     # 0101 (5) xor 0110 (6) -> 0011
