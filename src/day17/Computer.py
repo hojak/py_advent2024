@@ -36,6 +36,7 @@ class Computer:
             case 1: self.do_bxl()
             case 2: self.do_bst()
             case 3: self.do_jnz()
+            case 4: self.do_bxc()
             case _: raise Exception( "op " + str(self.program[self.current_instruction_pointer]) + " is not known" )
 
     def current_instruction(self):
@@ -60,6 +61,10 @@ class Computer:
 
     def do_bst(self):
         self.registerB = self.combo(self.current_operant()) % 8
+        self.goto_next_instruction()
+
+    def do_bxc(self):
+        self.registerB = self.registerB ^ self.registerC
         self.goto_next_instruction()
 
     def do_jnz(self):

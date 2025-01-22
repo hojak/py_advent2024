@@ -104,7 +104,20 @@ def test_jnz(registerA, operant, expected_instruction_pointer):
     assert testee.registerB == 2
     assert testee.registerC == 17
 
+@pytest.mark.parametrize('init_b, init_c, expected_b', [
+    (0,0,0),
+    (2,4,6),
+    (3,1,2),
+])
+def test_jnz(init_b, init_c, expected_b):
+    testee = Computer("Register A: 10\nRegister B: "+str(init_b)+"\nRegister C: "+str(init_c)+"\n\nProgram: 4,22")
+    
+    testee.do_next_instruction()
 
+    assert testee.instruction_pointer() == 2
+    assert testee.registerA == 10
+    assert testee.registerB == expected_b
+    assert testee.registerC == init_c
 
 
 def test_bxl():
