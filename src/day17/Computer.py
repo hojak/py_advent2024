@@ -12,6 +12,11 @@ class Computer:
         (unimportant, program) = program.split(": ")
         self.program = list( map( lambda str: int(str), program.strip().split(',')))
 
+        self.current_instrucion_pointer = 0
+
+    def instruction_pointer(self):
+        return self.current_instrucion_pointer
+
     def combo(self, operant):
         match operant:
             case 0|1|2|3:

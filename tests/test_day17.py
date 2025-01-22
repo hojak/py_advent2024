@@ -34,3 +34,12 @@ Program: 0''')
     assert testee.combo(4) == 10
     assert testee.combo(5) == 20
     assert testee.combo(6) == 30
+
+def test_initialize_instruction_pointer():
+    testee = Computer('''Register A: 10
+Register B: 20
+Register C: 30
+
+Program: 0''')
+    
+    assert testee.instruction_pointer() == 0
