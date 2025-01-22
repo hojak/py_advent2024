@@ -56,6 +56,22 @@ Program: 2,10''')
     assert testee.current_operant() == 10
 
 
+def test_adv():
+    # 0101 (5) xor 0110 (6) -> 0011
+    testee = Computer('''Register A: 1
+Register B: 5
+Register C: 30
+
+Program: 0,0''')
+    
+    testee.do_next_instruction()
+
+    assert testee.instruction_pointer() == 2
+    assert testee.registerA == 1
+    assert testee.registerB == 5
+    assert testee.registerC == 30
+
+
 
 def test_bxl():
     # 0101 (5) xor 0110 (6) -> 0011
