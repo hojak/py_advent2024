@@ -38,6 +38,7 @@ class Computer:
             case 3: self.do_jnz()
             case 4: self.do_bxc()
             case 6: self.do_bdv()
+            case 7: self.do_cdv()
             case _: raise Exception( "op " + str(self.program[self.current_instruction_pointer]) + " is not known" )
 
     def current_instruction(self):
@@ -56,6 +57,11 @@ class Computer:
     def do_bdv(self):
         self.registerB = self.compute_dv_value()
         self.goto_next_instruction()
+
+    def do_cdv(self):
+        self.registerC = self.compute_dv_value()
+        self.goto_next_instruction()
+
 
     def goto_next_instruction(self):
         self.current_instruction_pointer += 2
