@@ -198,3 +198,17 @@ def test_sample_program():
 
     assert testee.get_output() == "4,6,3,5,6,3,5,2,1,0"
 
+def test_reset():
+    testee = Computer(
+        "Register A: 2024\n"+
+        "Register B: 0\n"+
+        "Register C: 0\n\n"+
+        "Program: 0,3,5,4,3,0"
+    )
+    testee.run()
+
+    testee.reset(117440)
+    testee.run()
+    
+    assert testee.get_output() == "0,3,5,4,3,0"
+

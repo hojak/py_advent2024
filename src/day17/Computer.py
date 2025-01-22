@@ -104,6 +104,11 @@ class Computer:
         while ( self.instruction_pointer() < len(self.program)):
             self.do_next_instruction()
 
+    def reset(self,value_for_A):
+        self.registerA = value_for_A
+        self.current_instruction_pointer = 0
+        self.output = []
+
 def get_value_for_register(str):
     (name, value) = str.strip().split(":")
     return int(value)
