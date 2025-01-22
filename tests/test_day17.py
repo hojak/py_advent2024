@@ -56,21 +56,24 @@ Program: 2,10''')
     assert testee.current_instruction() == 2
     assert testee.current_operant() == 10
 
-
-
 @pytest.mark.parametrize('init_registerA, operant, expected_registerA', [
     (1,0,1),
+    (2,1,1),
+    (1024,2,256),
+    (1027,2,256),
+    (1027,5,128),
+    (1027,6,64),
 ])
 def test_adv(init_registerA, operant, expected_registerA):
     # 0101 (5) xor 0110 (6) -> 0011
-    testee = Computer("Register A: "+str(init_registerA)+"\nRegister B: 5\nRegister C: 30\n\nProgram: 0," + str(operant))
+    testee = Computer("Register A: "+str(init_registerA)+"\nRegister B: 3\nRegister C: 4\n\nProgram: 0," + str(operant))
     
     testee.do_next_instruction()
 
     assert testee.instruction_pointer() == 2
-    assert testee.registerA == 1
-    assert testee.registerB == 5
-    assert testee.registerC == 30
+    assert testee.registerA == expected_registerA
+    assert testee.registerB == 3
+    assert testee.registerC == 4
 
 
 

@@ -1,3 +1,5 @@
+import math
+
 class Computer:
 
 
@@ -41,6 +43,7 @@ class Computer:
         return self.program[self.current_instruction_pointer+1]
 
     def do_adv(self):
+        self.registerA = math.floor(self.registerA / ( 2 ** self.combo(self.current_operant()) ))
         self.goto_next_instruction()
 
     def goto_next_instruction(self):
