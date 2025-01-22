@@ -136,3 +136,21 @@ Program: 1,6''')
     assert testee.registerC == 30
 
 
+@pytest.mark.parametrize('init_registerA, operant, expected_registerB', [
+    (1,0,1),
+    (2,1,1),
+    (1024,2,256),
+    (1027,2,256),
+    (1027,5,128),
+    (1027,6,64),
+])
+def test_bdv(init_registerA, operant, expected_registerB):
+    testee = Computer("Register A: "+str(init_registerA)+"\nRegister B: 3\nRegister C: 4\n\nProgram: 6," + str(operant))
+    
+    testee.do_next_instruction()
+
+    assert testee.instruction_pointer() == 2
+    assert testee.registerA == init_registerA
+    assert testee.registerB == expected_registerB
+    assert testee.registerC == 4
+
