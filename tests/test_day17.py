@@ -90,6 +90,22 @@ def test_bst(operant, expected_registerB):
     assert testee.registerC == 17
 
 
+@pytest.mark.parametrize('registerA, operant, expected_instruction_pointer', [
+    (0,10,2),
+    (1,10,10),
+])
+def test_jnz(registerA, operant, expected_instruction_pointer):
+    testee = Computer("Register A: "+str(registerA)+"\nRegister B: 2\nRegister C: 17\n\nProgram: 3," + str(operant))
+    
+    testee.do_next_instruction()
+
+    assert testee.instruction_pointer() == expected_instruction_pointer
+    assert testee.registerA == registerA
+    assert testee.registerB == 2
+    assert testee.registerC == 17
+
+
+
 
 def test_bxl():
     # 0101 (5) xor 0110 (6) -> 0011
