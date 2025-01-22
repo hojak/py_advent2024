@@ -1,4 +1,5 @@
 from day17.Computer import Computer
+import pytest
 
 def test_initialize_computer_registers():
 
@@ -56,13 +57,13 @@ Program: 2,10''')
     assert testee.current_operant() == 10
 
 
-def test_adv():
-    # 0101 (5) xor 0110 (6) -> 0011
-    testee = Computer('''Register A: 1
-Register B: 5
-Register C: 30
 
-Program: 0,0''')
+@pytest.mark.parametrize('init_registerA, operant, expected_registerA', [
+    (1,0,1),
+])
+def test_adv(init_registerA, operant, expected_registerA):
+    # 0101 (5) xor 0110 (6) -> 0011
+    testee = Computer("Register A: "+str(init_registerA)+"\nRegister B: 5\nRegister C: 30\n\nProgram: 0," + str(operant))
     
     testee.do_next_instruction()
 
