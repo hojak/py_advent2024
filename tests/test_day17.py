@@ -185,3 +185,16 @@ def test_out():
 
     assert testee.get_output() == "1,2,2,4"
 
+
+def test_sample_program():
+    testee = Computer(
+        "Register A: 729\n"+
+        "Register B: 0\n"+
+        "Register C: 0\n\n"+
+        "Program: 0,1,5,4,3,0"
+    )
+
+    testee.run()
+
+    assert testee.get_output() == "4,6,3,5,6,3,5,2,1,0"
+
