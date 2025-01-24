@@ -17,8 +17,12 @@ class Network:
         else:
             self.computers[computer1].append(computer2)
 
+
         if ( not computer2 in self.computers):
-            self.computers[computer2] = []
+            self.computers[computer2] = [computer1]
+        else:
+            self.computers[computer2].append(computer1)
+
 
 
     def get_computers(self):
@@ -57,11 +61,37 @@ class Network:
         return list(filter(has_a_t_computer, triples))
     
     def find_max_clique(self):
-        computers = list(self.get_computers())
-        computers.sort()
+        computers = set(self.get_computers())
 
-        return ",".join(computers)
+        max_clique = list(self.bron_kerbosch_max_clique(set([]),computers,set([])))
+        max_clique.sort()
 
+        return ','.join(max_clique)
+
+
+    def bron_kerbosch_max_clique(self, R: set, P: set, X: set) -> set:
+        # https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
+        if len(P) == 0 and len(X) == 0:
+            return R
+    
+        result = set()
+    
+        for v in P.copy():
+            sub_P = P.intersection(set(self.computers[v]))
+            sub_X = X.intersection(set(self.computers[v]))
+            print (R)
+            sub_R = R.copy()
+            sub_R.add(v)
+
+            sub_result = self.bron_kerbosch_max_clique(sub_R, sub_P, sub_X)
+
+            if ( len(sub_result) > len(result)):
+                result = sub_result
+
+            P.remove(v)
+            X.add(v)
+
+        return result
 
 
 def has_a_t_computer(triple):
