@@ -21,4 +21,8 @@ def test_find_network_of_three():
     assert testee.has_connection('bb', 'cc')
     assert set(testee.find_triples()) == set(['aa,bb,cc'])
 
+
+def test_find_two_networks_of_three():
+    testee = Network('aa-bb\naa-dd\naa-cc\ncc-bb\naa-ta\nta-cc')
+    assert set(testee.find_triples()) == set(['aa,bb,cc','aa,cc,ta'])
     

@@ -44,8 +44,10 @@ class Network:
             while index1 < len(connected) and connected[index1] < computer:
                 index1+=1
 
-            for index2 in range(index1+1, len(connected)-1):
-                if ( self.has_connection(connected[index1], connected[index2])):
-                    result.append(computer + ',' + connected[index1] + ',' + connected[index2])
+            while index1 < len(connected)-1:
+                for index2 in range(index1+1, len(connected)):
+                    if ( self.has_connection(connected[index1], connected[index2])):
+                        result.append(computer + ',' + connected[index1] + ',' + connected[index2])
+                index1 += 1
 
         return result
