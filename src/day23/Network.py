@@ -79,7 +79,6 @@ class Network:
         for v in P.copy():
             sub_P = P.intersection(set(self.computers[v]))
             sub_X = X.intersection(set(self.computers[v]))
-            print (R)
             sub_R = R.copy()
             sub_R.add(v)
 
