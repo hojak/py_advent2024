@@ -30,3 +30,22 @@ class Network:
         
         return computer1 in self.computers and computer2 in self.computers[computer1]
     
+    def find_triples(self):
+        result = []
+
+        computers = list(self.get_computers())
+        computers.sort()
+
+        for computer in computers:
+            connected = self.computers[computer]
+            connected.sort()
+
+            index1 = 0
+            while index1 < len(connected) and connected[index1] < computer:
+                index1+=1
+
+            for index2 in range(index1+1, len(connected)-1):
+                if ( self.has_connection(connected[index1], connected[index2])):
+                    result.append(computer + ',' + connected[index1] + ',' + connected[index2])
+
+        return result

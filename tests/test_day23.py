@@ -13,4 +13,12 @@ def test_computers_are_not_connected():
     testee = Network('aa-ab\ncc-dd')
     assert not testee.has_connection('aa', 'cc')
     assert not testee.has_connection('ab', 'dd')
+
+def test_find_network_of_three():
+    testee = Network('aa-bb\naa-dd\naa-cc\ncc-bb')
+    assert testee.has_connection('aa', 'cc')
+    assert testee.has_connection('aa', 'bb')
+    assert testee.has_connection('bb', 'cc')
+    assert set(testee.find_triples()) == set(['aa,bb,cc'])
+
     
