@@ -23,3 +23,7 @@ class Network:
 
     def get_computers(self):
         return self.computers.keys()
+    
+
+    def has_connection(self, computer1, computer2):
+        return computer1 in self.computers and computer2 in self.computers[computer1]
