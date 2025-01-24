@@ -7,23 +7,26 @@ class Network:
             self.register_connection(line)
 
     def register_connection(self, line):
-        print ( "line: " + line)
         (computer1, computer2) = line.split('-')
+
+        if ( computer2 < computer1 ):
+            (computer1, computer2) = (computer2, computer1)
 
         if ( not computer1 in self.computers):
             self.computers[computer1] = [computer2]
         else:
-            self.computers[computer1].append ( computer2 )
+            self.computers[computer1].append(computer2)
 
         if ( not computer2 in self.computers):
-            self.computers[computer2] = [computer1]
-        else:
-            self.computers[computer2].append ( computer1 )
+            self.computers[computer2] = []
 
 
     def get_computers(self):
         return self.computers.keys()
     
-
     def has_connection(self, computer1, computer2):
+        if ( computer2 < computer1):
+            return self.has_connection(computer2, computer1)
+        
         return computer1 in self.computers and computer2 in self.computers[computer1]
+    
