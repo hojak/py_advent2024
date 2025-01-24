@@ -13,3 +13,7 @@ class Solver(problemSolver):
         print ('\n'.join ( found ))
 
         print (" --> found " + str(len(found)) + " possible subnets")
+
+    def solve_part2(self):
+        print ('looking for a maximal clique in the given network')
+        print (self.parsed_input.find_max_clique())
