@@ -55,6 +55,12 @@ class Network:
     def find_triples_with_t_computer(self):
         triples = self.find_triples()
         return list(filter(has_a_t_computer, triples))
+    
+    def find_max_clique(self):
+        computers = list(self.get_computers())
+        computers.sort()
+
+        return ",".join(computers)
 
 
 
