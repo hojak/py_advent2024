@@ -100,6 +100,9 @@ class Computer:
     def get_output(self):
         return ",".join( map( lambda i: str(i), self.output))
     
+    def get_program(self):
+        return ",".join( map( lambda i: str(i), self.program))
+    
     def run(self):
         while ( self.instruction_pointer() < len(self.program)):
             self.do_next_instruction()
