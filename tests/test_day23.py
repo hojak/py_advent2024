@@ -26,3 +26,8 @@ def test_find_two_networks_of_three():
     testee = Network('aa-bb\naa-dd\naa-cc\ncc-bb\naa-ta\nta-cc')
     assert set(testee.find_triples()) == set(['aa,bb,cc','aa,cc,ta'])
     
+
+def test_find_only_tripels_with_a_t_computer():
+    testee = Network('aa-bb\naa-dd\naa-cc\ncc-bb\naa-ta\nta-cc')
+    assert set(testee.find_triples_with_t_computer()) == set(['aa,cc,ta'])
+    

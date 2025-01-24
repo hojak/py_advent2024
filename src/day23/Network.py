@@ -51,3 +51,13 @@ class Network:
                 index1 += 1
 
         return result
+    
+    def find_triples_with_t_computer(self):
+        triples = self.find_triples()
+        return list(filter(has_a_t_computer, triples))
+
+
+
+def has_a_t_computer(triple):
+    computers = triple.split(',')
+    return computers[0][0]=='t' or computers[1][0]=='t' or computers[2][0]=='t'
