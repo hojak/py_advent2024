@@ -52,8 +52,12 @@ def test_xor_gate(input1, input2, expected_output):
     assert testee.get_output() == expected_output    
 
 def test_gate_net_parses_two_input_gates():
-    testee = GateNet ( 'x00: 1\nx01: 0' )
+    testee = GateNet ( 'x00: 1\nx01: 0\n\n' )
 
     assert testee.size() == 2
     assert testee.get_gate('x00').get_output() == 1    
     assert testee.get_gate('x01').get_output() == 0
+
+def test_simple_network_with_and_gate():
+    testee = GateNet ( 'i1: 1\ni2: 0\n\ni1 AND i2 -> o1')
+    assert testee.get_gate('o1').get_output() == 0
