@@ -22,3 +22,17 @@ def test_and_gate(input1, input2, expected_output):
 def test_and_gate_missing_input():
     testee = AndGate("and", Gate("no_value1"), Gate("no_value2"))
     assert testee.get_output() == None
+
+
+@pytest.mark.parametrize('input1, input2, expected_output', [
+    (0,1,1),
+    (1,0,1),
+    (0,0,0),
+    (1,1,1),
+])
+def test_or_gate(input1, input2, expected_output):
+    gate1 = ConstantGate("x0", input1)    
+    gate2 = ConstantGate("x1", input2)
+
+    testee = OrGate("or", gate1, gate2)
+    assert testee.get_output() == expected_output

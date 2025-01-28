@@ -14,11 +14,16 @@ class ConstantGate(Gate):
         return self.output
 
 
-class AndGate (Gate):
+class ComputingGate(Gate):
     def __init__(self, name, input1, input2):
         super().__init__(name)
         self.input1 = input1
         self.input2 = input2
 
+class AndGate (ComputingGate):
     def get_output(self):
         return self.input1.get_output() and self.input2.get_output()
+    
+class OrGate (ComputingGate):
+    def get_output(self):
+        return self.input1.get_output() or self.input2.get_output()
