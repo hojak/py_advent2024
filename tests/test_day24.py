@@ -38,7 +38,6 @@ def test_or_gate(input1, input2, expected_output):
     assert testee.get_output() == expected_output
 
 
-
 @pytest.mark.parametrize('input1, input2, expected_output', [
     (0,1,1),
     (1,0,1),
@@ -51,3 +50,9 @@ def test_xor_gate(input1, input2, expected_output):
 
     testee = XorGate("xor", gate1, gate2)
     assert testee.get_output() == expected_output    
+
+def test_gate_net_parses_one_input_gate():
+    testee = GateNet ( 'x00: 1' )
+
+    assert testee.size() == 1
+    assert testee.get_gate('x00').get_output() == 1

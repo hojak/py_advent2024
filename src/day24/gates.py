@@ -30,3 +30,18 @@ class OrGate (ComputingGate):
 class XorGate (ComputingGate):
     def get_output(self):
         return self.input1.get_output() ^ self.input2.get_output()
+    
+
+class GateNet:
+
+    def __init__(self, input):
+        self.gates = {}
+
+        (name, value) = input.split(': ')
+        self.gates[name] = ConstantGate(name, int(value))
+
+    def size(self):
+        return len(self.gates)
+    
+    def get_gate(self, name):
+        return self.gates[name]
