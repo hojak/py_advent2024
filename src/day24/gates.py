@@ -54,7 +54,7 @@ class GateNet:
             for line in lines:
                 if not self.register_computing_gate(line):
                     later.append(line)
-                    
+
             # assumption / problem definition: there are no loops
             if ( len(later) == len(lines)):
                 raise Exception ( "Cannot process the following gate definitions: \n" + "\n".join(lines) )
@@ -92,7 +92,6 @@ class GateNet:
         if name in self.gates:
             return self.gates[name]
         else: 
-            print ("don't know gate " + name)
             return None
     
     def get_result(self):
