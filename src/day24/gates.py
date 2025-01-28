@@ -66,4 +66,24 @@ class GateNet:
         return len(self.gates)
     
     def get_gate(self, name):
-        return self.gates[name]
+        if name in self.gates:
+            return self.gates[name]
+        else: 
+            print ("don't know gate " + name)
+            return None
+    
+    def get_result(self):
+        result = 0
+        
+        index = 0
+        outputgate = self.get_gate(GateNet.get_output_gate_name(index))
+        while outputgate != None:
+            result += outputgate.get_output() * (2 ** index)
+            index += 1
+            outputgate = self.get_gate(GateNet.get_output_gate_name(index))
+
+
+        return result
+    
+    def get_output_gate_name(index):
+        return 'z{:0>2}'.format(index)

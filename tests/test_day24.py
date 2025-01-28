@@ -67,3 +67,7 @@ def test_network_with_9_gates():
     assert testee.get_gate('z00').get_output()==0
     assert testee.get_gate('z01').get_output()==0
     assert testee.get_gate('z02').get_output()==1
+
+def test_network_result():
+    testee = GateNet ( 'x00: 1\nx01: 1\nx02: 1\ny00: 0\ny01: 1\ny02: 0\n\nx00 AND y00 -> z00\nx01 XOR y01 -> z01\nx02 OR y02 -> z02')
+    assert testee.get_result() == 4
