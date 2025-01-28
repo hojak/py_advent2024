@@ -71,3 +71,7 @@ def test_network_with_9_gates():
 def test_network_result():
     testee = GateNet ( 'x00: 1\nx01: 1\nx02: 1\ny00: 0\ny01: 1\ny02: 0\n\nx00 AND y00 -> z00\nx01 XOR y01 -> z01\nx02 OR y02 -> z02')
     assert testee.get_result() == 4
+
+def test_network_with_input_nodes_defined_later():
+    testee = GateNet('''x01: 1\nx02: 0\nx03: 1\n\nx01 AND a01 -> z00\nx02 OR x03 -> a01''')
+    assert testee.get_result() == 1
