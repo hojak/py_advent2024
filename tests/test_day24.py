@@ -1,3 +1,4 @@
+import pytest
 from day24.gates import *
 
 def test_constant_gate():
@@ -5,10 +6,15 @@ def test_constant_gate():
     assert testee.name == "x01"
     assert testee.get_output() == 1
 
+@pytest.mark.parametrize('input1, input2, expected_output', [
+    (0,1,0),
+    (1,0,0),
+    (0,0,0),
+    (1,1,1),
+])
+def test_and_gate(input1, input2, expected_output):
+    gate1 = ConstantGate("x0", input1)    
+    gate2 = ConstantGate("x1", input2)
 
-def test_and_gate():
-    input1 = ConstantGate("x0", 0)    
-    input2 = ConstantGate("x1", 1)
-
-    testee = AndGate("and", input1, input2)
-    assert testee.get_output() == 0
+    testee = AndGate("and", gate1, gate2)
+    assert testee.get_output() == expected_output
