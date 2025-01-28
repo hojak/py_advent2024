@@ -61,3 +61,9 @@ def test_gate_net_parses_two_input_gates():
 def test_simple_network_with_and_gate():
     testee = GateNet ( 'i1: 1\ni2: 0\n\ni1 AND i2 -> o1')
     assert testee.get_gate('o1').get_output() == 0
+
+def test_network_with_9_gates():
+    testee = GateNet ( 'x00: 1\nx01: 1\nx02: 1\ny00: 0\ny01: 1\ny02: 0\n\nx00 AND y00 -> z00\nx01 XOR y01 -> z01\nx02 OR y02 -> z02')
+    assert testee.get_gate('z00').get_output()==0
+    assert testee.get_gate('z01').get_output()==0
+    assert testee.get_gate('z02').get_output()==1
