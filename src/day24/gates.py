@@ -37,7 +37,11 @@ class GateNet:
     def __init__(self, input):
         self.gates = {}
 
-        (name, value) = input.split(': ')
+        for line in input.split('\n'):
+            self.register_constant_gate(line)
+
+    def register_constant_gate(self, line):
+        (name, value) = line.split(': ')
         self.gates[name] = ConstantGate(name, int(value))
 
     def size(self):
