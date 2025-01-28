@@ -1,15 +1,22 @@
-class ConstantGate:
-    def __init__(self, name, value):
+class Gate():
+    def __init__(self, name):
         self.name = name
+
+    def get_output(self):
+        return None
+
+class ConstantGate(Gate):
+    def __init__(self, name, value):
+        super().__init__(name)
         self.output = value
 
     def get_output(self):
         return self.output
 
 
-class AndGate:
+class AndGate (Gate):
     def __init__(self, name, input1, input2):
-        self.name = name
+        super().__init__(name)
         self.input1 = input1
         self.input2 = input2
 
