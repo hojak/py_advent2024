@@ -27,3 +27,6 @@ class AndGate (ComputingGate):
 class OrGate (ComputingGate):
     def get_output(self):
         return self.input1.get_output() or self.input2.get_output()
+class XorGate (ComputingGate):
+    def get_output(self):
+        return self.input1.get_output() ^ self.input2.get_output()

@@ -36,3 +36,18 @@ def test_or_gate(input1, input2, expected_output):
 
     testee = OrGate("or", gate1, gate2)
     assert testee.get_output() == expected_output
+
+
+
+@pytest.mark.parametrize('input1, input2, expected_output', [
+    (0,1,1),
+    (1,0,1),
+    (0,0,0),
+    (1,1,0),
+])
+def test_xor_gate(input1, input2, expected_output):
+    gate1 = ConstantGate("x0", input1)    
+    gate2 = ConstantGate("x1", input2)
+
+    testee = XorGate("xor", gate1, gate2)
+    assert testee.get_output() == expected_output    
